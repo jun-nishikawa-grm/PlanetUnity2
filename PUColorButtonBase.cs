@@ -45,9 +45,10 @@ public partial class PUColorButton : PUColorButtonBase {
 			Color color,
 			Vector3 position,
 			Vector2 size,
-			Vector2 pivot,
 			Vector3 rotation,
 			Vector3 scale,
+			Vector2 pivot,
+			string anchor,
 			bool hidden,
 			float lastY,
 			float lastX,
@@ -75,14 +76,17 @@ public partial class PUColorButton : PUColorButtonBase {
 		this.size = size;
 		this.sizeExists = true;
 
-		this.pivot = pivot;
-		this.pivotExists = true;
-
 		this.rotation = rotation;
 		this.rotationExists = true;
 
 		this.scale = scale;
 		this.scaleExists = true;
+
+		this.pivot = pivot;
+		this.pivotExists = true;
+
+		this.anchor = anchor;
+		this.anchorExists = true;
 
 		this.hidden = hidden;
 		this.hiddenExists = true;

@@ -25,12 +25,14 @@ public partial class PUGameObject : PUGameObjectBase {
 		if(attr != null) { position = new Vector3().PUParse(attr); positionExists = true; } 
 		attr = "0,0";
 		if(attr != null) { size = new Vector2().PUParse(attr); sizeExists = true; } 
-		attr = "0,0";
-		if(attr != null) { pivot = new Vector2().PUParse(attr); pivotExists = true; } 
 		attr = "0,0,0";
 		if(attr != null) { rotation = new Vector3().PUParse(attr); rotationExists = true; } 
 		attr = "1,1,1";
 		if(attr != null) { scale = new Vector3().PUParse(attr); scaleExists = true; } 
+		attr = "0,0";
+		if(attr != null) { pivot = new Vector2().PUParse(attr); pivotExists = true; } 
+		attr = "bottom,left";
+		if(attr != null) { anchor = attr; anchorExists = true; } 
 
 	}
 	
@@ -38,9 +40,10 @@ public partial class PUGameObject : PUGameObjectBase {
 	public PUGameObject(
 			Vector3 position,
 			Vector2 size,
-			Vector2 pivot,
 			Vector3 rotation,
 			Vector3 scale,
+			Vector2 pivot,
+			string anchor,
 			bool hidden,
 			float lastY,
 			float lastX ) : this()
@@ -51,14 +54,17 @@ public partial class PUGameObject : PUGameObjectBase {
 		this.size = size;
 		this.sizeExists = true;
 
-		this.pivot = pivot;
-		this.pivotExists = true;
-
 		this.rotation = rotation;
 		this.rotationExists = true;
 
 		this.scale = scale;
 		this.scaleExists = true;
+
+		this.pivot = pivot;
+		this.pivotExists = true;
+
+		this.anchor = anchor;
+		this.anchorExists = true;
 
 		this.hidden = hidden;
 		this.hiddenExists = true;
@@ -75,9 +81,10 @@ public partial class PUGameObject : PUGameObjectBase {
 	public PUGameObject(
 			Vector3 position,
 			Vector2 size,
-			Vector2 pivot,
 			Vector3 rotation,
 			Vector3 scale,
+			Vector2 pivot,
+			string anchor,
 			bool hidden,
 			float lastY,
 			float lastX,
@@ -96,14 +103,17 @@ public partial class PUGameObject : PUGameObjectBase {
 		this.size = size;
 		this.sizeExists = true;
 
-		this.pivot = pivot;
-		this.pivotExists = true;
-
 		this.rotation = rotation;
 		this.rotationExists = true;
 
 		this.scale = scale;
 		this.scaleExists = true;
+
+		this.pivot = pivot;
+		this.pivotExists = true;
+
+		this.anchor = anchor;
+		this.anchorExists = true;
 
 		this.hidden = hidden;
 		this.hiddenExists = true;
@@ -161,14 +171,17 @@ public class PUGameObjectBase : PUObject {
 	public Vector2 size;
 	public bool sizeExists;
 
-	public Vector2 pivot;
-	public bool pivotExists;
-
 	public Vector3 rotation;
 	public bool rotationExists;
 
 	public Vector3 scale;
 	public bool scaleExists;
+
+	public Vector2 pivot;
+	public bool pivotExists;
+
+	public string anchor;
+	public bool anchorExists;
 
 	public bool hidden;
 	public bool hiddenExists;
@@ -185,9 +198,10 @@ public class PUGameObjectBase : PUObject {
 	
 	public void SetPosition(Vector3 v) { position = v; positionExists = true; } 
 	public void SetSize(Vector2 v) { size = v; sizeExists = true; } 
-	public void SetPivot(Vector2 v) { pivot = v; pivotExists = true; } 
 	public void SetRotation(Vector3 v) { rotation = v; rotationExists = true; } 
 	public void SetScale(Vector3 v) { scale = v; scaleExists = true; } 
+	public void SetPivot(Vector2 v) { pivot = v; pivotExists = true; } 
+	public void SetAnchor(string v) { anchor = v; anchorExists = true; } 
 	public void SetHidden(bool v) { hidden = v; hiddenExists = true; } 
 	public void SetLastY(float v) { lastY = v; lastYExists = true; } 
 	public void SetLastX(float v) { lastX = v; lastXExists = true; } 
@@ -274,11 +288,6 @@ public class PUGameObjectBase : PUObject {
 		if(attr == null) { attr = "0,0"; }
 		if(attr != null) { size = new Vector2().PUParse(attr); sizeExists = true; } 
 		
-		attr = reader.GetAttribute("pivot");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr == null) { attr = "0,0"; }
-		if(attr != null) { pivot = new Vector2().PUParse(attr); pivotExists = true; } 
-		
 		attr = reader.GetAttribute("rotation");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0,0,0"; }
@@ -288,6 +297,16 @@ public class PUGameObjectBase : PUObject {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "1,1,1"; }
 		if(attr != null) { scale = new Vector3().PUParse(attr); scaleExists = true; } 
+		
+		attr = reader.GetAttribute("pivot");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr == null) { attr = "0,0"; }
+		if(attr != null) { pivot = new Vector2().PUParse(attr); pivotExists = true; } 
+		
+		attr = reader.GetAttribute("anchor");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr == null) { attr = "bottom,left"; }
+		if(attr != null) { anchor = attr; anchorExists = true; } 
 		
 		attr = reader.GetAttribute("hidden");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
@@ -316,9 +335,10 @@ public class PUGameObjectBase : PUObject {
 
 		if(positionExists) { sb.AppendFormat (" {0}=\"{1}\"", "position", position); }
 		if(sizeExists) { sb.AppendFormat (" {0}=\"{1}\"", "size", size); }
-		if(pivotExists) { sb.AppendFormat (" {0}=\"{1}\"", "pivot", pivot); }
 		if(rotationExists) { sb.AppendFormat (" {0}=\"{1}\"", "rotation", rotation); }
 		if(scaleExists) { sb.AppendFormat (" {0}=\"{1}\"", "scale", scale); }
+		if(pivotExists) { sb.AppendFormat (" {0}=\"{1}\"", "pivot", pivot); }
+		if(anchorExists) { sb.AppendFormat (" {0}=\"{1}\"", "anchor", anchor); }
 		if(hiddenExists) { sb.AppendFormat (" {0}=\"{1}\"", "hidden", hidden.ToString().ToLower()); }
 		if(lastYExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastY", lastY.ToString ("0.##")); }
 		if(lastXExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastX", lastX.ToString ("0.##")); }

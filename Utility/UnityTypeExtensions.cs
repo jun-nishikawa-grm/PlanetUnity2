@@ -3,6 +3,23 @@ using UnityEngine;
 using System;
 using System.Globalization;
 
+
+public static class StringExtension
+{
+	public static int NumberOfOccurancesOfChar(this string source, char c)
+	{
+		char[] testchars = source.ToCharArray();
+		int length = testchars.Length;
+		int count = 0;
+		for (int n = length-1; n >= 0; n--)
+		{
+			if (testchars[n] == c)
+				count++;
+		}
+		return count;
+	}
+}
+
 public static class Vector2Extension
 {
 	public static Vector2 PUParse(this Vector2 v, string value)
