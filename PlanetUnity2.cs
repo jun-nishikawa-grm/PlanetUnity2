@@ -40,6 +40,29 @@ public class PlanetUnity2 {
 	public const string EVENTWITHNOCOLLIDER = "EventWithNoCollider";
 	public const string EDITORFILEDIDCHANGE = "EditorFileDidChange";
 
+	public enum TextOverflowVertical {
+		truncate,
+		overflow,
+	};
+
+	public enum TextAlignment {
+		left,
+		center,
+		right,
+	};
+
+	public enum FontStyle {
+		normal,
+		bold,
+		italic,
+		boldAndItalic,
+	};
+
+	public enum TextOverflowHorizontal {
+		wrap,
+		overflow,
+	};
+
 
 
 	static public string ConvertClassName(string xmlNamespace, string name)

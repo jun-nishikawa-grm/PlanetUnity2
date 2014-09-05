@@ -22,6 +22,7 @@ public class PlanetUnityResourceCache
 	static private Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
 	static private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
 	static private Dictionary<string, string> stringFiles = new Dictionary<string, string>();
+	static private Dictionary<string, Font> fonts = new Dictionary<string, Font>();
 
 	static public Texture2D GetTexture(string s)
 	{
@@ -91,5 +92,31 @@ public class PlanetUnityResourceCache
 		stringFiles [s] = t;
 		#endif
 		return t;
+	}
+
+	static public Font GetFont(string s)
+	{
+		if (s == null) {
+			return null;
+		}
+		if (fonts.ContainsKey(s)) {
+			return fonts [s];
+		}
+
+		Font font = null;
+
+		if (s.Equals ("Arial")) {
+			font = (Font)Resources.GetBuiltinResource(typeof(Font), "Arial.ttf");
+		}
+
+		if (font == null) {
+			font = Resources.Load (s) as Font;
+		}
+
+		if (font == null) {
+			return null;
+		}
+		fonts [s] = font;
+		return font;
 	}
 }

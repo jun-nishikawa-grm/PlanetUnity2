@@ -160,6 +160,83 @@
 	
 	
 	
+	
+	
+	<simpleType name="TextAlignment">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "left"/>
+			<enumeration value = "center"/>
+			<enumeration value = "right"/>
+		</restriction>
+    </simpleType>
+
+	<simpleType name="FontStyle">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "normal"/>
+			<enumeration value = "bold"/>
+			<enumeration value = "italic"/>
+			<enumeration value = "boldAndItalic"/>
+		</restriction>
+    </simpleType>
+
+	<simpleType name="TextOverflowHorizontal">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "wrap"/>
+			<enumeration value = "overflow"/>
+		</restriction>
+    </simpleType>
+
+	<simpleType name="TextOverflowVertical">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "truncate"/>
+			<enumeration value = "overflow"/>
+		</restriction>
+    </simpleType>
+	
+	<element name="Text" type="planet:Text" />
+	<complexType name="Text">
+		<complexContent>
+			<extension base="planet:GameObject">
+			
+				<attribute name="font" type="string" use="optional" />
+				<attribute name="fontSize" type="int" use="optional" default="12" />
+				<attribute name="fontStyle" type="planet:FontStyle" use="optional" />
+				<attribute name="fontColor" type="planet:color" use="optional" default="0,0,0,1" />
+				
+				<attribute name="lineSpacing" type="float" use="optional" />
+				
+				<attribute name="alignment" type="planet:TextAlignment" use="optional" default="center"/>
+				
+				<attribute name="value" type="string" use="required" />
+				<attribute name="bestFit" type="boolean" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<element name="TextButton" type="planet:TextButton" />
+	<complexType name="TextButton">
+		<complexContent>
+			<extension base="planet:Text">
+				<attribute name="onTouchUp" type="string" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	
+	
+	
 	<element name="Notification" type="planet:Notification" />
 	<complexType name="Notification">
 		<attribute name="name" type="string" use="required" />
