@@ -13,6 +13,34 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+using UnityEngine;
+using System.Xml;
+using System.Collections;
+using UnityEngine.UI;
+
 public partial class PUImage : PUImageBase {
+
+	public Image image;
+	public CanvasRenderer canvasRenderer;
+
+	public override void gaxb_init ()
+	{
+		gameObject = new GameObject ("<Image/>", typeof(RectTransform));
+		gameObject.AddComponent<CanvasRenderer> ();
+		gameObject.AddComponent<Image> ();
+
+
+		image = gameObject.GetComponent<Image> ();
+		canvasRenderer = gameObject.GetComponent<CanvasRenderer> ();
+
+		if (colorExists) {
+			image.color = color;
+		}
+
+		if (resourcePathExists) {
+			Texture2D texture = PlanetUnityResourceCache.GetTexture (resourcePath);
+			image.sprite = Sprite.Create (texture, new Rect (0, 0, texture.width-1, texture.height-1), Vector2.zero);
+		}
+	}
 
 }

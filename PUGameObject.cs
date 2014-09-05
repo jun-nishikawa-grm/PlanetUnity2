@@ -26,12 +26,9 @@ public partial class PUGameObject : PUGameObjectBase {
 	{
 		gameObject.transform.parent = p.transform;
 	}
-
-
-	public override void gaxb_load(XmlReader reader, object _parent, Hashtable args)
+		
+	public void gaxb_final(XmlReader reader, object _parent, Hashtable args)
 	{
-		base.gaxb_load(reader, _parent, args);
-
 		if (gameObject == null) {
 			gameObject = new GameObject ("<GameObject />");
 		}
@@ -48,13 +45,32 @@ public partial class PUGameObject : PUGameObjectBase {
 		}
 
 		rectTransform = gameObject.GetComponent<RectTransform> ();
-
 		rectTransform.localPosition = position;
 		rectTransform.localScale = scale;
 		rectTransform.localEulerAngles = rotation;
 		rectTransform.pivot = pivot;
-		rectTransform.sizeDelta = size;
-					
+
+		// If the width or height is 0, inherit the parents width or height
+		RectTransform parentTransform = null;
+		if (gameObject.transform.parent) {
+			parentTransform = gameObject.transform.parent.GetComponent<RectTransform> ();
+		}
+
+		if (parentTransform != null) {
+			if ((int)size.x == 0) {
+				size.x = parentTransform.sizeDelta.x;
+			}
+			if ((int)size.y == 0) {
+				size.y = parentTransform.sizeDelta.y;
+			}
+		}
+
+		if (this is PUCanvas == false) {
+			rectTransform.sizeDelta = size;
+		}
+
+		gameObject.layer = LayerMask.NameToLayer ("UI");
+
 		if (hidden) {
 			gameObject.SetActive (false);
 		}

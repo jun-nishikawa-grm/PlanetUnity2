@@ -73,7 +73,7 @@
 		<complexContent>
 			<extension base="planet:Object">
 				<attribute name="position" type="planet:vec3" use="optional" default="0,0,0" />
-				<attribute name="size" type="planet:vec2" use="optional" default="10,10" />
+				<attribute name="size" type="planet:vec2" use="optional" default="0,0" />
 				<attribute name="pivot" type="planet:vec2" use="optional" default="0,0" />
 				<attribute name="rotation" type="planet:vec3" use="optional" default="0,0,0" />
 				<attribute name="scale" type="planet:vec3" use="optional" default="1,1,1" />
@@ -105,6 +105,7 @@
 		<complexContent>
 			<extension base="planet:GameObject">
 				<attribute name="renderMode" type="planet:CanvasRenderMode" use="optional" default="Overlay" />
+				<attribute name="pixelPerfect" type="boolean" use="optional" default="false" />
 			</extension>
 		</complexContent>
 	</complexType>
@@ -118,6 +119,18 @@
 			</extension>
 		</complexContent>
 	</complexType>
+	
+	<element name="ColorButton" type="planet:ColorButton"/>
+	<complexType name="ColorButton">
+		<complexContent>
+			<extension base="planet:Color">
+				<attribute name="touchColor" type="planet:color" use="optional" />
+				<attribute name="onTouchUp" type="string" use="optional" />
+				<attribute name="onTouchDown" type="string" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
 
 	<element name="Image" type="planet:Image"/>
 	<complexType name="Image">
@@ -128,6 +141,22 @@
 			</extension>
 		</complexContent>
 	</complexType>
+	
+	<element name="ImageButton" type="planet:ImageButton"/>
+	<complexType name="ImageButton">
+		<complexContent>
+			<extension base="planet:Image">
+				<attribute name="normalResourcePath" type="string" use="required" />
+				<attribute name="highlightedResourcePath" type="string" use="required" />
+				<attribute name="touchColor" type="planet:color" use="optional" />
+				<attribute name="onTouchUp" type="string" use="optional" />
+				<attribute name="onTouchDown" type="string" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	
+	
 	
 	<element name="Notification" type="planet:Notification" />
 	<complexType name="Notification">

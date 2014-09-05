@@ -15,36 +15,39 @@ using System.Collections.Generic;
 using System.Collections;
 
 
-public partial class PUCanvas : PUCanvasBase {
+public partial class PUColorButton : PUColorButtonBase {
 	
-	public PUCanvas()
+	public PUColorButton()
 	{
-		string attr;
-
-		attr = "Overlay";
-		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)System.Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); renderModeExists = true; } 
-		attr = "false";
-		if(attr != null) { pixelPerfect = bool.Parse(attr); pixelPerfectExists = true; } 
-
 	}
 	
 	
-	public PUCanvas(
-			PlanetUnity2.CanvasRenderMode renderMode,
-			bool pixelPerfect ) : this()
+	public PUColorButton(
+			Color touchColor,
+			string onTouchUp,
+			string onTouchDown,
+			Color color ) : this()
 	{
-		this.renderMode = renderMode;
-		this.renderModeExists = true;
+		this.touchColor = touchColor;
+		this.touchColorExists = true;
 
-		this.pixelPerfect = pixelPerfect;
-		this.pixelPerfectExists = true;
+		this.onTouchUp = onTouchUp;
+		this.onTouchUpExists = true;
+
+		this.onTouchDown = onTouchDown;
+		this.onTouchDownExists = true;
+
+		this.color = color;
+		this.colorExists = true;
 	}
 
 	
 	
-	public PUCanvas(
-			PlanetUnity2.CanvasRenderMode renderMode,
-			bool pixelPerfect,
+	public PUColorButton(
+			Color touchColor,
+			string onTouchUp,
+			string onTouchDown,
+			Color color,
 			Vector3 position,
 			Vector2 size,
 			Vector2 pivot,
@@ -62,11 +65,17 @@ public partial class PUCanvas : PUCanvasBase {
 			string tag5,
 			string tag6 ) : this()
 	{
-		this.renderMode = renderMode;
-		this.renderModeExists = true;
+		this.touchColor = touchColor;
+		this.touchColorExists = true;
 
-		this.pixelPerfect = pixelPerfect;
-		this.pixelPerfectExists = true;
+		this.onTouchUp = onTouchUp;
+		this.onTouchUpExists = true;
+
+		this.onTouchDown = onTouchDown;
+		this.onTouchDownExists = true;
+
+		this.color = color;
+		this.colorExists = true;
 
 		this.position = position;
 		this.positionExists = true;
@@ -123,7 +132,7 @@ public partial class PUCanvas : PUCanvasBase {
 
 
 
-public class PUCanvasBase : PUGameObject {
+public class PUColorButtonBase : PUColor {
 
 
 	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
@@ -133,18 +142,22 @@ public class PUCanvasBase : PUGameObject {
 
 
 	// XML Attributes
-	public PlanetUnity2.CanvasRenderMode renderMode;
-	public bool renderModeExists;
+	public Color touchColor;
+	public bool touchColorExists;
 
-	public bool pixelPerfect;
-	public bool pixelPerfectExists;
+	public string onTouchUp;
+	public bool onTouchUpExists;
+
+	public string onTouchDown;
+	public bool onTouchDownExists;
 
 
 
 
 	
-	public void SetRenderMode(PlanetUnity2.CanvasRenderMode v) { renderMode = v; renderModeExists = true; } 
-	public void SetPixelPerfect(bool v) { pixelPerfect = v; pixelPerfectExists = true; } 
+	public void SetTouchColor(Color v) { touchColor = v; touchColorExists = true; } 
+	public void SetOnTouchUp(string v) { onTouchUp = v; onTouchUpExists = true; } 
+	public void SetOnTouchDown(string v) { onTouchDown = v; onTouchDownExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -157,19 +170,19 @@ public class PUCanvasBase : PUGameObject {
 	{
 		if(parent != null)
 		{
-			FieldInfo parentField = parent.GetType().GetField("Canvas");
+			FieldInfo parentField = parent.GetType().GetField("ColorButton");
 			List<object> parentChildren = null;
 			
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
 				
-				parentField = parent.GetType().GetField("CanvasExists");
+				parentField = parent.GetType().GetField("ColorButtonExists");
 				parentField.SetValue(parent, true);
 			}
 			else
 			{
-				parentField = parent.GetType().GetField("Canvass");
+				parentField = parent.GetType().GetField("ColorButtons");
 				
 				if(parentField != null)
 				{
@@ -177,7 +190,7 @@ public class PUCanvasBase : PUGameObject {
 				}
 				else
 				{
-					parentField = parent.GetType().GetField("GameObjects");
+					parentField = parent.GetType().GetField("Colors");
 					if(parentField != null)
 					{
 						parentChildren = (List<object>)(parentField.GetValue(parent));
@@ -209,7 +222,7 @@ public class PUCanvasBase : PUGameObject {
 		
 		parent = _parent;
 		
-		if(this.GetType() == typeof( PUCanvas ))
+		if(this.GetType() == typeof( PUColorButton ))
 		{
 			gaxb_addToParent();
 		}
@@ -218,15 +231,17 @@ public class PUCanvasBase : PUGameObject {
 		
 
 		string attr;
-		attr = reader.GetAttribute("renderMode");
+		attr = reader.GetAttribute("touchColor");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr == null) { attr = "Overlay"; }
-		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)System.Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); renderModeExists = true; } 
+		if(attr != null) { touchColor = new Color().PUParse(attr); touchColorExists = true; } 
 		
-		attr = reader.GetAttribute("pixelPerfect");
+		attr = reader.GetAttribute("onTouchUp");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr == null) { attr = "false"; }
-		if(attr != null) { pixelPerfect = bool.Parse(attr); pixelPerfectExists = true; } 
+		if(attr != null) { onTouchUp = attr; onTouchUpExists = true; } 
+		
+		attr = reader.GetAttribute("onTouchDown");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { onTouchDown = attr; onTouchDownExists = true; } 
 		
 
 	}
@@ -241,8 +256,9 @@ public class PUCanvasBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(renderModeExists) { sb.AppendFormat (" {0}=\"{1}\"", "renderMode", (int)renderMode); }
-		if(pixelPerfectExists) { sb.AppendFormat (" {0}=\"{1}\"", "pixelPerfect", pixelPerfect.ToString().ToLower()); }
+		if(touchColorExists) { sb.AppendFormat (" {0}=\"{1}\"", "touchColor", touchColor); }
+		if(onTouchUpExists) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchUp", onTouchUp); }
+		if(onTouchDownExists) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchDown", onTouchDown); }
 
 	}
 	
@@ -260,7 +276,7 @@ public class PUCanvasBase : PUGameObject {
 			sb.AppendFormat ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		}
 		
-		sb.AppendFormat ("<{0}", "Canvas");
+		sb.AppendFormat ("<{0}", "ColorButton");
 		
 		if(xmlns != null)
 		{
@@ -280,7 +296,7 @@ public class PUCanvasBase : PUGameObject {
 		}
 		else
 		{
-			sb.AppendFormat (">{0}</{1}>", seq.ToString(), "Canvas");
+			sb.AppendFormat (">{0}</{1}>", seq.ToString(), "ColorButton");
 		}
 	}
 }

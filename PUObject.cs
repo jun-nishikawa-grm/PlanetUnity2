@@ -30,7 +30,12 @@ public partial class PUObject : PUObjectBase {
 		NotificationCenter.removeObserver (this);
 	}
 
-	public void gaxb_loadComplete()
+	public virtual void gaxb_complete()
+	{
+
+	}
+
+	public virtual void gaxb_init()
 	{
 
 	}

@@ -1,3 +1,4 @@
+
 /* Copyright (c) 2012 Small Planet Digital, LLC
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files 
@@ -12,33 +13,23 @@
  * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-using System.Xml;
-using System.Collections;
+
 using UnityEngine;
 using UnityEngine.UI;
+using System.Xml;
+using System.Collections;
 
-public partial class PUCanvas : PUCanvasBase {
+public partial class PUColorButton : PUColorButtonBase {
 
-	public Canvas canvas;
-	public GraphicRaycaster graphicRaycaster;
+	public Button button;
 
 	public override void gaxb_init ()
 	{
-		gameObject = new GameObject("<Canvas/>", typeof(RectTransform));
-		gameObject.AddComponent<Canvas>();
-		gameObject.AddComponent<GraphicRaycaster>();
+		base.gaxb_init ();
 
-		canvas = gameObject.GetComponent<Canvas> ();
-		graphicRaycaster = gameObject.GetComponent<GraphicRaycaster> ();
+		gameObject.AddComponent<Button> ();
 
-		if(renderMode == PlanetUnity2.CanvasRenderMode.Overlay)
-			canvas.renderMode = RenderMode.Overlay;
-		if(renderMode == PlanetUnity2.CanvasRenderMode.OverlayCamera)
-			canvas.renderMode = RenderMode.OverlayCamera;
-		if(renderMode == PlanetUnity2.CanvasRenderMode.World)
-			canvas.renderMode = RenderMode.World;
-
-		canvas.pixelPerfect = pixelPerfect;
+		button = gameObject.GetComponent<Button> ();
 	}
 
 }

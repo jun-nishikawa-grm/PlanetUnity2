@@ -46,12 +46,10 @@ public partial class PUCode : PUCodeBase {
 		NotificationCenter.removeObserver (controller);
 	}
 
-	public override void gaxb_load(XmlReader reader, object _parent, Hashtable args)
+	public override void gaxb_init()
 	{
 		controller = null;
 		GC.Collect();
-
-		base.gaxb_load(reader, _parent, args);
 
 		gameObject.name = _class;
 	}
@@ -60,7 +58,7 @@ public partial class PUCode : PUCodeBase {
 		return (IPUCode)instances [name];
 	}
 
-	public void gaxb_loadComplete()
+	public void gaxb_complete()
 	{
 		if (singleton) {
 			if (instances [_class] != null && instances [_class] != this) {
@@ -143,7 +141,7 @@ public partial class PUCode : PUCodeBase {
 			}
 		}
 
-		base.gaxb_loadComplete ();
+		base.gaxb_complete ();
 	}
 
 }

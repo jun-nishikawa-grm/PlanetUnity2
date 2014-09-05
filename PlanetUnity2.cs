@@ -81,6 +81,12 @@ public class PlanetUnity2 {
 						if(customBlock == null){
 							method = entityClass.GetMethod ("gaxb_load");
 							method.Invoke (entityObject, new[] { reader, rootEntity, args });
+							
+							method = entityClass.GetMethod ("gaxb_init");
+							method.Invoke (entityObject, null);
+							
+							method = entityClass.GetMethod ("gaxb_final");
+							method.Invoke (entityObject, new[] { reader, rootEntity, args });
 						}else{
 							customBlock(entityObject, rootEntity, reader);
 						}
@@ -89,7 +95,7 @@ public class PlanetUnity2 {
 							rootEntity = entityObject;
 						} else {
 							if(customBlock == null){
-								method = entityClass.GetMethod ("gaxb_loadComplete");
+								method = entityClass.GetMethod ("gaxb_complete");
 								if(method != null) { method.Invoke (entityObject, null); }
 							}
 						}
@@ -142,7 +148,7 @@ public class PlanetUnity2 {
 						Type entityClass = Type.GetType (ConvertClassName(xmlNamespace, reader.Name), true);
 						
 						if(customBlock == null) {
-							method = entityClass.GetMethod ("gaxb_loadComplete");
+							method = entityClass.GetMethod ("gaxb_complete");
 							if(method != null) { method.Invoke (rootEntity, null); }
 						}
 

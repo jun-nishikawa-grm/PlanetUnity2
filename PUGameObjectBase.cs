@@ -23,7 +23,7 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		attr = "0,0,0";
 		if(attr != null) { position = new Vector3().PUParse(attr); positionExists = true; } 
-		attr = "10,10";
+		attr = "0,0";
 		if(attr != null) { size = new Vector2().PUParse(attr); sizeExists = true; } 
 		attr = "0,0";
 		if(attr != null) { pivot = new Vector2().PUParse(attr); pivotExists = true; } 
@@ -271,7 +271,7 @@ public class PUGameObjectBase : PUObject {
 		
 		attr = reader.GetAttribute("size");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr == null) { attr = "10,10"; }
+		if(attr == null) { attr = "0,0"; }
 		if(attr != null) { size = new Vector2().PUParse(attr); sizeExists = true; } 
 		
 		attr = reader.GetAttribute("pivot");

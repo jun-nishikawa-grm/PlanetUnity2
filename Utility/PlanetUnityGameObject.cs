@@ -52,9 +52,6 @@ public class PlanetUnityOverride {
 		return true;
 	};
 
-	//public static Func<string, string> processResourcePath = (path) => path;
-
-
 	public static string processString(object o, string s)
 	{
 		if (s == null)
@@ -70,41 +67,30 @@ public class PlanetUnityOverride {
 			string[] results = new string[12];
 			int nresults = 0;
 
+			RectTransform rectTransform = null;
+
+			mathParser.LocalVariables.Clear ();
+
 			if (o is GameObject) {
-				// Use the size of the display
-				mathParser.LocalVariables.Clear ();
+				rectTransform = (o as GameObject).GetComponent<RectTransform> ();
 
-				mathParser.LocalVariables.Add ("top", Convert.ToDecimal(0));
-				mathParser.LocalVariables.Add ("bottom", Convert.ToDecimal(0));
-				mathParser.LocalVariables.Add ("left", Convert.ToDecimal(0));
-				mathParser.LocalVariables.Add ("right", Convert.ToDecimal(0));
-				mathParser.LocalVariables.Add ("scale", Convert.ToDecimal(1.0f));
-
-				mathParser.LocalVariables.Add ("scaledW", Convert.ToDecimal(Screen.width));
-				mathParser.LocalVariables.Add ("scaledH", Convert.ToDecimal(Screen.height));
-
-				mathParser.LocalVariables.Add ("w", Convert.ToDecimal(Screen.width));
-				mathParser.LocalVariables.Add ("h", Convert.ToDecimal(Screen.height));
 				mathParser.LocalVariables.Add ("lastY", Convert.ToDecimal(0));
 				mathParser.LocalVariables.Add ("lastX", Convert.ToDecimal(0));
 			}
 			else if (o is PUGameObject) {
 				PUGameObject entity = (PUGameObject)o;
-				mathParser.LocalVariables.Clear ();
+				rectTransform = entity.gameObject.GetComponent<RectTransform> ();
 
-				mathParser.LocalVariables.Add ("top", Convert.ToDecimal(canvasTop));
-				mathParser.LocalVariables.Add ("bottom", Convert.ToDecimal(canvasBottom));
-				mathParser.LocalVariables.Add ("left", Convert.ToDecimal(canvasLeft));
-				mathParser.LocalVariables.Add ("right", Convert.ToDecimal(canvasRight));
-				mathParser.LocalVariables.Add ("scale", Convert.ToDecimal(canvasScale));
-
-				mathParser.LocalVariables.Add ("scaledW", Convert.ToDecimal(canvasScale*entity.size.x));
-				mathParser.LocalVariables.Add ("scaledH", Convert.ToDecimal(canvasScale*entity.size.y));
-
-				mathParser.LocalVariables.Add ("w", Convert.ToDecimal(entity.size.x));
-				mathParser.LocalVariables.Add ("h", Convert.ToDecimal(entity.size.y));
 				mathParser.LocalVariables.Add ("lastY", Convert.ToDecimal(entity.lastY));
 				mathParser.LocalVariables.Add ("lastX", Convert.ToDecimal(entity.lastX));
+			}
+
+			if (rectTransform) {
+				mathParser.LocalVariables.Add ("scaledW", Convert.ToDecimal(rectTransform.sizeDelta.x));
+				mathParser.LocalVariables.Add ("scaledH", Convert.ToDecimal(rectTransform.sizeDelta.y));
+
+				mathParser.LocalVariables.Add ("w", Convert.ToDecimal(rectTransform.sizeDelta.x));
+				mathParser.LocalVariables.Add ("h", Convert.ToDecimal(rectTransform.sizeDelta.y));
 			}
 
 			foreach (string part in parts) {
