@@ -23,14 +23,10 @@ public partial class PUColorButton : PUColorButtonBase {
 	
 	
 	public PUColorButton(
-			Color touchColor,
 			string onTouchUp,
 			string onTouchDown,
 			Color color ) : this()
 	{
-		this.touchColor = touchColor;
-		this.touchColorExists = true;
-
 		this.onTouchUp = onTouchUp;
 		this.onTouchUpExists = true;
 
@@ -44,7 +40,6 @@ public partial class PUColorButton : PUColorButtonBase {
 	
 	
 	public PUColorButton(
-			Color touchColor,
 			string onTouchUp,
 			string onTouchDown,
 			Color color,
@@ -65,9 +60,6 @@ public partial class PUColorButton : PUColorButtonBase {
 			string tag5,
 			string tag6 ) : this()
 	{
-		this.touchColor = touchColor;
-		this.touchColorExists = true;
-
 		this.onTouchUp = onTouchUp;
 		this.onTouchUpExists = true;
 
@@ -142,9 +134,6 @@ public class PUColorButtonBase : PUColor {
 
 
 	// XML Attributes
-	public Color touchColor;
-	public bool touchColorExists;
-
 	public string onTouchUp;
 	public bool onTouchUpExists;
 
@@ -155,7 +144,6 @@ public class PUColorButtonBase : PUColor {
 
 
 	
-	public void SetTouchColor(Color v) { touchColor = v; touchColorExists = true; } 
 	public void SetOnTouchUp(string v) { onTouchUp = v; onTouchUpExists = true; } 
 	public void SetOnTouchDown(string v) { onTouchDown = v; onTouchDownExists = true; } 
 
@@ -231,10 +219,6 @@ public class PUColorButtonBase : PUColor {
 		
 
 		string attr;
-		attr = reader.GetAttribute("touchColor");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { touchColor = new Color().PUParse(attr); touchColorExists = true; } 
-		
 		attr = reader.GetAttribute("onTouchUp");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { onTouchUp = attr; onTouchUpExists = true; } 
@@ -256,7 +240,6 @@ public class PUColorButtonBase : PUColor {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(touchColorExists) { sb.AppendFormat (" {0}=\"{1}\"", "touchColor", touchColor); }
 		if(onTouchUpExists) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchUp", onTouchUp); }
 		if(onTouchDownExists) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchDown", onTouchDown); }
 

@@ -16,6 +16,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using System.Runtime.Remoting.Messaging;
 
 public partial class PUImageButton : PUImageButtonBase {
 
@@ -28,6 +29,25 @@ public partial class PUImageButton : PUImageButtonBase {
 		gameObject.AddComponent<Button> ();
 
 		button = gameObject.GetComponent<Button> ();
+
+		if (pressedResourcePathExists || highlightedResourcePathExists || disabledResourcePathExists) {
+
+			button.transition = Selectable.Transition.SpriteSwap;
+
+			SpriteState states = button.spriteState;
+
+			if (pressedResourcePathExists) {
+				states.pressedSprite = PlanetUnityResourceCache.GetSprite (pressedResourcePath);
+			}
+			if (highlightedResourcePathExists) {
+				states.pressedSprite = PlanetUnityResourceCache.GetSprite (highlightedResourcePath);
+			}
+			if (disabledResourcePathExists) {
+				states.pressedSprite = PlanetUnityResourceCache.GetSprite (disabledResourcePath);
+			}
+
+			button.spriteState = states;
+		}
 	}
 
 }

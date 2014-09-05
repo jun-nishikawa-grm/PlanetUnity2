@@ -38,8 +38,7 @@ public partial class PUImage : PUImageBase {
 		}
 
 		if (resourcePathExists) {
-			Texture2D texture = PlanetUnityResourceCache.GetTexture (resourcePath);
-			image.sprite = Sprite.Create (texture, new Rect (0, 0, texture.width-1, texture.height-1), Vector2.zero);
+			image.sprite = PlanetUnityResourceCache.GetSprite (resourcePath);
 		}
 	}
 

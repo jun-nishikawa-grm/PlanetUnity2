@@ -24,8 +24,9 @@ public partial class PUImageButton : PUImageButtonBase {
 	
 	public PUImageButton(
 			string normalResourcePath,
+			string pressedResourcePath,
 			string highlightedResourcePath,
-			Color touchColor,
+			string disabledResourcePath,
 			string onTouchUp,
 			string onTouchDown,
 			string resourcePath ) : this()
@@ -33,11 +34,14 @@ public partial class PUImageButton : PUImageButtonBase {
 		this.normalResourcePath = normalResourcePath;
 		this.normalResourcePathExists = true;
 
+		this.pressedResourcePath = pressedResourcePath;
+		this.pressedResourcePathExists = true;
+
 		this.highlightedResourcePath = highlightedResourcePath;
 		this.highlightedResourcePathExists = true;
 
-		this.touchColor = touchColor;
-		this.touchColorExists = true;
+		this.disabledResourcePath = disabledResourcePath;
+		this.disabledResourcePathExists = true;
 
 		this.onTouchUp = onTouchUp;
 		this.onTouchUpExists = true;
@@ -53,8 +57,9 @@ public partial class PUImageButton : PUImageButtonBase {
 	
 	public PUImageButton(
 			string normalResourcePath,
+			string pressedResourcePath,
 			string highlightedResourcePath,
-			Color touchColor,
+			string disabledResourcePath,
 			string onTouchUp,
 			string onTouchDown,
 			string resourcePath,
@@ -79,11 +84,14 @@ public partial class PUImageButton : PUImageButtonBase {
 		this.normalResourcePath = normalResourcePath;
 		this.normalResourcePathExists = true;
 
+		this.pressedResourcePath = pressedResourcePath;
+		this.pressedResourcePathExists = true;
+
 		this.highlightedResourcePath = highlightedResourcePath;
 		this.highlightedResourcePathExists = true;
 
-		this.touchColor = touchColor;
-		this.touchColorExists = true;
+		this.disabledResourcePath = disabledResourcePath;
+		this.disabledResourcePathExists = true;
 
 		this.onTouchUp = onTouchUp;
 		this.onTouchUpExists = true;
@@ -165,11 +173,14 @@ public class PUImageButtonBase : PUImage {
 	public string normalResourcePath;
 	public bool normalResourcePathExists;
 
+	public string pressedResourcePath;
+	public bool pressedResourcePathExists;
+
 	public string highlightedResourcePath;
 	public bool highlightedResourcePathExists;
 
-	public Color touchColor;
-	public bool touchColorExists;
+	public string disabledResourcePath;
+	public bool disabledResourcePathExists;
 
 	public string onTouchUp;
 	public bool onTouchUpExists;
@@ -182,8 +193,9 @@ public class PUImageButtonBase : PUImage {
 
 	
 	public void SetNormalResourcePath(string v) { normalResourcePath = v; normalResourcePathExists = true; } 
+	public void SetPressedResourcePath(string v) { pressedResourcePath = v; pressedResourcePathExists = true; } 
 	public void SetHighlightedResourcePath(string v) { highlightedResourcePath = v; highlightedResourcePathExists = true; } 
-	public void SetTouchColor(Color v) { touchColor = v; touchColorExists = true; } 
+	public void SetDisabledResourcePath(string v) { disabledResourcePath = v; disabledResourcePathExists = true; } 
 	public void SetOnTouchUp(string v) { onTouchUp = v; onTouchUpExists = true; } 
 	public void SetOnTouchDown(string v) { onTouchDown = v; onTouchDownExists = true; } 
 
@@ -263,13 +275,17 @@ public class PUImageButtonBase : PUImage {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { normalResourcePath = attr; normalResourcePathExists = true; } 
 		
+		attr = reader.GetAttribute("pressedResourcePath");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { pressedResourcePath = attr; pressedResourcePathExists = true; } 
+		
 		attr = reader.GetAttribute("highlightedResourcePath");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { highlightedResourcePath = attr; highlightedResourcePathExists = true; } 
 		
-		attr = reader.GetAttribute("touchColor");
+		attr = reader.GetAttribute("disabledResourcePath");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { touchColor = new Color().PUParse(attr); touchColorExists = true; } 
+		if(attr != null) { disabledResourcePath = attr; disabledResourcePathExists = true; } 
 		
 		attr = reader.GetAttribute("onTouchUp");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
@@ -293,8 +309,9 @@ public class PUImageButtonBase : PUImage {
 		base.gaxb_appendXMLAttributes(sb);
 
 		if(normalResourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "normalResourcePath", normalResourcePath); }
+		if(pressedResourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "pressedResourcePath", pressedResourcePath); }
 		if(highlightedResourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "highlightedResourcePath", highlightedResourcePath); }
-		if(touchColorExists) { sb.AppendFormat (" {0}=\"{1}\"", "touchColor", touchColor); }
+		if(disabledResourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "disabledResourcePath", disabledResourcePath); }
 		if(onTouchUpExists) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchUp", onTouchUp); }
 		if(onTouchDownExists) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchDown", onTouchDown); }
 

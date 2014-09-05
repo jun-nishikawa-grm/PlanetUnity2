@@ -124,7 +124,6 @@
 	<complexType name="ColorButton">
 		<complexContent>
 			<extension base="planet:Color">
-				<attribute name="touchColor" type="planet:color" use="optional" />
 				<attribute name="onTouchUp" type="string" use="optional" />
 				<attribute name="onTouchDown" type="string" use="optional" />
 			</extension>
@@ -146,9 +145,9 @@
 	<complexType name="ImageButton">
 		<complexContent>
 			<extension base="planet:Image">
-				<attribute name="normalResourcePath" type="string" use="required" />
+				<attribute name="pressedResourcePath" type="string" use="required" />
 				<attribute name="highlightedResourcePath" type="string" use="required" />
-				<attribute name="touchColor" type="planet:color" use="optional" />
+				<attribute name="disabledResourcePath" type="string" use="required" />
 				<attribute name="onTouchUp" type="string" use="optional" />
 				<attribute name="onTouchDown" type="string" use="optional" />
 			</extension>

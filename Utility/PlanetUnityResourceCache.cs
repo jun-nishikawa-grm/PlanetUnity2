@@ -57,6 +57,14 @@ public class PlanetUnityResourceCache
 
 		Sprite[] allSprites = Resources.LoadAll<Sprite>(Path.GetDirectoryName(s));
 
+		if (allSprites.Length == 0) {
+			// This wasn't a sprite atlas, must be an individual texture
+			Texture2D texture = GetTexture(s);
+			Sprite sprite = Sprite.Create (texture, new Rect (0, 0, texture.width - 1, texture.height - 1), Vector2.zero);
+			sprites [spriteName] = sprite;
+			return sprite;
+		}
+			
 		foreach(Sprite sprite in allSprites) {
 			sprites [sprite.name] = sprite;
 		}
