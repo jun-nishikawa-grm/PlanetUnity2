@@ -17,18 +17,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Runtime.Remoting.Messaging;
+using UnityEngine.EventSystems;
 
 public partial class PUImageButton : PUImageButtonBase {
 
 	public Button button;
+
+	public EventTrigger eventTrigger;
 
 	public override void gaxb_init ()
 	{
 		base.gaxb_init ();
 
 		gameObject.AddComponent<Button> ();
+		gameObject.AddComponent<EventTrigger> ();
 
 		button = gameObject.GetComponent<Button> ();
+		eventTrigger = gameObject.GetComponent<EventTrigger> ();
 
 		if (pressedResourcePathExists || highlightedResourcePathExists || disabledResourcePathExists) {
 
@@ -47,6 +52,12 @@ public partial class PUImageButton : PUImageButtonBase {
 			}
 
 			button.spriteState = states;
+		}
+
+		if (onTouchUpExists) {
+			button.onClick.AddListener(() => { 
+				NotificationCenter.postNotification (Scope (), this.onTouchUp, NotificationCenter.Args("sender", this));
+			}); 
 		}
 	}
 

@@ -23,7 +23,6 @@ public partial class PUImageButton : PUImageButtonBase {
 	
 	
 	public PUImageButton(
-			string normalResourcePath,
 			string pressedResourcePath,
 			string highlightedResourcePath,
 			string disabledResourcePath,
@@ -31,9 +30,6 @@ public partial class PUImageButton : PUImageButtonBase {
 			string onTouchDown,
 			string resourcePath ) : this()
 	{
-		this.normalResourcePath = normalResourcePath;
-		this.normalResourcePathExists = true;
-
 		this.pressedResourcePath = pressedResourcePath;
 		this.pressedResourcePathExists = true;
 
@@ -56,7 +52,6 @@ public partial class PUImageButton : PUImageButtonBase {
 	
 	
 	public PUImageButton(
-			string normalResourcePath,
 			string pressedResourcePath,
 			string highlightedResourcePath,
 			string disabledResourcePath,
@@ -81,9 +76,6 @@ public partial class PUImageButton : PUImageButtonBase {
 			string tag5,
 			string tag6 ) : this()
 	{
-		this.normalResourcePath = normalResourcePath;
-		this.normalResourcePathExists = true;
-
 		this.pressedResourcePath = pressedResourcePath;
 		this.pressedResourcePathExists = true;
 
@@ -170,9 +162,6 @@ public class PUImageButtonBase : PUImage {
 
 
 	// XML Attributes
-	public string normalResourcePath;
-	public bool normalResourcePathExists;
-
 	public string pressedResourcePath;
 	public bool pressedResourcePathExists;
 
@@ -192,7 +181,6 @@ public class PUImageButtonBase : PUImage {
 
 
 	
-	public void SetNormalResourcePath(string v) { normalResourcePath = v; normalResourcePathExists = true; } 
 	public void SetPressedResourcePath(string v) { pressedResourcePath = v; pressedResourcePathExists = true; } 
 	public void SetHighlightedResourcePath(string v) { highlightedResourcePath = v; highlightedResourcePathExists = true; } 
 	public void SetDisabledResourcePath(string v) { disabledResourcePath = v; disabledResourcePathExists = true; } 
@@ -271,10 +259,6 @@ public class PUImageButtonBase : PUImage {
 		
 
 		string attr;
-		attr = reader.GetAttribute("normalResourcePath");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { normalResourcePath = attr; normalResourcePathExists = true; } 
-		
 		attr = reader.GetAttribute("pressedResourcePath");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { pressedResourcePath = attr; pressedResourcePathExists = true; } 
@@ -308,7 +292,6 @@ public class PUImageButtonBase : PUImage {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(normalResourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "normalResourcePath", normalResourcePath); }
 		if(pressedResourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "pressedResourcePath", pressedResourcePath); }
 		if(highlightedResourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "highlightedResourcePath", highlightedResourcePath); }
 		if(disabledResourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "disabledResourcePath", disabledResourcePath); }

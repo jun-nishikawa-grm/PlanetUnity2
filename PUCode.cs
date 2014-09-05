@@ -19,6 +19,8 @@ using System;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Collections;
+using Sfs2X.Core;
+using System.IO;
 
 public interface IPUCode {
 
@@ -50,8 +52,6 @@ public partial class PUCode : PUCodeBase {
 	{
 		controller = null;
 		GC.Collect();
-
-		gameObject.name = _class;
 	}
 
 	public static IPUCode GetSingletonByName(string name){
@@ -60,6 +60,10 @@ public partial class PUCode : PUCodeBase {
 
 	public void gaxb_complete()
 	{
+		if (gameObject != null) {
+			gameObject.name = _class;
+		}
+
 		if (singleton) {
 			if (instances [_class] != null && instances [_class] != this) {
 				GameObject.Destroy (this.gameObject);

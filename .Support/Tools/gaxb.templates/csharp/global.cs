@@ -131,10 +131,11 @@ end
 							method.Invoke (entityObject, new[] { reader, rootEntity, args });
 							
 							method = entityClass.GetMethod ("gaxb_init");
-							method.Invoke (entityObject, null);
+							if(method != null) { method.Invoke (entityObject, null); }
 							
 							method = entityClass.GetMethod ("gaxb_final");
-							method.Invoke (entityObject, new[] { reader, rootEntity, args });
+							if(method != null) { method.Invoke (entityObject, new[] { reader, rootEntity, args }); }
+							
 						}else{
 							customBlock(entityObject, rootEntity, reader);
 						}
