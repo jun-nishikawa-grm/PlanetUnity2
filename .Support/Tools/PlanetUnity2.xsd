@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+    xmlns:planet="http://schema.smallplanet.com/PlanetUnity2"
+    targetNamespace="http://schema.smallplanet.com/PlanetUnity2">
+
+	<!-- Type declarations for custom classes -->
+	<simpleType name="color">
+		<annotation>
+			<appinfo>Color</appinfo>
+		</annotation>
+        <restriction base="string" />
+    </simpleType>
+
+	<simpleType name="vec2">
+		<annotation>
+			<appinfo>Vector2</appinfo>
+		</annotation>
+        <restriction base="string" />
+    </simpleType>
+
+	<simpleType name="vec3">
+		<annotation>
+			<appinfo>Vector3</appinfo>
+		</annotation>
+        <restriction base="string" />
+    </simpleType>
+
+	<simpleType name="vec4">
+		<annotation>
+			<appinfo>Vector4</appinfo>
+		</annotation>
+        <restriction base="string" />
+    </simpleType>
+
+	<simpleType name="PlanetNotification">
+		<annotation>
+			<appinfo>TYPEDEF</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "UserStringInput"/>
+			<enumeration value = "UserCharInput"/>
+			<enumeration value = "UserInputCancelled"/>
+			
+			<enumeration value = "ButtonTouchDown"/>
+			<enumeration value = "ButtonTouchUp"/>
+			
+			<enumeration value = "EventWithUnregisteredCollider"/>
+			<enumeration value = "EventWithNoCollider"/>
+			
+			<enumeration value = "EditorFileDidChange"/>
+		</restriction>
+    </simpleType>
+	
+	<!-- Super Classes -->
+
+	<element name="Object" type="planet:Object" />
+	<complexType name="Object">
+		<sequence>
+			<any minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+		<attribute name="title" type="string" />
+		<attribute name="tag" type="string" use="optional" />
+		<attribute name="tag1" type="string" use="optional" />
+		<attribute name="tag2" type="string" use="optional" />
+		<attribute name="tag3" type="string" use="optional" />
+		<attribute name="tag4" type="string" use="optional" />
+		<attribute name="tag5" type="string" use="optional" />
+		<attribute name="tag6" type="string" use="optional" />
+	</complexType>
+
+	<element name="GameObject" type="planet:GameObject"/>
+	<complexType name="GameObject">
+		<complexContent>
+			<extension base="planet:Object">
+				<attribute name="position" type="planet:vec3" use="optional" default="0,0,0" />
+				<attribute name="size" type="planet:vec2" use="optional" default="10,10" />
+				<attribute name="pivot" type="planet:vec2" use="optional" default="0,0" />
+				<attribute name="rotation" type="planet:vec3" use="optional" default="0,0,0" />
+				<attribute name="scale" type="planet:vec3" use="optional" default="1,1,1" />
+				<attribute name="hidden" type="boolean" use="optional" />
+				<attribute name="lastY" type="float" use="optional" />
+		        <attribute name="lastX" type="float" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<!-- Ghost Entities -->
+
+	<!-- Entities -->
+
+
+	<simpleType name="CanvasRenderMode">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "Overlay"/>
+			<enumeration value = "OverlayCamera"/>
+			<enumeration value = "World"/>
+		</restriction>
+    </simpleType>
+
+	<element name="Canvas" type="planet:Canvas"/>
+	<complexType name="Canvas" >
+		<complexContent>
+			<extension base="planet:GameObject">
+				<attribute name="renderMode" type="planet:CanvasRenderMode" use="optional" default="Overlay" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	
+	<element name="Color" type="planet:Color"/>
+	<complexType name="Color">
+		<complexContent>
+			<extension base="planet:GameObject">
+				<attribute name="color" type="planet:color" use="required" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<element name="Image" type="planet:Image"/>
+	<complexType name="Image">
+		<complexContent>
+			<extension base="planet:GameObject">
+				<attribute name="resourcePath" type="string" use="required" />
+				<attribute name="color" type="planet:color" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<element name="Notification" type="planet:Notification" />
+	<complexType name="Notification">
+		<attribute name="name" type="string" use="required" />
+	</complexType>
+	
+	
+	<element name="Code" type="planet:Code" />
+	<complexType name="Code">
+		<complexContent>
+			<extension base="planet:GameObject">
+				<sequence>
+					<element ref="planet:Notification" minOccurs="0" maxOccurs="unbounded" />
+				</sequence>
+				<attribute name="class" type="string" use="required" />
+				<attribute name="singleton" type="boolean" use="optional" default="false" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
+
+</schema>
