@@ -1,0 +1,73 @@
+
+/* Copyright (c) 2012 Small Planet Digital, LLC
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files 
+ * (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, 
+ * publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, 
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF 
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE 
+ * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+using UnityEngine;
+using UnityEngine.UI;
+using System.Reflection;
+
+public partial class PUInputField : PUInputFieldBase {
+
+
+	public GameObject textGameObject;
+
+	public InputField field;
+
+	public override void gaxb_init ()
+	{
+		// We call Text's gaxb_init, which creates the appropriate text component on gameObject
+		base.gaxb_init ();
+
+		textGameObject = gameObject;
+
+		// Next, we create a new gameObject, and put the Text-created gameObject inside me
+		gameObject = new GameObject ("<InputField/>", typeof(RectTransform));
+		gameObject.AddComponent<CanvasRenderer> ();
+		gameObject.AddComponent<InputField> ();
+
+		field = gameObject.GetComponent<InputField> ();
+
+		// Move the text to be the child of the input field
+		textGameObject.transform.SetParent (gameObject.transform, false);
+		textGameObject.FillParentUI ();
+
+		text.supportRichText = false;
+		text.alignment = TextAnchor.UpperLeft;
+
+		field.activeTextColor = fontColor;
+		field.transition = Selectable.Transition.None;
+		field.text = text;
+
+		// There is a bug in Unity code where m_Value is null accessed, this is a workaround
+		typeof(InputField).GetField("m_Value",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(field, "");
+
+		/*
+		protected void Init()
+		{
+			if (this.m_DoInit && this.m_TextComponent != null)
+			{
+				this.m_DoInit = false;
+				this.m_OriginalText = this.m_TextComponent.text;
+				this.m_OriginalColor = this.m_TextComponent.color;
+				this.m_Pivot = this.m_TextComponent.rectTransform.get_pivot();
+				InputField.mDrawStart = 0;
+				InputField.mDrawEnd = this.m_Value.Length;
+				this.UpdateLabel();
+			}
+		}
+		*/
+	}
+
+}

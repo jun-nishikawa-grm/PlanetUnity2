@@ -133,6 +133,16 @@
 		</complexContent>
 	</complexType>
 	
+	
+	<element name="RawImage" type="planet:RawImage"/>
+	<complexType name="RawImage">
+		<complexContent>
+			<extension base="planet:GameObject">
+				<attribute name="resourcePath" type="string" use="required" />
+				<attribute name="color" type="planet:color" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
 
 	<element name="Image" type="planet:Image"/>
 	<complexType name="Image">
@@ -230,6 +240,16 @@
 		<complexContent>
 			<extension base="planet:Text">
 				<attribute name="onTouchUp" type="string" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	
+	<element name="InputField" type="planet:InputField" />
+	<complexType name="InputField">
+		<complexContent>
+			<extension base="planet:Text">
+				<attribute name="onValueChanged" type="string" use="optional" />
 			</extension>
 		</complexContent>
 	</complexType>

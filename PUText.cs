@@ -31,6 +31,10 @@ public partial class PUText : PUTextBase {
 		text = gameObject.GetComponent<Text> ();
 		canvasRenderer = gameObject.GetComponent<CanvasRenderer> ();
 
+		if (titleExists == false && valueExists) {
+			gameObject.name = string.Format("\"{0}\"", value);
+		}
+
 		if (valueExists) {
 			text.text = value;
 		}

@@ -4,6 +4,21 @@ using System;
 using System.Globalization;
 
 
+public static class GameObjectExtension
+{
+	public static void FillParentUI(this GameObject source)
+	{
+		RectTransform myTransform = (RectTransform)source.transform;
+		RectTransform parentTransform = (RectTransform)source.transform.parent;
+
+		myTransform.pivot = new Vector2(0.5f,0.5f);
+		myTransform.anchorMin = Vector2.zero;
+		myTransform.anchorMax = Vector2.one;
+		myTransform.sizeDelta = Vector2.zero;
+	}
+}
+
+
 public static class StringExtension
 {
 	public static int NumberOfOccurancesOfChar(this string source, char c)
