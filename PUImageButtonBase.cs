@@ -66,6 +66,7 @@ public partial class PUImageButton : PUImageButtonBase {
 			Vector2 pivot,
 			string anchor,
 			bool hidden,
+			bool mask,
 			float lastY,
 			float lastX,
 			string title,
@@ -118,6 +119,9 @@ public partial class PUImageButton : PUImageButtonBase {
 
 		this.hidden = hidden;
 		this.hiddenExists = true;
+
+		this.mask = mask;
+		this.maskExists = true;
 
 		this.lastY = lastY;
 		this.lastYExists = true;

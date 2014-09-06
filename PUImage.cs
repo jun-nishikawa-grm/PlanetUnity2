@@ -14,8 +14,6 @@
  */
 
 using UnityEngine;
-using System.Xml;
-using System.Collections;
 using UnityEngine.UI;
 
 public partial class PUImage : PUImageBase {

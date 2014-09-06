@@ -84,6 +84,7 @@ public partial class PUText : PUTextBase {
 			Vector2 pivot,
 			string anchor,
 			bool hidden,
+			bool mask,
 			float lastY,
 			float lastX,
 			string title,
@@ -139,6 +140,9 @@ public partial class PUText : PUTextBase {
 
 		this.hidden = hidden;
 		this.hiddenExists = true;
+
+		this.mask = mask;
+		this.maskExists = true;
 
 		this.lastY = lastY;
 		this.lastYExists = true;

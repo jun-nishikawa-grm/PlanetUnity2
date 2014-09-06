@@ -18,6 +18,7 @@ using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.UI;
 
 public partial class PUGameObject : PUGameObjectBase {
 
@@ -146,10 +147,23 @@ public partial class PUGameObject : PUGameObjectBase {
 					rectTransform.localEulerAngles = rotation;*/
 				}
 			}
-
 		}
 
+
+
 		gameObject.layer = LayerMask.NameToLayer ("UI");
+
+		if (mask) {
+			gameObject.AddComponent<Mask> ();
+
+			// Mask requires a Graphic; if we don't have one, add one and tell it now to draw it...
+			if (gameObject.GetComponent<Graphic> () == null) {
+				gameObject.AddComponent<RawImage> ();
+
+				Mask maskComponent = gameObject.GetComponent<Mask> ();
+				maskComponent.showMaskGraphic = false;
+			}
+		}
 
 		if (hidden) {
 			gameObject.SetActive (false);

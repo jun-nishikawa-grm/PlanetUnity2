@@ -81,6 +81,7 @@
 				<attribute name="anchor" type="string" use="optional" default="bottom,left"/>
 				
 				<attribute name="hidden" type="boolean" use="optional" />
+				<attribute name="mask" type="boolean" use="optional" />
 				<attribute name="lastY" type="float" use="optional" />
 		        <attribute name="lastX" type="float" use="optional" />
 			</extension>
@@ -253,6 +254,17 @@
 			</extension>
 		</complexContent>
 	</complexType>
+	
+	<element name="ScrollRect" type="planet:ScrollRect"/>
+	<complexType name="ScrollRect">
+		<complexContent>
+			<extension base="planet:GameObject">
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	
+	
 	
 	
 	

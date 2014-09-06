@@ -45,6 +45,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			Vector2 pivot,
 			string anchor,
 			bool hidden,
+			bool mask,
 			float lastY,
 			float lastX ) : this()
 	{
@@ -69,6 +70,9 @@ public partial class PUGameObject : PUGameObjectBase {
 		this.hidden = hidden;
 		this.hiddenExists = true;
 
+		this.mask = mask;
+		this.maskExists = true;
+
 		this.lastY = lastY;
 		this.lastYExists = true;
 
@@ -86,6 +90,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			Vector2 pivot,
 			string anchor,
 			bool hidden,
+			bool mask,
 			float lastY,
 			float lastX,
 			string title,
@@ -117,6 +122,9 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		this.hidden = hidden;
 		this.hiddenExists = true;
+
+		this.mask = mask;
+		this.maskExists = true;
 
 		this.lastY = lastY;
 		this.lastYExists = true;
@@ -186,6 +194,9 @@ public class PUGameObjectBase : PUObject {
 	public bool hidden;
 	public bool hiddenExists;
 
+	public bool mask;
+	public bool maskExists;
+
 	public float lastY;
 	public bool lastYExists;
 
@@ -203,6 +214,7 @@ public class PUGameObjectBase : PUObject {
 	public void SetPivot(Vector2 v) { pivot = v; pivotExists = true; } 
 	public void SetAnchor(string v) { anchor = v; anchorExists = true; } 
 	public void SetHidden(bool v) { hidden = v; hiddenExists = true; } 
+	public void SetMask(bool v) { mask = v; maskExists = true; } 
 	public void SetLastY(float v) { lastY = v; lastYExists = true; } 
 	public void SetLastX(float v) { lastX = v; lastXExists = true; } 
 
@@ -312,6 +324,10 @@ public class PUGameObjectBase : PUObject {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { hidden = bool.Parse(attr); hiddenExists = true; } 
 		
+		attr = reader.GetAttribute("mask");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { mask = bool.Parse(attr); maskExists = true; } 
+		
 		attr = reader.GetAttribute("lastY");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { lastY = float.Parse(attr); lastYExists = true; } 
@@ -340,6 +356,7 @@ public class PUGameObjectBase : PUObject {
 		if(pivotExists) { sb.AppendFormat (" {0}=\"{1}\"", "pivot", pivot); }
 		if(anchorExists) { sb.AppendFormat (" {0}=\"{1}\"", "anchor", anchor); }
 		if(hiddenExists) { sb.AppendFormat (" {0}=\"{1}\"", "hidden", hidden.ToString().ToLower()); }
+		if(maskExists) { sb.AppendFormat (" {0}=\"{1}\"", "mask", mask.ToString().ToLower()); }
 		if(lastYExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastY", lastY.ToString ("0.##")); }
 		if(lastXExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastX", lastX.ToString ("0.##")); }
 

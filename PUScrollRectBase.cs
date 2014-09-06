@@ -15,34 +15,15 @@ using System.Collections.Generic;
 using System.Collections;
 
 
-public partial class PUColorButton : PUColorButtonBase {
+public partial class PUScrollRect : PUScrollRectBase {
 	
-	public PUColorButton()
+	public PUScrollRect()
 	{
 	}
 	
 	
-	public PUColorButton(
-			string onTouchUp,
-			string onTouchDown,
-			Color color ) : this()
-	{
-		this.onTouchUp = onTouchUp;
-		this.onTouchUpExists = true;
-
-		this.onTouchDown = onTouchDown;
-		this.onTouchDownExists = true;
-
-		this.color = color;
-		this.colorExists = true;
-	}
-
 	
-	
-	public PUColorButton(
-			string onTouchUp,
-			string onTouchDown,
-			Color color,
+	public PUScrollRect(
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -62,15 +43,6 @@ public partial class PUColorButton : PUColorButtonBase {
 			string tag5,
 			string tag6 ) : this()
 	{
-		this.onTouchUp = onTouchUp;
-		this.onTouchUpExists = true;
-
-		this.onTouchDown = onTouchDown;
-		this.onTouchDownExists = true;
-
-		this.color = color;
-		this.colorExists = true;
-
 		this.position = position;
 		this.positionExists = true;
 
@@ -132,28 +104,17 @@ public partial class PUColorButton : PUColorButtonBase {
 
 
 
-public class PUColorButtonBase : PUColor {
+public class PUScrollRectBase : PUGameObject {
 
-
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
 
 	// XML Attributes
-	public string onTouchUp;
-	public bool onTouchUpExists;
-
-	public string onTouchDown;
-	public bool onTouchDownExists;
-
 
 
 
 	
-	public void SetOnTouchUp(string v) { onTouchUp = v; onTouchUpExists = true; } 
-	public void SetOnTouchDown(string v) { onTouchDown = v; onTouchDownExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -166,19 +127,19 @@ public class PUColorButtonBase : PUColor {
 	{
 		if(parent != null)
 		{
-			FieldInfo parentField = parent.GetType().GetField("ColorButton");
+			FieldInfo parentField = parent.GetType().GetField("ScrollRect");
 			List<object> parentChildren = null;
 			
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
 				
-				parentField = parent.GetType().GetField("ColorButtonExists");
+				parentField = parent.GetType().GetField("ScrollRectExists");
 				parentField.SetValue(parent, true);
 			}
 			else
 			{
-				parentField = parent.GetType().GetField("ColorButtons");
+				parentField = parent.GetType().GetField("ScrollRects");
 				
 				if(parentField != null)
 				{
@@ -186,7 +147,7 @@ public class PUColorButtonBase : PUColor {
 				}
 				else
 				{
-					parentField = parent.GetType().GetField("Colors");
+					parentField = parent.GetType().GetField("GameObjects");
 					if(parentField != null)
 					{
 						parentChildren = (List<object>)(parentField.GetValue(parent));
@@ -218,22 +179,12 @@ public class PUColorButtonBase : PUColor {
 		
 		parent = _parent;
 		
-		if(this.GetType() == typeof( PUColorButton ))
+		if(this.GetType() == typeof( PUScrollRect ))
 		{
 			gaxb_addToParent();
 		}
 		
 		xmlns = reader.GetAttribute("xmlns");
-		
-
-		string attr;
-		attr = reader.GetAttribute("onTouchUp");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { onTouchUp = attr; onTouchUpExists = true; } 
-		
-		attr = reader.GetAttribute("onTouchDown");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { onTouchDown = attr; onTouchDownExists = true; } 
 		
 
 	}
@@ -248,8 +199,6 @@ public class PUColorButtonBase : PUColor {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(onTouchUpExists) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchUp", onTouchUp); }
-		if(onTouchDownExists) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchDown", onTouchDown); }
 
 	}
 	
@@ -267,7 +216,7 @@ public class PUColorButtonBase : PUColor {
 			sb.AppendFormat ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		}
 		
-		sb.AppendFormat ("<{0}", "ColorButton");
+		sb.AppendFormat ("<{0}", "ScrollRect");
 		
 		if(xmlns != null)
 		{
@@ -287,7 +236,7 @@ public class PUColorButtonBase : PUColor {
 		}
 		else
 		{
-			sb.AppendFormat (">{0}</{1}>", seq.ToString(), "ColorButton");
+			sb.AppendFormat (">{0}</{1}>", seq.ToString(), "ScrollRect");
 		}
 	}
 }

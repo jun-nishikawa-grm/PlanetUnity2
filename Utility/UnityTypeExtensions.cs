@@ -4,6 +4,63 @@ using System;
 using System.Globalization;
 
 
+public static class RectTransformExtension
+{
+	public static float GetWidth(this RectTransform myTransform)
+	{
+		RectTransform parentTransform = myTransform.parent as RectTransform;
+
+		if (parentTransform == null) {
+			return myTransform.sizeDelta.x;
+		}
+
+		return parentTransform.GetWidth () * (myTransform.anchorMax.x - myTransform.anchorMin.x) + myTransform.sizeDelta.x;
+	}
+
+	public static float GetHeight(this RectTransform myTransform)
+	{
+		RectTransform parentTransform = myTransform.parent as RectTransform;
+
+		if (parentTransform == null) {
+			return myTransform.sizeDelta.y;
+		}
+
+		return parentTransform.GetHeight () * (myTransform.anchorMax.y - myTransform.anchorMin.y) + myTransform.sizeDelta.y;
+	}
+
+	public static float GetMinX(this RectTransform myTransform)
+	{
+		RectTransform parentTransform = myTransform.parent as RectTransform;
+
+		if (parentTransform == null) {
+			return 0;
+		}
+
+		return myTransform.anchoredPosition.x - myTransform.pivot.x * parentTransform.GetWidth();
+	}
+
+	public static float GetMaxX(this RectTransform myTransform)
+	{
+		return myTransform.GetMinX () + myTransform.GetWidth ();
+	}
+
+	public static float GetMinY(this RectTransform myTransform)
+	{
+		RectTransform parentTransform = myTransform.parent as RectTransform;
+
+		if (parentTransform == null) {
+			return 0;
+		}
+
+		return myTransform.anchoredPosition.y - myTransform.pivot.y * parentTransform.GetHeight();
+	}
+
+	public static float GetMaxY(this RectTransform myTransform)
+	{
+		return myTransform.GetMinY () + myTransform.GetHeight ();
+	}
+}
+
 public static class GameObjectExtension
 {
 	public static void FillParentUI(this GameObject source)
