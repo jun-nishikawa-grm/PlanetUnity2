@@ -134,7 +134,7 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	}
 
 	public string xmlPath;
-	public Font[] fonts;
+	public bool editorPreview;
 
 	private PUCanvas canvas;
 
@@ -158,17 +158,6 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		pos.y += PlanetUnityOverride.canvasTop;
 
 		return pos;
-	}
-
-	static public Font FindFontNamed(string name) {
-		if (!currentGameObject)
-			return null;
-		foreach (Font font in currentGameObject.fonts) {
-			if (font.name.Equals (name)) {
-				return font;
-			}
-		}
-		return Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
 	}
 
 	// Use this for initialization

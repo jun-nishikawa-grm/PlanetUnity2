@@ -72,6 +72,7 @@
 	<complexType name="GameObject">
 		<complexContent>
 			<extension base="planet:Object">
+				<attribute name="bounds" type="planet:vec4" use="optional" />
 				<attribute name="position" type="planet:vec3" use="optional" default="0,0,0" />
 				<attribute name="size" type="planet:vec2" use="optional" default="0,0" />
 				<attribute name="rotation" type="planet:vec3" use="optional" default="0,0,0" />
@@ -110,6 +111,8 @@
 			<extension base="planet:GameObject">
 				<attribute name="renderMode" type="planet:CanvasRenderMode" use="optional" default="Overlay" />
 				<attribute name="pixelPerfect" type="boolean" use="optional" default="false" />
+				<attribute name="referenceResolution" type="planet:vec2" use="optional" />
+				<attribute name="referenceResolutionBias" type="float" use="optional" />
 			</extension>
 		</complexContent>
 	</complexType>

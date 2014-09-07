@@ -77,6 +77,7 @@ public partial class PUText : PUTextBase {
 			PlanetUnity2.TextAlignment alignment,
 			string value,
 			bool bestFit,
+			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -119,6 +120,9 @@ public partial class PUText : PUTextBase {
 
 		this.bestFit = bestFit;
 		this.bestFitExists = true;
+
+		this.bounds = bounds;
+		this.boundsExists = true;
 
 		this.position = position;
 		this.positionExists = true;

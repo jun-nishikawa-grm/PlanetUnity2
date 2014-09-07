@@ -59,6 +59,7 @@ public partial class PUImageButton : PUImageButtonBase {
 			string onTouchDown,
 			string resourcePath,
 			Color color,
+			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -98,6 +99,9 @@ public partial class PUImageButton : PUImageButtonBase {
 
 		this.color = color;
 		this.colorExists = true;
+
+		this.bounds = bounds;
+		this.boundsExists = true;
 
 		this.position = position;
 		this.positionExists = true;

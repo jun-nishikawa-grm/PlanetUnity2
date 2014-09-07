@@ -50,6 +50,7 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 			float spacing,
 			Vector4 padding,
 			PlanetUnity2.GridLayoutChildAlignment childAlignment,
+			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -77,6 +78,9 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 
 		this.childAlignment = childAlignment;
 		this.childAlignmentExists = true;
+
+		this.bounds = bounds;
+		this.boundsExists = true;
 
 		this.position = position;
 		this.positionExists = true;

@@ -24,6 +24,7 @@ public partial class PUScrollRect : PUScrollRectBase {
 	
 	
 	public PUScrollRect(
+			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -43,6 +44,9 @@ public partial class PUScrollRect : PUScrollRectBase {
 			string tag5,
 			string tag6 ) : this()
 	{
+		this.bounds = bounds;
+		this.boundsExists = true;
+
 		this.position = position;
 		this.positionExists = true;
 

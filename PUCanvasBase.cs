@@ -31,13 +31,21 @@ public partial class PUCanvas : PUCanvasBase {
 	
 	public PUCanvas(
 			PlanetUnity2.CanvasRenderMode renderMode,
-			bool pixelPerfect ) : this()
+			bool pixelPerfect,
+			Vector2 referenceResolution,
+			float referenceResolutionBias ) : this()
 	{
 		this.renderMode = renderMode;
 		this.renderModeExists = true;
 
 		this.pixelPerfect = pixelPerfect;
 		this.pixelPerfectExists = true;
+
+		this.referenceResolution = referenceResolution;
+		this.referenceResolutionExists = true;
+
+		this.referenceResolutionBias = referenceResolutionBias;
+		this.referenceResolutionBiasExists = true;
 	}
 
 	
@@ -45,6 +53,9 @@ public partial class PUCanvas : PUCanvasBase {
 	public PUCanvas(
 			PlanetUnity2.CanvasRenderMode renderMode,
 			bool pixelPerfect,
+			Vector2 referenceResolution,
+			float referenceResolutionBias,
+			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -69,6 +80,15 @@ public partial class PUCanvas : PUCanvasBase {
 
 		this.pixelPerfect = pixelPerfect;
 		this.pixelPerfectExists = true;
+
+		this.referenceResolution = referenceResolution;
+		this.referenceResolutionExists = true;
+
+		this.referenceResolutionBias = referenceResolutionBias;
+		this.referenceResolutionBiasExists = true;
+
+		this.bounds = bounds;
+		this.boundsExists = true;
 
 		this.position = position;
 		this.positionExists = true;
@@ -147,12 +167,20 @@ public class PUCanvasBase : PUGameObject {
 	public bool pixelPerfect;
 	public bool pixelPerfectExists;
 
+	public Vector2 referenceResolution;
+	public bool referenceResolutionExists;
+
+	public float referenceResolutionBias;
+	public bool referenceResolutionBiasExists;
+
 
 
 
 	
 	public void SetRenderMode(PlanetUnity2.CanvasRenderMode v) { renderMode = v; renderModeExists = true; } 
 	public void SetPixelPerfect(bool v) { pixelPerfect = v; pixelPerfectExists = true; } 
+	public void SetReferenceResolution(Vector2 v) { referenceResolution = v; referenceResolutionExists = true; } 
+	public void SetReferenceResolutionBias(float v) { referenceResolutionBias = v; referenceResolutionBiasExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -236,6 +264,14 @@ public class PUCanvasBase : PUGameObject {
 		if(attr == null) { attr = "false"; }
 		if(attr != null) { pixelPerfect = bool.Parse(attr); pixelPerfectExists = true; } 
 		
+		attr = reader.GetAttribute("referenceResolution");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { referenceResolution = new Vector2().PUParse(attr); referenceResolutionExists = true; } 
+		
+		attr = reader.GetAttribute("referenceResolutionBias");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { referenceResolutionBias = float.Parse(attr); referenceResolutionBiasExists = true; } 
+		
 
 	}
 	
@@ -251,6 +287,8 @@ public class PUCanvasBase : PUGameObject {
 
 		if(renderModeExists) { sb.AppendFormat (" {0}=\"{1}\"", "renderMode", (int)renderMode); }
 		if(pixelPerfectExists) { sb.AppendFormat (" {0}=\"{1}\"", "pixelPerfect", pixelPerfect.ToString().ToLower()); }
+		if(referenceResolutionExists) { sb.AppendFormat (" {0}=\"{1}\"", "referenceResolution", referenceResolution); }
+		if(referenceResolutionBiasExists) { sb.AppendFormat (" {0}=\"{1}\"", "referenceResolutionBias", referenceResolutionBias.ToString ("0.##")); }
 
 	}
 	

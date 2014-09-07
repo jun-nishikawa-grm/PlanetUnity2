@@ -38,6 +38,17 @@ public partial class PUCanvas : PUCanvasBase {
 		if(renderMode == PlanetUnity2.CanvasRenderMode.World)
 			canvas.renderMode = RenderMode.World;
 
+		if (referenceResolutionExists) {
+			gameObject.AddComponent<ReferenceResolution>();
+			ReferenceResolution referenceResolutionComponent = gameObject.GetComponent<ReferenceResolution> ();
+
+			referenceResolutionComponent.resolution = referenceResolution;
+
+			if (referenceResolutionBiasExists) {
+				referenceResolutionComponent.matchWidthOrHeight = referenceResolutionBias;
+			}
+		}
+
 		canvas.pixelPerfect = pixelPerfect;
 	}
 

@@ -38,6 +38,7 @@ public partial class PURawImage : PURawImageBase {
 	public PURawImage(
 			string resourcePath,
 			Color color,
+			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -62,6 +63,9 @@ public partial class PURawImage : PURawImageBase {
 
 		this.color = color;
 		this.colorExists = true;
+
+		this.bounds = bounds;
+		this.boundsExists = true;
 
 		this.position = position;
 		this.positionExists = true;

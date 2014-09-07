@@ -43,6 +43,7 @@ public partial class PUCode : PUCodeBase {
 	public PUCode(
 			string _class,
 			bool singleton,
+			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -67,6 +68,9 @@ public partial class PUCode : PUCodeBase {
 
 		this.singleton = singleton;
 		this.singletonExists = true;
+
+		this.bounds = bounds;
+		this.boundsExists = true;
 
 		this.position = position;
 		this.positionExists = true;

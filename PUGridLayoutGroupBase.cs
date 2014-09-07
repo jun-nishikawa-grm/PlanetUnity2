@@ -60,6 +60,7 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 			PlanetUnity2.GridLayoutStartCorner startCorner,
 			PlanetUnity2.GridLayoutStartAxis startAxis,
 			PlanetUnity2.GridLayoutChildAlignment childAlignment,
+			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -93,6 +94,9 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 
 		this.childAlignment = childAlignment;
 		this.childAlignmentExists = true;
+
+		this.bounds = bounds;
+		this.boundsExists = true;
 
 		this.position = position;
 		this.positionExists = true;

@@ -38,6 +38,7 @@ public partial class PUGameObject : PUGameObjectBase {
 	
 	
 	public PUGameObject(
+			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -49,6 +50,9 @@ public partial class PUGameObject : PUGameObjectBase {
 			float lastY,
 			float lastX ) : this()
 	{
+		this.bounds = bounds;
+		this.boundsExists = true;
+
 		this.position = position;
 		this.positionExists = true;
 
@@ -83,6 +87,7 @@ public partial class PUGameObject : PUGameObjectBase {
 	
 	
 	public PUGameObject(
+			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
 			Vector3 rotation,
@@ -102,6 +107,9 @@ public partial class PUGameObject : PUGameObjectBase {
 			string tag5,
 			string tag6 ) : this()
 	{
+		this.bounds = bounds;
+		this.boundsExists = true;
+
 		this.position = position;
 		this.positionExists = true;
 
@@ -173,6 +181,9 @@ public class PUGameObjectBase : PUObject {
 
 
 	// XML Attributes
+	public Vector4 bounds;
+	public bool boundsExists;
+
 	public Vector3 position;
 	public bool positionExists;
 
@@ -207,6 +218,7 @@ public class PUGameObjectBase : PUObject {
 
 
 	
+	public void SetBounds(Vector4 v) { bounds = v; boundsExists = true; } 
 	public void SetPosition(Vector3 v) { position = v; positionExists = true; } 
 	public void SetSize(Vector2 v) { size = v; sizeExists = true; } 
 	public void SetRotation(Vector3 v) { rotation = v; rotationExists = true; } 
@@ -290,6 +302,10 @@ public class PUGameObjectBase : PUObject {
 		
 
 		string attr;
+		attr = reader.GetAttribute("bounds");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { bounds = new Vector4().PUParse(attr); boundsExists = true; } 
+		
 		attr = reader.GetAttribute("position");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0,0,0"; }
@@ -349,6 +365,7 @@ public class PUGameObjectBase : PUObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
+		if(boundsExists) { sb.AppendFormat (" {0}=\"{1}\"", "bounds", bounds); }
 		if(positionExists) { sb.AppendFormat (" {0}=\"{1}\"", "position", position); }
 		if(sizeExists) { sb.AppendFormat (" {0}=\"{1}\"", "size", size); }
 		if(rotationExists) { sb.AppendFormat (" {0}=\"{1}\"", "rotation", rotation); }

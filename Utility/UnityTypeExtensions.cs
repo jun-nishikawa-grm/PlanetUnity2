@@ -133,7 +133,7 @@ public static class Vector4Extension
 		v.x = float.Parse (elements [0], System.Globalization.CultureInfo.InvariantCulture);
 		v.y = float.Parse (elements [1], System.Globalization.CultureInfo.InvariantCulture);
 		v.z = float.Parse (elements [2], System.Globalization.CultureInfo.InvariantCulture);
-		v.w = float.Parse (elements [2], System.Globalization.CultureInfo.InvariantCulture);
+		v.w = float.Parse (elements [3], System.Globalization.CultureInfo.InvariantCulture);
 		return v;
 	}
 

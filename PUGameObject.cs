@@ -78,6 +78,11 @@ public partial class PUGameObject : PUGameObjectBase {
 			SetParentGameObject (parentEntity.gameObject);
 		}
 
+		if (boundsExists) {
+			this.SetPosition (new Vector3 (bounds.x, bounds.y, 0.0f));
+			this.SetSize (new Vector2 (bounds.z, bounds.w));
+		}
+
 		rectTransform = gameObject.GetComponent<RectTransform> ();
 		if (rectTransform != null) {
 
