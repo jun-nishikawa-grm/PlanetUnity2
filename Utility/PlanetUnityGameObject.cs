@@ -21,6 +21,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -121,7 +122,6 @@ public class PlanetUnityOverride {
 
 }
 
-
 public class PlanetUnityGameObject : MonoBehaviour {
 
 	public static float desiredFPS;
@@ -134,8 +134,9 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	}
 
 	public string xmlPath;
-	public bool editorPreview;
+	public bool editorPreview = true;
 
+	private GameObject planetUnityContainer;
 	private PUCanvas canvas;
 
 	private bool shouldReloadMainXML = false;
@@ -184,9 +185,11 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 		NotificationCenter.removeObserver (this);
 
+		#if !UNITY_EDITOR
 		RemoveCanvas ();
+		#endif
 	}
-
+		
 	void Update () {
 		if (shouldReloadMainXML) {
 			shouldReloadMainXML = false;
@@ -211,12 +214,14 @@ public class PlanetUnityGameObject : MonoBehaviour {
 				}
 				return true;
 			});
-
+				
 			canvas.gaxb_unload ();
 
-			Destroy (canvas.gameObject);
+			DestroyImmediate (canvas.gameObject);
 			canvas = null;
 		}
+
+		SafeRemoveAllChildren ();
 	}
 
 	public PUCanvas Canvas() {
@@ -229,7 +234,18 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 		Stopwatch sw = Stopwatch.StartNew ();
 
-		canvas = (PUCanvas)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath (xmlPath), gameObject, null);
+		planetUnityContainer = GameObject.Find ("PlanetUnityContainer");
+		if (planetUnityContainer == null) {
+			planetUnityContainer = new GameObject ("PlanetUnityContainer");
+		}
+
+		canvas = (PUCanvas)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath (xmlPath), planetUnityContainer, null);
+
+		#if UNITY_EDITOR
+		foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
+			t.gameObject.hideFlags = HideFlags.DontSave;
+		}
+		#endif
 
 		sw.Stop ();
 
@@ -237,6 +253,35 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 		//Profile.PrintResults ();
 		//Profile.Reset ();
+	}
+
+	public void SafeRemoveAllChildren() {
+		// This gets hokey, but the editor complains if the components are not removed in a specific order
+		// before the game object itself is destroyed...
+		planetUnityContainer = GameObject.Find ("PlanetUnityContainer");
+		if (planetUnityContainer != null) {
+			for (int i = planetUnityContainer.transform.childCount - 1; i >= 0; i--) {
+				Transform canvasObject = planetUnityContainer.transform.GetChild (i);
+
+				// Remove all components...
+				DestroyImmediate (canvasObject.GetComponent<GraphicRaycaster> ());
+				DestroyImmediate (canvasObject.GetComponent<ReferenceResolution> ());
+				DestroyImmediate (canvasObject.GetComponent<Canvas> ());
+
+				DestroyImmediate (canvasObject.gameObject);
+			}
+
+			DestroyImmediate (planetUnityContainer);
+		}
+	}
+
+	public void EditorReloadCanvas () {
+	
+		SafeRemoveAllChildren ();
+
+		if (editorPreview) {
+			ReloadCanvas ();
+		}
 	}
 
 	private Queue<Task> TaskQueue = new Queue<Task>();
@@ -275,6 +320,31 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 #if UNITY_EDITOR
 
+[InitializeOnLoad]
+public class Autorun
+{
+	static Autorun()
+	{
+		EditorApplication.update += RunOnce;
+	}
+
+	static void RunOnce()
+	{
+		// If we're the edit, and we're in edit mode, and live preview is set...
+		GameObject puObject = GameObject.Find ("PlanetUnity");
+		if (puObject == null)
+			return;
+		PlanetUnityGameObject script = puObject.GetComponent<PlanetUnityGameObject> ();
+		if (script == null)
+			return;
+
+		script.EditorReloadCanvas ();
+
+		EditorApplication.update -= RunOnce;
+	}
+}
+
+[ExecuteInEditMode]
 public class CustomPostprocessor : AssetPostprocessor
 {
 	private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromPath)
@@ -283,9 +353,19 @@ public class CustomPostprocessor : AssetPostprocessor
 		{
 			NotificationCenter.postNotification(null, PlanetUnity2.EDITORFILEDIDCHANGE, NotificationCenter.Args("path", asset));
 		}
+
+		// If we're the edit, and we're in edit mode, and live preview is set...
+		GameObject puObject = GameObject.Find ("PlanetUnity");
+		if (puObject == null)
+			return;
+		PlanetUnityGameObject script = puObject.GetComponent<PlanetUnityGameObject> ();
+		if (script == null)
+			return;
+
+		script.EditorReloadCanvas ();
 	}
 }
-
+	
 #endif
 
 
