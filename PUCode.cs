@@ -56,13 +56,19 @@ public partial class PUCode : PUCodeBase {
 
 	public void gaxb_complete()
 	{
+		// If we're in live editor mode, we don't want to load controllers
+		if (Application.isPlaying == false) {
+			base.gaxb_complete ();
+			return;
+		}
+
 		if (gameObject != null) {
 			gameObject.name = _class;
 		}
 
 		if (singleton) {
 			if (instances [_class] != null && instances [_class] != this) {
-				GameObject.Destroy (this.gameObject);
+				GameObject.DestroyImmediate (this.gameObject);
 				controller = (IPUCode)instances[_class];
 			} else {
 				MonoBehaviour.DontDestroyOnLoad(this.gameObject);

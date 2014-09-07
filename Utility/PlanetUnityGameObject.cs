@@ -187,9 +187,11 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 		#if !UNITY_EDITOR
 		RemoveCanvas ();
+		#else
+		EditorReloadCanvas ();
 		#endif
 	}
-		
+
 	void Update () {
 		if (shouldReloadMainXML) {
 			shouldReloadMainXML = false;
@@ -228,7 +230,11 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		return canvas;
 	}
 
-	public void ReloadCanvas () {
+	public void LoadCanvasXML (string xml) {
+
+		if (xmlPath == null || PlanetUnityOverride.xmlFromPath (xmlPath) == null) {
+			return;
+		}
 
 		RemoveCanvas ();
 
@@ -238,8 +244,8 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		if (planetUnityContainer == null) {
 			planetUnityContainer = new GameObject ("PlanetUnityContainer");
 		}
-
-		canvas = (PUCanvas)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath (xmlPath), planetUnityContainer, null);
+			
+		canvas = (PUCanvas)PlanetUnity2.loadXML (xml, planetUnityContainer, null);
 
 		#if UNITY_EDITOR
 		foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
@@ -253,6 +259,11 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 		//Profile.PrintResults ();
 		//Profile.Reset ();
+	}
+
+	public void ReloadCanvas () {
+
+		LoadCanvasXML (PlanetUnityOverride.xmlFromPath (xmlPath));
 	}
 
 	public void SafeRemoveAllChildren() {
@@ -330,7 +341,7 @@ public class Autorun
 
 	static void RunOnce()
 	{
-		// If we're the edit, and we're in edit mode, and live preview is set...
+		// If we're the editor, and we're in edit mode, and live preview is set...
 		GameObject puObject = GameObject.Find ("PlanetUnity");
 		if (puObject == null)
 			return;
@@ -338,7 +349,9 @@ public class Autorun
 		if (script == null)
 			return;
 
-		script.EditorReloadCanvas ();
+		if (Application.isPlaying == false) {
+			script.EditorReloadCanvas ();
+		}
 
 		EditorApplication.update -= RunOnce;
 	}
