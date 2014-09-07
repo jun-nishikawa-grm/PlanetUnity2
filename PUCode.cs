@@ -14,13 +14,9 @@
  */
 
 using UnityEngine;
-using System.Xml;
 using System;
 using System.Reflection;
-using System.Collections.Generic;
 using System.Collections;
-using Sfs2X.Core;
-using System.IO;
 
 public interface IPUCode {
 
