@@ -29,6 +29,10 @@ public partial class PUImageButton : PUImageButtonBase {
 	{
 		base.gaxb_init ();
 
+		if (titleExists == false) {
+			gameObject.name = "<ImageButton/>";
+		}
+
 		gameObject.AddComponent<Button> ();
 		gameObject.AddComponent<EventTrigger> ();
 

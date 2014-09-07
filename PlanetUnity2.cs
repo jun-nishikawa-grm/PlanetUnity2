@@ -25,6 +25,18 @@ interface IPlanetUnity2
 public class PlanetUnity2 {
 	public int baseRenderQueue = 0;
 
+	public enum GridLayoutStartCorner {
+		upperLeft,
+		upperRight,
+		lowerLeft,
+		lowerRight,
+	};
+
+	public enum GridLayoutStartAxis {
+		horizontal,
+		vertical,
+	};
+
 	public enum CanvasRenderMode {
 		Overlay,
 		OverlayCamera,
@@ -43,6 +55,18 @@ public class PlanetUnity2 {
 	public enum TextOverflowVertical {
 		truncate,
 		overflow,
+	};
+
+	public enum GridLayoutChildAlignment {
+		upperLeft,
+		upperCenter,
+		upperRight,
+		middleLeft,
+		middleCenter,
+		middleRight,
+		lowerLeft,
+		lowerCenter,
+		lowerRight,
 	};
 
 	public enum TextAlignment {

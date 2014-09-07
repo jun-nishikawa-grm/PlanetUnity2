@@ -27,6 +27,10 @@ public partial class PUColorButton : PUColorButtonBase {
 	{
 		base.gaxb_init ();
 
+		if (titleExists == false) {
+			gameObject.name = "<ColorButton/>";
+		}
+
 		gameObject.AddComponent<Button> ();
 
 		button = gameObject.GetComponent<Button> ();

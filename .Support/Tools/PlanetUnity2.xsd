@@ -168,10 +168,16 @@
 		</complexContent>
 	</complexType>
 	
+	<element name="ScrollRect" type="planet:ScrollRect"/>
+	<complexType name="ScrollRect">
+		<complexContent>
+			<extension base="planet:GameObject">
+			</extension>
+		</complexContent>
+	</complexType>
 	
 	
-	
-	
+	<!-- ***** Text ***** -->
 	
 	<simpleType name="TextAlignment">
 		<annotation>
@@ -255,18 +261,87 @@
 		</complexContent>
 	</complexType>
 	
-	<element name="ScrollRect" type="planet:ScrollRect"/>
-	<complexType name="ScrollRect">
+	<!-- ***************************************************************************************** -->
+	
+	
+	
+	<!-- ***** Layout Groups ***** -->
+	
+	<simpleType name="GridLayoutStartCorner">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "upperLeft"/>
+			<enumeration value = "upperRight"/>
+			<enumeration value = "lowerLeft"/>
+			<enumeration value = "lowerRight"/>
+		</restriction>
+    </simpleType>
+
+	<simpleType name="GridLayoutStartAxis">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "horizontal"/>
+			<enumeration value = "vertical"/>
+		</restriction>
+    </simpleType>
+	
+	<simpleType name="GridLayoutChildAlignment">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "upperLeft"/>
+			<enumeration value = "upperCenter"/>
+			<enumeration value = "upperRight"/>
+			<enumeration value = "middleLeft"/>
+			<enumeration value = "middleCenter"/>
+			<enumeration value = "middleRight"/>
+			<enumeration value = "lowerLeft"/>
+			<enumeration value = "lowerCenter"/>
+			<enumeration value = "lowerRight"/>
+		</restriction>
+    </simpleType>
+	
+	<element name="GridLayoutGroup" type="planet:GridLayoutGroup"/>
+	<complexType name="GridLayoutGroup">
 		<complexContent>
 			<extension base="planet:GameObject">
+				<attribute name="cellSize" type="planet:vec2" use="optional" default="100,100" />
+				<attribute name="spacing" type="planet:vec2" use="optional" default="0,0" />
+				<attribute name="startCorner" type="planet:GridLayoutStartCorner" use="optional" />
+				<attribute name="startAxis" type="planet:GridLayoutStartAxis" use="optional" />
+				<attribute name="childAlignment" type="planet:GridLayoutChildAlignment" use="optional" />
 			</extension>
 		</complexContent>
 	</complexType>
 	
+	<element name="VerticalLayoutGroup" type="planet:VerticalLayoutGroup"/>
+	<complexType name="VerticalLayoutGroup">
+		<complexContent>
+			<extension base="planet:GameObject">
+				<attribute name="spacing" type="float" use="optional" default="0" />
+				<attribute name="padding" type="planet:vec4" use="optional" default="0,0,0,0" />
+				<attribute name="childAlignment" type="planet:GridLayoutChildAlignment" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
 	
+	<element name="HorizontalLayoutGroup" type="planet:HorizontalLayoutGroup"/>
+	<complexType name="HorizontalLayoutGroup">
+		<complexContent>
+			<extension base="planet:GameObject">
+				<attribute name="spacing" type="float" use="optional" default="0" />
+				<attribute name="padding" type="planet:vec4" use="optional" default="0,0,0,0" />
+				<attribute name="childAlignment" type="planet:GridLayoutChildAlignment" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
 	
-	
-	
+	<!-- ***************************************************************************************** -->
 	
 	
 	<element name="Notification" type="planet:Notification" />

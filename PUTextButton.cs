@@ -25,6 +25,10 @@ public partial class PUTextButton : PUTextButtonBase {
 	{
 		base.gaxb_init ();
 
+		if (titleExists == false) {
+			gameObject.name = "<TextButton/>";
+		}
+
 		gameObject.AddComponent<Button> ();
 
 		button = gameObject.GetComponent<Button> ();
