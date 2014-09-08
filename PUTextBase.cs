@@ -25,7 +25,7 @@ public partial class PUText : PUTextBase {
 		if(attr != null) { fontSize = int.Parse(attr); fontSizeExists = true; } 
 		attr = "0,0,0,1";
 		if(attr != null) { fontColor = new Color().PUParse(attr); fontColorExists = true; } 
-		attr = "center";
+		attr = "middleCenter";
 		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)System.Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); alignmentExists = true; } 
 
 	}
@@ -328,7 +328,7 @@ public class PUTextBase : PUGameObject {
 		
 		attr = reader.GetAttribute("alignment");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr == null) { attr = "center"; }
+		if(attr == null) { attr = "middleCenter"; }
 		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)System.Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); alignmentExists = true; } 
 		
 		attr = reader.GetAttribute("value");

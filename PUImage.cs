@@ -37,6 +37,11 @@ public partial class PUImage : PUImageBase {
 
 		if (resourcePathExists) {
 			image.sprite = PlanetUnityResourceCache.GetSprite (resourcePath);
+
+			Vector4 border = image.sprite.border;
+			if (!border.x.Equals(0) || !border.y.Equals(0) || !border.z.Equals(0) || !border.w.Equals(0)) {
+				image.type = Image.Type.Sliced;
+			}
 		}
 	}
 

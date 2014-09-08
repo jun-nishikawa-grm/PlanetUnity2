@@ -187,9 +187,15 @@
 			<appinfo>NAMED_ENUM</appinfo>
 		</annotation>
         <restriction base="string">
-			<enumeration value = "left"/>
-			<enumeration value = "center"/>
-			<enumeration value = "right"/>
+			<enumeration value = "upperLeft"/>
+			<enumeration value = "upperCenter"/>
+			<enumeration value = "upperRight"/>
+			<enumeration value = "middleLeft"/>
+			<enumeration value = "middleCenter"/>
+			<enumeration value = "middleRight"/>
+			<enumeration value = "lowerLeft"/>
+			<enumeration value = "lowerCenter"/>
+			<enumeration value = "lowerRight"/>
 		</restriction>
     </simpleType>
 
@@ -237,7 +243,7 @@
 				
 				<attribute name="lineSpacing" type="float" use="optional" />
 				
-				<attribute name="alignment" type="planet:TextAlignment" use="optional" default="center"/>
+				<attribute name="alignment" type="planet:TextAlignment" use="optional" default="middleCenter"/>
 				
 				<attribute name="value" type="string" use="required" />
 				<attribute name="bestFit" type="boolean" use="optional" />

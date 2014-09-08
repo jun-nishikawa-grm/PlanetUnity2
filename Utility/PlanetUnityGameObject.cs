@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -188,13 +187,10 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 		#if !UNITY_EDITOR
 		RemoveCanvas ();
-		#else
-		EditorReloadCanvas ();
 		#endif
 	}
-
+		
 	void Update () {
-
 		if (shouldReloadMainXML) {
 			shouldReloadMainXML = false;
 			#if UNITY_EDITOR
@@ -232,11 +228,7 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		return canvas;
 	}
 
-	public void LoadCanvasXML (string xml) {
-
-		if (xmlPath == null || PlanetUnityOverride.xmlFromPath (xmlPath) == null) {
-			return;
-		}
+	public void ReloadCanvas () {
 
 		RemoveCanvas ();
 
@@ -246,8 +238,8 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		if (planetUnityContainer == null) {
 			planetUnityContainer = new GameObject ("PlanetUnityContainer");
 		}
-			
-		canvas = (PUCanvas)PlanetUnity2.loadXML (xml, planetUnityContainer, null);
+
+		canvas = (PUCanvas)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath (xmlPath), planetUnityContainer, null);
 
 		#if UNITY_EDITOR
 		foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
@@ -257,35 +249,14 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 		sw.Stop ();
 
-		#if !UNITY_EDITOR
 		UnityEngine.Debug.Log ("[" + sw.Elapsed.TotalMilliseconds + "ms] Loading canvas " + xmlPath + ".xml");
-		#endif
 
 		//Profile.PrintResults ();
 		//Profile.Reset ();
 	}
 
-	public void CheckForEventSystem() {
-		GameObject eventSystem = GameObject.Find ("EventSystem");
-		if (eventSystem == null) {
-			// We need to create this manually...
-
-			eventSystem = new GameObject ("EventSystem");
-			eventSystem.AddComponent<EventSystem> ();
-			eventSystem.AddComponent<StandaloneInputModule> ();
-			eventSystem.AddComponent<TouchInputModule> ();
-
-		}
-	}
-
-	public void ReloadCanvas () {
-
-		CheckForEventSystem ();
-
-		LoadCanvasXML (PlanetUnityOverride.xmlFromPath (xmlPath));
-	}
-
 	public void SafeRemoveAllChildren() {
+		//UnityEngine.Debug.Log ("SafeRemoveAllChildren");
 		// This gets hokey, but the editor complains if the components are not removed in a specific order
 		// before the game object itself is destroyed...
 		planetUnityContainer = GameObject.Find ("PlanetUnityContainer");
@@ -360,7 +331,7 @@ public class Autorun
 
 	static void RunOnce()
 	{
-		// If we're the editor, and we're in edit mode, and live preview is set...
+		// If we're the edit, and we're in edit mode, and live preview is set...
 		GameObject puObject = GameObject.Find ("PlanetUnity");
 		if (puObject == null)
 			return;
@@ -368,9 +339,7 @@ public class Autorun
 		if (script == null)
 			return;
 
-		if (Application.isPlaying == false) {
-			script.EditorReloadCanvas ();
-		}
+		script.EditorReloadCanvas ();
 
 		EditorApplication.update -= RunOnce;
 	}
@@ -394,7 +363,9 @@ public class CustomPostprocessor : AssetPostprocessor
 		if (script == null)
 			return;
 
-		script.EditorReloadCanvas ();
+		if (Application.isPlaying == false) {
+			script.EditorReloadCanvas ();
+		}
 	}
 }
 	

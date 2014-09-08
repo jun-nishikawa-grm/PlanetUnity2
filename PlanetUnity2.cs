@@ -70,9 +70,15 @@ public class PlanetUnity2 {
 	};
 
 	public enum TextAlignment {
-		left,
-		center,
-		right,
+		upperLeft,
+		upperCenter,
+		upperRight,
+		middleLeft,
+		middleCenter,
+		middleRight,
+		lowerLeft,
+		lowerCenter,
+		lowerRight,
 	};
 
 	public enum FontStyle {

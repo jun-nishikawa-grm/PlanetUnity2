@@ -65,15 +65,25 @@ public partial class PUText : PUTextBase {
 		}
 
 		if (alignmentExists) {
-			if(alignment == PlanetUnity2.TextAlignment.center){
+			if(alignment == PlanetUnity2.TextAlignment.lowerCenter)
+				text.alignment = TextAnchor.LowerCenter;
+			if(alignment == PlanetUnity2.TextAlignment.lowerLeft)
+				text.alignment = TextAnchor.LowerLeft;
+			if(alignment == PlanetUnity2.TextAlignment.lowerRight)
+				text.alignment = TextAnchor.LowerRight;
+			if(alignment == PlanetUnity2.TextAlignment.middleCenter)
 				text.alignment = TextAnchor.MiddleCenter;
-			}
-			if(alignment == PlanetUnity2.TextAlignment.left){
+			if(alignment == PlanetUnity2.TextAlignment.middleLeft)
+				text.alignment = TextAnchor.MiddleLeft;
+			if(alignment == PlanetUnity2.TextAlignment.middleRight)
+				text.alignment = TextAnchor.MiddleRight;
+			if(alignment == PlanetUnity2.TextAlignment.upperCenter)
+				text.alignment = TextAnchor.UpperCenter;
+			if(alignment == PlanetUnity2.TextAlignment.upperLeft)
 				text.alignment = TextAnchor.UpperLeft;
-			}
-			if(alignment == PlanetUnity2.TextAlignment.right){
+			if(alignment == PlanetUnity2.TextAlignment.upperRight)
 				text.alignment = TextAnchor.UpperRight;
-			}
+
 		}
 	}
 
