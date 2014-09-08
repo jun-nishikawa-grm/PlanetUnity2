@@ -53,21 +53,10 @@ public partial class PUInputField : PUInputFieldBase {
 		// There is a bug in Unity code where m_Value is null accessed, this is a workaround
 		typeof(InputField).GetField("m_Value",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(field, "");
 
-		/*
-		protected void Init()
-		{
-			if (this.m_DoInit && this.m_TextComponent != null)
-			{
-				this.m_DoInit = false;
-				this.m_OriginalText = this.m_TextComponent.text;
-				this.m_OriginalColor = this.m_TextComponent.color;
-				this.m_Pivot = this.m_TextComponent.rectTransform.get_pivot();
-				InputField.mDrawStart = 0;
-				InputField.mDrawEnd = this.m_Value.Length;
-				this.UpdateLabel();
-			}
-		}
-		*/
+
+		field.onSubmit.AddListener(new UnityEngine.Events.UnityAction<string>((string value) => { 
+			NotificationCenter.postNotification (Scope (), this.onValueChanged, NotificationCenter.Args("sender", this));
+		}));
 	}
 
 }

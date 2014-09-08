@@ -65,7 +65,9 @@ public partial class PUScrollRect : PUScrollRectBase {
 	{
 		// 0) create a content game object to place all of our children into
 		contentObject = new GameObject ("ScrollRectContent", typeof(RectTransform));
-		foreach (Transform t in gameObject.transform) {
+
+		for(int i = gameObject.transform.childCount-1; i >= 0; i--){
+			Transform t = gameObject.transform.GetChild (i);
 			t.SetParent (contentObject.transform, false);
 		}
 		contentObject.transform.SetParent (gameObject.transform);
