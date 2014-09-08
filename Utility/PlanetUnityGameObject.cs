@@ -32,11 +32,6 @@ public delegate void Task();
 public class PlanetUnityOverride {
 
 	private static Mathos.Parser.MathParser mathParser = new Mathos.Parser.MathParser();
-	public static float canvasTop;
-	public static float canvasBottom;
-	public static float canvasLeft;
-	public static float canvasRight;
-	public static float canvasScale;
 
 	public static int puCameraLayer = 30;
 	public static int puEventLayer = 29;
@@ -142,24 +137,6 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	private bool shouldReloadMainXML = false;
 
 	static public PlanetUnityGameObject currentGameObject = null;
-
-	static public Vector2 MousePosition() {
-		Vector2 pos = new Vector2 (Input.mousePosition.x, Input.mousePosition.y);
-
-		if (currentGameObject == null || currentGameObject.canvas == null)
-			return pos;
-
-		pos.x /= Screen.width;
-		pos.y /= Screen.height;
-
-		pos.x *= PlanetUnityOverride.canvasRight - PlanetUnityOverride.canvasLeft;
-		pos.y *= PlanetUnityOverride.canvasBottom - PlanetUnityOverride.canvasTop;
-
-		pos.x += PlanetUnityOverride.canvasLeft;
-		pos.y += PlanetUnityOverride.canvasTop;
-
-		return pos;
-	}
 
 	// Use this for initialization
 	void Start () {
@@ -320,7 +297,7 @@ public class PlanetUnityGameObject : MonoBehaviour {
 }
 
 #if UNITY_EDITOR
-
+/*
 [InitializeOnLoad]
 public class Autorun
 {
@@ -344,7 +321,7 @@ public class Autorun
 		EditorApplication.update -= RunOnce;
 	}
 }
-
+*/
 [ExecuteInEditMode]
 public class CustomPostprocessor : AssetPostprocessor
 {
