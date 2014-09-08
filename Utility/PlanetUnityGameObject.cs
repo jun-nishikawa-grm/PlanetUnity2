@@ -193,6 +193,7 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	}
 
 	void Update () {
+
 		if (shouldReloadMainXML) {
 			shouldReloadMainXML = false;
 			#if UNITY_EDITOR
@@ -255,7 +256,9 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 		sw.Stop ();
 
+		#if !UNITY_EDITOR
 		UnityEngine.Debug.Log ("[" + sw.Elapsed.TotalMilliseconds + "ms] Loading canvas " + xmlPath + ".xml");
+		#endif
 
 		//Profile.PrintResults ();
 		//Profile.Reset ();

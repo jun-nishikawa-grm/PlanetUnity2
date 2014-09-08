@@ -90,6 +90,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			if (this is PUCanvas == false) {
 
 				rectTransform.pivot = pivot;
+				rectTransform.localPosition = new Vector3 (0, 0, position.z);
 				rectTransform.anchoredPosition = position;
 				rectTransform.localScale = scale;
 				rectTransform.localEulerAngles = rotation;
