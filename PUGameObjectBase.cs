@@ -33,6 +33,8 @@ public partial class PUGameObject : PUGameObjectBase {
 		if(attr != null) { pivot = new Vector2().PUParse(attr); pivotExists = true; } 
 		attr = "bottom,left";
 		if(attr != null) { anchor = attr; anchorExists = true; } 
+		attr = "true";
+		if(attr != null) { active = bool.Parse(attr); activeExists = true; } 
 
 	}
 	
@@ -45,7 +47,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			Vector3 scale,
 			Vector2 pivot,
 			string anchor,
-			bool hidden,
+			bool active,
 			bool mask,
 			float lastY,
 			float lastX ) : this()
@@ -71,8 +73,8 @@ public partial class PUGameObject : PUGameObjectBase {
 		this.anchor = anchor;
 		this.anchorExists = true;
 
-		this.hidden = hidden;
-		this.hiddenExists = true;
+		this.active = active;
+		this.activeExists = true;
 
 		this.mask = mask;
 		this.maskExists = true;
@@ -94,7 +96,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			Vector3 scale,
 			Vector2 pivot,
 			string anchor,
-			bool hidden,
+			bool active,
 			bool mask,
 			float lastY,
 			float lastX,
@@ -128,8 +130,8 @@ public partial class PUGameObject : PUGameObjectBase {
 		this.anchor = anchor;
 		this.anchorExists = true;
 
-		this.hidden = hidden;
-		this.hiddenExists = true;
+		this.active = active;
+		this.activeExists = true;
 
 		this.mask = mask;
 		this.maskExists = true;
@@ -202,8 +204,8 @@ public class PUGameObjectBase : PUObject {
 	public string anchor;
 	public bool anchorExists;
 
-	public bool hidden;
-	public bool hiddenExists;
+	public bool active;
+	public bool activeExists;
 
 	public bool mask;
 	public bool maskExists;
@@ -225,7 +227,7 @@ public class PUGameObjectBase : PUObject {
 	public void SetScale(Vector3 v) { scale = v; scaleExists = true; } 
 	public void SetPivot(Vector2 v) { pivot = v; pivotExists = true; } 
 	public void SetAnchor(string v) { anchor = v; anchorExists = true; } 
-	public void SetHidden(bool v) { hidden = v; hiddenExists = true; } 
+	public void SetActive(bool v) { active = v; activeExists = true; } 
 	public void SetMask(bool v) { mask = v; maskExists = true; } 
 	public void SetLastY(float v) { lastY = v; lastYExists = true; } 
 	public void SetLastX(float v) { lastX = v; lastXExists = true; } 
@@ -336,9 +338,10 @@ public class PUGameObjectBase : PUObject {
 		if(attr == null) { attr = "bottom,left"; }
 		if(attr != null) { anchor = attr; anchorExists = true; } 
 		
-		attr = reader.GetAttribute("hidden");
+		attr = reader.GetAttribute("active");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { hidden = bool.Parse(attr); hiddenExists = true; } 
+		if(attr == null) { attr = "true"; }
+		if(attr != null) { active = bool.Parse(attr); activeExists = true; } 
 		
 		attr = reader.GetAttribute("mask");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
@@ -372,7 +375,7 @@ public class PUGameObjectBase : PUObject {
 		if(scaleExists) { sb.AppendFormat (" {0}=\"{1}\"", "scale", scale); }
 		if(pivotExists) { sb.AppendFormat (" {0}=\"{1}\"", "pivot", pivot); }
 		if(anchorExists) { sb.AppendFormat (" {0}=\"{1}\"", "anchor", anchor); }
-		if(hiddenExists) { sb.AppendFormat (" {0}=\"{1}\"", "hidden", hidden.ToString().ToLower()); }
+		if(activeExists) { sb.AppendFormat (" {0}=\"{1}\"", "active", active.ToString().ToLower()); }
 		if(maskExists) { sb.AppendFormat (" {0}=\"{1}\"", "mask", mask.ToString().ToLower()); }
 		if(lastYExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastY", lastY.ToString ("0.##")); }
 		if(lastXExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastX", lastX.ToString ("0.##")); }

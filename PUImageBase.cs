@@ -45,7 +45,7 @@ public partial class PUImage : PUImageBase {
 			Vector3 scale,
 			Vector2 pivot,
 			string anchor,
-			bool hidden,
+			bool active,
 			bool mask,
 			float lastY,
 			float lastX,
@@ -85,8 +85,8 @@ public partial class PUImage : PUImageBase {
 		this.anchor = anchor;
 		this.anchorExists = true;
 
-		this.hidden = hidden;
-		this.hiddenExists = true;
+		this.active = active;
+		this.activeExists = true;
 
 		this.mask = mask;
 		this.maskExists = true;

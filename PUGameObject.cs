@@ -171,9 +171,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			}
 		}
 
-		if (hidden) {
-			gameObject.SetActive (false);
-		}
+		gameObject.SetActive (active);
 	}
 
 	public void unload(){

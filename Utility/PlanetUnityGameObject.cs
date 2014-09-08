@@ -50,7 +50,7 @@ public class PlanetUnityOverride {
 		if (s == null)
 			return null;
 
-		s.Replace("@LANGUAGE", PlanetUnityLanguage.LanguageCode());
+		s = s.Replace("@LANGUAGE", PlanetUnityLanguage.LanguageCode());
 
 		if (s.StartsWith ("@eval(")) {
 
@@ -79,9 +79,6 @@ public class PlanetUnityOverride {
 			}
 
 			if (rectTransform) {
-				mathParser.LocalVariables.Add ("scaledW", Convert.ToDecimal(rectTransform.sizeDelta.x));
-				mathParser.LocalVariables.Add ("scaledH", Convert.ToDecimal(rectTransform.sizeDelta.y));
-
 				mathParser.LocalVariables.Add ("w", Convert.ToDecimal(rectTransform.sizeDelta.x));
 				mathParser.LocalVariables.Add ("h", Convert.ToDecimal(rectTransform.sizeDelta.y));
 			}

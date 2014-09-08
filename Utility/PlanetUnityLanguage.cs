@@ -33,6 +33,13 @@ public class PlanetUnityLanguage
 		if(languageCode == null) {
 			languageCode = Application.systemLanguage.ToString ();
 		}
+
+		CreateLanguageCodeMapping ();
+
+		try {
+			languageCode = languageToCode [languageCode];
+		} catch {}
+
 		return languageCode;
 	}
 
@@ -100,7 +107,7 @@ public class PlanetUnityLanguage
 		try {
 			code = languageToCode [code];
 		} catch {}
-
+			
 		if (!allLanguages.TryGetValue (code, out languageDict)) {
 			string stringsFile = PlanetUnityResourceCache.GetTextFile ("languages/" + code + "/Localizable.strings");
 			if (stringsFile == null) {
@@ -114,8 +121,6 @@ public class PlanetUnityLanguage
 				currentLanguage.Add (match.Groups [1].Value, match.Groups [2].Value);
 			}
 			allLanguages.Add (code, currentLanguage);
-
-			Debug.Log ("Loading language strings for " + code);
 		}
 	}
 
@@ -150,7 +155,7 @@ public class PlanetUnityLanguage
 	static public string Translate(string key)
 	{
 		if (languageCode == null) {
-
+			LanguageCode ();
 		}
 		return Translate (key, languageCode);
 	}

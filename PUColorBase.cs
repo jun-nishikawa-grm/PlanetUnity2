@@ -40,7 +40,7 @@ public partial class PUColor : PUColorBase {
 			Vector3 scale,
 			Vector2 pivot,
 			string anchor,
-			bool hidden,
+			bool active,
 			bool mask,
 			float lastY,
 			float lastX,
@@ -77,8 +77,8 @@ public partial class PUColor : PUColorBase {
 		this.anchor = anchor;
 		this.anchorExists = true;
 
-		this.hidden = hidden;
-		this.hiddenExists = true;
+		this.active = active;
+		this.activeExists = true;
 
 		this.mask = mask;
 		this.maskExists = true;
