@@ -153,14 +153,8 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	}
 
 	void OnDestroy () {
-
 		NotificationCenter.removeObserver (this);
-
-		#if !UNITY_EDITOR
 		RemoveCanvas ();
-		#else
-		EditorReloadCanvas ();
-		#endif
 	}
 
 	void Update () {
@@ -207,7 +201,7 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		if (xmlPath == null || PlanetUnityOverride.xmlFromPath (xmlPath) == null) {
 			return;
 		}
-
+			
 		RemoveCanvas ();
 
 		Stopwatch sw = Stopwatch.StartNew ();
@@ -216,6 +210,8 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		if (planetUnityContainer == null) {
 			planetUnityContainer = new GameObject ("PlanetUnityContainer");
 		}
+
+		//UnityEngine.Debug.Log ("LoadCanvasXML");
 
 		canvas = (PUCanvas)PlanetUnity2.loadXML (xml, planetUnityContainer, null);
 
@@ -256,6 +252,9 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	}
 
 	public void SafeRemoveAllChildren() {
+
+		//UnityEngine.Debug.Log ("SafeRemoveAllChildren");
+
 		// This gets hokey, but the editor complains if the components are not removed in a specific order
 		// before the game object itself is destroyed...
 		planetUnityContainer = GameObject.Find ("PlanetUnityContainer");
@@ -325,11 +324,17 @@ public class Autorun
 {
 	static Autorun()
 	{
-		EditorApplication.update += RunOnce;
+		EditorApplication.update += Update;
 	}
 
-	static void RunOnce()
+
+	static bool inEditor = true;
+	static bool editorPreviewCache = false;
+
+	static void Update()
 	{
+		bool reloadPreview = false;
+
 		// If we're the editor, and we're in edit mode, and live preview is set...
 		GameObject puObject = GameObject.Find ("PlanetUnity");
 		if (puObject == null)
@@ -338,11 +343,33 @@ public class Autorun
 		if (script == null)
 			return;
 
-		if (Application.isPlaying == false) {
-			script.EditorReloadCanvas ();
+		// Monitor changes to and from edit mode
+		if (inEditor == true && Application.isPlaying) {
+			//UnityEngine.Debug.Log ("Switch to play mode");
+
+			inEditor = false;
+		}else if (inEditor == false && Application.isPlaying == false) {
+			//UnityEngine.Debug.Log ("Switch to edit mode");
+
+			reloadPreview = true;
+
+			inEditor = true;
 		}
 
-		EditorApplication.update -= RunOnce;
+
+		// Monitor changes to the editorPreview variable
+		if (script.editorPreview != editorPreviewCache) {
+
+			reloadPreview = true;
+
+			editorPreviewCache = script.editorPreview;
+		}
+
+		if (inEditor) {
+			if (reloadPreview) {
+				script.EditorReloadCanvas ();
+			}
+		}
 	}
 }
 
@@ -351,11 +378,6 @@ public class CustomPostprocessor : AssetPostprocessor
 {
 	private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromPath)
 	{
-		foreach(string asset in importedAssets)
-		{
-			NotificationCenter.postNotification(null, PlanetUnity2.EDITORFILEDIDCHANGE, NotificationCenter.Args("path", asset));
-		}
-
 		// If we're the edit, and we're in edit mode, and live preview is set...
 		GameObject puObject = GameObject.Find ("PlanetUnity");
 		if (puObject == null)
@@ -365,6 +387,11 @@ public class CustomPostprocessor : AssetPostprocessor
 			return;
 
 		script.EditorReloadCanvas ();
+
+		foreach(string asset in importedAssets)
+		{
+			NotificationCenter.postNotification(null, PlanetUnity2.EDITORFILEDIDCHANGE, NotificationCenter.Args("path", asset));
+		}
 	}
 }
 
