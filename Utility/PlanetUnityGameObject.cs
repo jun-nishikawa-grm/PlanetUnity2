@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -264,7 +265,22 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		//Profile.Reset ();
 	}
 
+	public void CheckForEventSystem() {
+		GameObject eventSystem = GameObject.Find ("EventSystem");
+		if (eventSystem == null) {
+			// We need to create this manually...
+
+			eventSystem = new GameObject ("EventSystem");
+			eventSystem.AddComponent<EventSystem> ();
+			eventSystem.AddComponent<StandaloneInputModule> ();
+			eventSystem.AddComponent<TouchInputModule> ();
+
+		}
+	}
+
 	public void ReloadCanvas () {
+
+		CheckForEventSystem ();
 
 		LoadCanvasXML (PlanetUnityOverride.xmlFromPath (xmlPath));
 	}
