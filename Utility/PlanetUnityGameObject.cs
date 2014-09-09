@@ -384,6 +384,17 @@ public class CustomPostprocessor : AssetPostprocessor
 		{
 			NotificationCenter.postNotification(null, PlanetUnity2.EDITORFILEDIDCHANGE, NotificationCenter.Args("path", asset));
 		}
+
+		if (Application.isPlaying == false) {
+			GameObject puObject = GameObject.Find ("PlanetUnity");
+			if (puObject == null)
+				return;
+			PlanetUnityGameObject script = puObject.GetComponent<PlanetUnityGameObject> ();
+			if (script == null)
+				return;
+
+			script.EditorReloadCanvas ();
+		}
 	}
 }
 
