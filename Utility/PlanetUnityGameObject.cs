@@ -142,9 +142,11 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		#if UNITY_EDITOR
 		NotificationCenter.addObserver(this, PlanetUnity2.EDITORFILEDIDCHANGE, null, (args,name) => {
 			string assetPath = args ["path"].ToString();
+
 			if( assetPath.Contains(xmlPath+".xml") ||
 				assetPath.EndsWith(".strings"))
 			{
+				EditorReloadCanvas ();
 				PlanetUnityLanguage.ReloadAllLanguages();
 				ReloadCanvas ();
 			}
@@ -211,7 +213,7 @@ public class PlanetUnityGameObject : MonoBehaviour {
 			planetUnityContainer = new GameObject ("PlanetUnityContainer");
 		}
 
-		//UnityEngine.Debug.Log ("LoadCanvasXML");
+		UnityEngine.Debug.Log ("LoadCanvasXML");
 
 		canvas = (PUCanvas)PlanetUnity2.loadXML (xml, planetUnityContainer, null);
 
@@ -253,7 +255,7 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 	public void SafeRemoveAllChildren() {
 
-		//UnityEngine.Debug.Log ("SafeRemoveAllChildren");
+		UnityEngine.Debug.Log ("SafeRemoveAllChildren");
 
 		// This gets hokey, but the editor complains if the components are not removed in a specific order
 		// before the game object itself is destroyed...
@@ -378,16 +380,6 @@ public class CustomPostprocessor : AssetPostprocessor
 {
 	private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromPath)
 	{
-		// If we're the edit, and we're in edit mode, and live preview is set...
-		GameObject puObject = GameObject.Find ("PlanetUnity");
-		if (puObject == null)
-			return;
-		PlanetUnityGameObject script = puObject.GetComponent<PlanetUnityGameObject> ();
-		if (script == null)
-			return;
-
-		script.EditorReloadCanvas ();
-
 		foreach(string asset in importedAssets)
 		{
 			NotificationCenter.postNotification(null, PlanetUnity2.EDITORFILEDIDCHANGE, NotificationCenter.Args("path", asset));
