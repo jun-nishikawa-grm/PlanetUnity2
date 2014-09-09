@@ -85,6 +85,8 @@
 				<attribute name="mask" type="boolean" use="optional" />
 				<attribute name="lastY" type="float" use="optional" />
 		        <attribute name="lastX" type="float" use="optional" />
+		
+				<attribute name="shader" type="string" use="optional" />
 			</extension>
 		</complexContent>
 	</complexType>

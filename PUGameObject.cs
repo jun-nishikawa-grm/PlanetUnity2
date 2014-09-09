@@ -64,7 +64,7 @@ public partial class PUGameObject : PUGameObjectBase {
 	public virtual void gaxb_final(XmlReader reader, object _parent, Hashtable args)
 	{
 		if (gameObject == null) {
-			gameObject = new GameObject ("<GameObject />");
+			gameObject = new GameObject ("<GameObject />", typeof(RectTransform));
 		}
 
 		if (titleExists) {
@@ -83,79 +83,10 @@ public partial class PUGameObject : PUGameObjectBase {
 			this.SetSize (new Vector2 (bounds.z, bounds.w));
 		}
 
-		rectTransform = gameObject.GetComponent<RectTransform> ();
-		if (rectTransform != null) {
-
-			// Never modofiy the RectTransform of the Canvas directly, it does bad things
-			if (this is PUCanvas == false) {
-
-				rectTransform.pivot = pivot;
-				rectTransform.localPosition = new Vector3 (0, 0, position.z);
-				rectTransform.anchoredPosition = position;
-				rectTransform.localScale = scale;
-				rectTransform.localEulerAngles = rotation;
-
-				RectTransform parentTransform = (RectTransform)gameObject.transform.parent;
-				if ((int)size.x == 0) {
-					size.x = parentTransform.sizeDelta.x;
-				}
-				if ((int)size.y == 0) {
-					size.y = parentTransform.sizeDelta.y;
-				}
-				rectTransform.sizeDelta = size;
-
-
-				if (anchorExists) {
-					int numCommas = anchor.NumberOfOccurancesOfChar (',');
-					Vector4 values = new Vector4 ();
-
-					if (numCommas == 1) {
-						// english representation
-						values = stringToAnchorLookup[anchor];
-					}
-
-					if (numCommas == 3) {
-						// math representation
-						values.PUParse (anchor);
-					}
-
-					rectTransform.anchorMin = new Vector2 (values.x, values.y);
-					rectTransform.anchorMax = new Vector2 (values.z, values.w);
-
-					// the sizeDelta is the amount left over after the anchors are calculated; therefore,
-					// if we have set the anchors we need to adjust the sizeDelta
-					float anchorDeltaX = rectTransform.anchorMax.x - rectTransform.anchorMin.x;
-					float anchorDeltaY = rectTransform.anchorMax.y - rectTransform.anchorMin.y;
-
-					float mySizeDeltaX = rectTransform.sizeDelta.x;
-					float mySizeDeltaY = rectTransform.sizeDelta.y;
-
-					mySizeDeltaX -= (parentTransform.sizeDelta.x * anchorDeltaX);
-					mySizeDeltaY -= (parentTransform.sizeDelta.y * anchorDeltaY);
-
-					rectTransform.sizeDelta = new Vector2(mySizeDeltaX, mySizeDeltaY);
-
-					/*
-					if (values.x.Equals(values.z) == false) {
-						rectTransform.offsetMax = new Vector2 (0, 0);
-					}
-					if (values.y.Equals(values.w) == false) {
-						rectTransform.offsetMin = new Vector2 (0, 0);
-					}
-*/
-					/*
-					rectTransform.offsetMax = new Vector2 (0, 0);
-					rectTransform.offsetMin = new Vector2 (0, 0);
-
-					rectTransform.pivot = pivot;
-					rectTransform.localPosition = position;
-					rectTransform.localScale = scale;
-					rectTransform.localEulerAngles = rotation;*/
-				}
-			}
+		// Never modofiy the RectTransform of the Canvas directly, it does bad things
+		if (this is PUCanvas == false) {
+			UpdateRectTransform ();
 		}
-
-
 
 		gameObject.layer = LayerMask.NameToLayer ("UI");
 
@@ -171,12 +102,97 @@ public partial class PUGameObject : PUGameObjectBase {
 			}
 		}
 
+		if (shaderExists) {
+			Graphic graphic = gameObject.GetComponent<Graphic> ();
+			if (graphic != null) {
+				graphic.material = new Material (Shader.Find (shader));
+			}
+		}
+
 		gameObject.SetActive (active);
 	}
 
 	public void unload(){
 		GameObject.Destroy (gameObject);
 		gameObject = null;
+	}
+
+	public void UpdateRectTransform() {
+
+		rectTransform = gameObject.GetComponent<RectTransform> ();
+		if (rectTransform != null) {
+			rectTransform.pivot = pivot;
+			rectTransform.localPosition = new Vector3 (0, 0, position.z);
+			rectTransform.anchoredPosition = position;
+			rectTransform.localScale = scale;
+			rectTransform.localEulerAngles = rotation;
+
+			RectTransform parentTransform = (RectTransform)gameObject.transform.parent;
+			if ((int)size.x == 0) {
+				size.x = parentTransform.sizeDelta.x;
+			}
+			if ((int)size.y == 0) {
+				size.y = parentTransform.sizeDelta.y;
+			}
+			rectTransform.sizeDelta = size;
+
+			if (anchorExists) {
+				int numCommas = anchor.NumberOfOccurancesOfChar (',');
+				Vector4 values = new Vector4 ();
+
+				if (numCommas == 1) {
+					// english representation
+					values = stringToAnchorLookup [anchor];
+				}
+
+				if (numCommas == 3) {
+					// math representation
+					values.PUParse (anchor);
+				}
+
+				rectTransform.anchorMin = new Vector2 (values.x, values.y);
+				rectTransform.anchorMax = new Vector2 (values.z, values.w);
+
+				// the sizeDelta is the amount left over after the anchors are calculated; therefore,
+				// if we have set the anchors we need to adjust the sizeDelta
+				float anchorDeltaX = rectTransform.anchorMax.x - rectTransform.anchorMin.x;
+				float anchorDeltaY = rectTransform.anchorMax.y - rectTransform.anchorMin.y;
+
+				float mySizeDeltaX = rectTransform.sizeDelta.x;
+				float mySizeDeltaY = rectTransform.sizeDelta.y;
+
+				mySizeDeltaX -= (parentTransform.sizeDelta.x * anchorDeltaX);
+				mySizeDeltaY -= (parentTransform.sizeDelta.y * anchorDeltaY);
+
+
+
+				rectTransform.sizeDelta = new Vector2 (mySizeDeltaX, mySizeDeltaY);
+			}
+		}
+	}
+
+	public void SetFrame(float x, float y, float w, float h, float pivotX, float pivotY, string anchor) {
+		SetPosition (new Vector3 (x, y, 0));
+		SetSize (new Vector2 (w, h));
+		SetPivot (new Vector2 (pivotX, pivotY));
+		SetAnchor (anchor);
+	}
+
+	public void LoadIntoPUGameObject(PUGameObject _parent)
+	{
+		gaxb_load (null, null, null);
+		gaxb_init ();
+		gaxb_final (null, _parent, null);
+
+		Vector3 savedPos = gameObject.transform.localPosition;
+		Vector3 savedScale = gameObject.transform.localScale;
+		Quaternion savedRot = gameObject.transform.localRotation;
+
+		gameObject.transform.SetParent (_parent.gameObject.transform, false);
+
+		gameObject.transform.localPosition = savedPos;
+		gameObject.transform.localRotation = savedRot;
+		gameObject.transform.localScale = savedScale;
 	}
 
 }

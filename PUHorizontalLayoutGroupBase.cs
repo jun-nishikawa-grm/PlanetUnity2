@@ -61,6 +61,7 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 			bool mask,
 			float lastY,
 			float lastX,
+			string shader,
 			string title,
 			string tag,
 			string tag1,
@@ -111,6 +112,9 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 
 		this.lastX = lastX;
 		this.lastXExists = true;
+
+		this.shader = shader;
+		this.shaderExists = true;
 
 		this.title = title;
 		this.titleExists = true;

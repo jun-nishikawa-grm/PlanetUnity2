@@ -61,6 +61,7 @@ public partial class PUVerticalLayoutGroup : PUVerticalLayoutGroupBase {
 			bool mask,
 			float lastY,
 			float lastX,
+			string shader,
 			string title,
 			string tag,
 			string tag1,
@@ -111,6 +112,9 @@ public partial class PUVerticalLayoutGroup : PUVerticalLayoutGroupBase {
 
 		this.lastX = lastX;
 		this.lastXExists = true;
+
+		this.shader = shader;
+		this.shaderExists = true;
 
 		this.title = title;
 		this.titleExists = true;

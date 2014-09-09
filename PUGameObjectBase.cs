@@ -50,7 +50,8 @@ public partial class PUGameObject : PUGameObjectBase {
 			bool active,
 			bool mask,
 			float lastY,
-			float lastX ) : this()
+			float lastX,
+			string shader ) : this()
 	{
 		this.bounds = bounds;
 		this.boundsExists = true;
@@ -84,6 +85,9 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		this.lastX = lastX;
 		this.lastXExists = true;
+
+		this.shader = shader;
+		this.shaderExists = true;
 	}
 
 	
@@ -100,6 +104,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			bool mask,
 			float lastY,
 			float lastX,
+			string shader,
 			string title,
 			string tag,
 			string tag1,
@@ -141,6 +146,9 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		this.lastX = lastX;
 		this.lastXExists = true;
+
+		this.shader = shader;
+		this.shaderExists = true;
 
 		this.title = title;
 		this.titleExists = true;
@@ -216,6 +224,9 @@ public class PUGameObjectBase : PUObject {
 	public float lastX;
 	public bool lastXExists;
 
+	public string shader;
+	public bool shaderExists;
+
 
 
 
@@ -231,6 +242,7 @@ public class PUGameObjectBase : PUObject {
 	public void SetMask(bool v) { mask = v; maskExists = true; } 
 	public void SetLastY(float v) { lastY = v; lastYExists = true; } 
 	public void SetLastX(float v) { lastX = v; lastXExists = true; } 
+	public void SetShader(string v) { shader = v; shaderExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -355,6 +367,10 @@ public class PUGameObjectBase : PUObject {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { lastX = float.Parse(attr); lastXExists = true; } 
 		
+		attr = reader.GetAttribute("shader");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { shader = attr; shaderExists = true; } 
+		
 
 	}
 	
@@ -379,6 +395,7 @@ public class PUGameObjectBase : PUObject {
 		if(maskExists) { sb.AppendFormat (" {0}=\"{1}\"", "mask", mask.ToString().ToLower()); }
 		if(lastYExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastY", lastY.ToString ("0.##")); }
 		if(lastXExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastX", lastX.ToString ("0.##")); }
+		if(shaderExists) { sb.AppendFormat (" {0}=\"{1}\"", "shader", shader); }
 
 	}
 	
