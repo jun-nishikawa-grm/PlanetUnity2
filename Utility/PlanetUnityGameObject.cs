@@ -213,7 +213,7 @@ public class PlanetUnityGameObject : MonoBehaviour {
 			planetUnityContainer = new GameObject ("PlanetUnityContainer");
 		}
 
-		UnityEngine.Debug.Log ("LoadCanvasXML");
+		//UnityEngine.Debug.Log ("LoadCanvasXML");
 
 		canvas = (PUCanvas)PlanetUnity2.loadXML (xml, planetUnityContainer, null);
 
@@ -255,7 +255,7 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 	public void SafeRemoveAllChildren() {
 
-		UnityEngine.Debug.Log ("SafeRemoveAllChildren");
+		//UnityEngine.Debug.Log ("SafeRemoveAllChildren");
 
 		// This gets hokey, but the editor complains if the components are not removed in a specific order
 		// before the game object itself is destroyed...
