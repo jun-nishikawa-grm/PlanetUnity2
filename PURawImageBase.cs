@@ -24,13 +24,17 @@ public partial class PURawImage : PURawImageBase {
 	
 	public PURawImage(
 			string resourcePath,
-			Color color ) : this()
+			Color color,
+			Vector4 uvRect ) : this()
 	{
 		this.resourcePath = resourcePath;
 		this.resourcePathExists = true;
 
 		this.color = color;
 		this.colorExists = true;
+
+		this.uvRect = uvRect;
+		this.uvRectExists = true;
 	}
 
 	
@@ -38,6 +42,7 @@ public partial class PURawImage : PURawImageBase {
 	public PURawImage(
 			string resourcePath,
 			Color color,
+			Vector4 uvRect,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -64,6 +69,9 @@ public partial class PURawImage : PURawImageBase {
 
 		this.color = color;
 		this.colorExists = true;
+
+		this.uvRect = uvRect;
+		this.uvRectExists = true;
 
 		this.bounds = bounds;
 		this.boundsExists = true;
@@ -148,12 +156,16 @@ public class PURawImageBase : PUGameObject {
 	public Color color;
 	public bool colorExists;
 
+	public Vector4 uvRect;
+	public bool uvRectExists;
+
 
 
 
 	
 	public void SetResourcePath(string v) { resourcePath = v; resourcePathExists = true; } 
 	public void SetColor(Color v) { color = v; colorExists = true; } 
+	public void SetUvRect(Vector4 v) { uvRect = v; uvRectExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -235,6 +247,10 @@ public class PURawImageBase : PUGameObject {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { color = new Color().PUParse(attr); colorExists = true; } 
 		
+		attr = reader.GetAttribute("uvRect");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { uvRect = new Vector4().PUParse(attr); uvRectExists = true; } 
+		
 
 	}
 	
@@ -250,6 +266,7 @@ public class PURawImageBase : PUGameObject {
 
 		if(resourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "resourcePath", resourcePath); }
 		if(colorExists) { sb.AppendFormat (" {0}=\"{1}\"", "color", color); }
+		if(uvRectExists) { sb.AppendFormat (" {0}=\"{1}\"", "uvRect", uvRect); }
 
 	}
 	
