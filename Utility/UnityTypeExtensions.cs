@@ -8,24 +8,12 @@ public static class RectTransformExtension
 {
 	public static float GetWidth(this RectTransform myTransform)
 	{
-		RectTransform parentTransform = myTransform.parent as RectTransform;
-
-		if (parentTransform == null) {
-			return myTransform.sizeDelta.x;
-		}
-
-		return parentTransform.GetWidth () * (myTransform.anchorMax.x - myTransform.anchorMin.x) + myTransform.sizeDelta.x;
+		return myTransform.rect.width;
 	}
 
 	public static float GetHeight(this RectTransform myTransform)
 	{
-		RectTransform parentTransform = myTransform.parent as RectTransform;
-
-		if (parentTransform == null) {
-			return myTransform.sizeDelta.y;
-		}
-
-		return parentTransform.GetHeight () * (myTransform.anchorMax.y - myTransform.anchorMin.y) + myTransform.sizeDelta.y;
+		return myTransform.rect.height;
 	}
 
 	public static float GetMinX(this RectTransform myTransform)

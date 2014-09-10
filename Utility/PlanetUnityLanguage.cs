@@ -115,12 +115,14 @@ public class PlanetUnityLanguage
 				stringsFile = PlanetUnityResourceCache.GetTextFile ("languages/en/Localizable.strings");
 			}
 
-			Dictionary<string,string> currentLanguage = new Dictionary<string,string> ();
-			MatchCollection matches = Regex.Matches (stringsFile, "\"([^\"]+)\"\\s*=\\s*\"([^\"]+)\"");
-			foreach (Match match in matches) {
-				currentLanguage.Add (match.Groups [1].Value, match.Groups [2].Value);
+			if (stringsFile != null) {
+				Dictionary<string,string> currentLanguage = new Dictionary<string,string> ();
+				MatchCollection matches = Regex.Matches (stringsFile, "\"([^\"]+)\"\\s*=\\s*\"([^\"]+)\"");
+				foreach (Match match in matches) {
+					currentLanguage.Add (match.Groups [1].Value, match.Groups [2].Value);
+				}
+				allLanguages.Add (code, currentLanguage);
 			}
-			allLanguages.Add (code, currentLanguage);
 		}
 	}
 
