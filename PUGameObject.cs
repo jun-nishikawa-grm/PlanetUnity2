@@ -193,6 +193,8 @@ public partial class PUGameObject : PUGameObjectBase {
 		gameObject.transform.localPosition = savedPos;
 		gameObject.transform.localRotation = savedRot;
 		gameObject.transform.localScale = savedScale;
+
+		_parent.children.Add (this);
 	}
 
 }
