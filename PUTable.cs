@@ -155,7 +155,6 @@ public partial class PUTable : PUTableBase {
 		foreach (PUTableCell cell in allCells) {
 			cell.puGameObject.unload ();
 		}
-
 		allCells.Clear ();
 
 		if (allObjects == null || allObjects.Count == 0) {

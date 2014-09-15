@@ -117,6 +117,13 @@ public partial class PUGameObject : PUGameObjectBase {
 		gameObject = null;
 	}
 
+	public void unloadAllChildren(){
+		foreach (PUGameObject go in children) {
+			go.unload ();
+		}
+		children.Clear ();
+	}
+
 	public void UpdateRectTransform() {
 
 		rectTransform = gameObject.GetComponent<RectTransform> ();
