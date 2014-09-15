@@ -41,7 +41,10 @@ public partial class PUCode : PUCodeBase {
 	public override void gaxb_unload()
 	{
 		base.gaxb_unload ();
-		NotificationCenter.removeObserver (controller);
+
+		if (singleton == false) {
+			NotificationCenter.removeObserver (controller);
+		}
 	}
 
 	public override void gaxb_init()

@@ -163,8 +163,8 @@ public partial class PUTable : PUTableBase {
 		}
 
 		// 1) Run through allObjects; instantiate a cell object based on said object class
-		foreach (object row in allObjects) {
-			LoadCellForData(row);
+		for(int i = allObjects.Count-1; i >= 0; i--) {
+			LoadCellForData(allObjects[i]);
 		}
 
 		foreach (PUTableCell cell in allCells) {

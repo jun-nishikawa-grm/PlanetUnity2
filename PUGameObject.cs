@@ -184,6 +184,8 @@ public partial class PUGameObject : PUGameObjectBase {
 		gaxb_init ();
 		gaxb_final (null, _parent, null);
 
+		parent = _parent;
+
 		Vector3 savedPos = gameObject.transform.localPosition;
 		Vector3 savedScale = gameObject.transform.localScale;
 		Quaternion savedRot = gameObject.transform.localRotation;

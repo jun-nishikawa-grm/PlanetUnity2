@@ -79,8 +79,8 @@ public class PlanetUnityOverride {
 			}
 
 			if (rectTransform) {
-				mathParser.LocalVariables.Add ("w", Convert.ToDecimal(rectTransform.sizeDelta.x));
-				mathParser.LocalVariables.Add ("h", Convert.ToDecimal(rectTransform.sizeDelta.y));
+				mathParser.LocalVariables.Add ("w", Convert.ToDecimal(rectTransform.rect.width));
+				mathParser.LocalVariables.Add ("h", Convert.ToDecimal(rectTransform.rect.height));
 			}
 
 			foreach (string part in parts) {
