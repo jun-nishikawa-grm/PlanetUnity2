@@ -195,6 +195,8 @@ public partial class PUGameObject : PUGameObjectBase {
 		gameObject.transform.localScale = savedScale;
 
 		_parent.children.Add (this);
+
+		gaxb_complete ();
 	}
 
 }

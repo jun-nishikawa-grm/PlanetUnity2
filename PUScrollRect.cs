@@ -35,6 +35,13 @@ public partial class PUScrollRect : PUScrollRectBase {
 
 	public void CalculateContentSize()
 	{
+		RectTransform myRectTransform = (RectTransform)contentObject.transform;
+
+		if (contentObject.transform.childCount == 0) {
+			myRectTransform.sizeDelta = new Vector2((gameObject.transform as RectTransform).rect.width, 0);
+			return;
+		}
+
 		// if contentSize does not exist, run through planet children and calculate a content size
 		float minX = 999999, maxX = -999999;
 		float minY = 999999, maxY = -999999;
@@ -56,8 +63,7 @@ public partial class PUScrollRect : PUScrollRectBase {
 			if (tMaxY > maxY)
 				maxY = tMaxY;
 		}
-
-		RectTransform myRectTransform = (RectTransform)contentObject.transform;
+			
 		myRectTransform.sizeDelta = new Vector2 (maxX - minX, maxY - minY);
 	}
 		

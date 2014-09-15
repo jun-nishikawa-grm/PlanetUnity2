@@ -375,5 +375,38 @@
 		</complexContent>
 	</complexType>
 	
+	
+	
+	
+	<!-- ************** Non uGUI Entities **************** -->
+	
+	<element name="Movie" type="planet:Movie"/>
+	<complexType name="Movie">
+		<complexContent>
+			<extension base="planet:GameObject">
+				<attribute name="hasAlpha" type="boolean" use="required" />
+				<attribute name="looping" type="boolean" use="required" />
+				<attribute name="resourcePath" type="string" use="required" />
+				<attribute name="color" type="planet:color" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<element name="Prefab" type="planet:Prefab" />
+	<complexType name="Prefab">
+		<complexContent>
+			<extension base="planet:GameObject">
+				<attribute name="name" type="string" use="required" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
+	<element name="Table" type="planet:Table"/>
+	<complexType name="Table">
+		<complexContent>
+			<extension base="planet:ScrollRect">
+			</extension>
+		</complexContent>
+	</complexType>
 
 </schema>
