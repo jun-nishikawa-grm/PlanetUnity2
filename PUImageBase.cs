@@ -47,6 +47,7 @@ public partial class PUImage : PUImageBase {
 			string anchor,
 			bool active,
 			bool mask,
+			bool outline,
 			float lastY,
 			float lastX,
 			string shader,
@@ -91,6 +92,9 @@ public partial class PUImage : PUImageBase {
 
 		this.mask = mask;
 		this.maskExists = true;
+
+		this.outline = outline;
+		this.outlineExists = true;
 
 		this.lastY = lastY;
 		this.lastYExists = true;

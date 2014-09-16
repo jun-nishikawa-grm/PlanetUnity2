@@ -49,6 +49,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			string anchor,
 			bool active,
 			bool mask,
+			bool outline,
 			float lastY,
 			float lastX,
 			string shader ) : this()
@@ -80,6 +81,9 @@ public partial class PUGameObject : PUGameObjectBase {
 		this.mask = mask;
 		this.maskExists = true;
 
+		this.outline = outline;
+		this.outlineExists = true;
+
 		this.lastY = lastY;
 		this.lastYExists = true;
 
@@ -102,6 +106,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			string anchor,
 			bool active,
 			bool mask,
+			bool outline,
 			float lastY,
 			float lastX,
 			string shader,
@@ -140,6 +145,9 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		this.mask = mask;
 		this.maskExists = true;
+
+		this.outline = outline;
+		this.outlineExists = true;
 
 		this.lastY = lastY;
 		this.lastYExists = true;
@@ -218,6 +226,9 @@ public class PUGameObjectBase : PUObject {
 	public bool mask;
 	public bool maskExists;
 
+	public bool outline;
+	public bool outlineExists;
+
 	public float lastY;
 	public bool lastYExists;
 
@@ -240,6 +251,7 @@ public class PUGameObjectBase : PUObject {
 	public void SetAnchor(string v) { anchor = v; anchorExists = true; } 
 	public void SetActive(bool v) { active = v; activeExists = true; } 
 	public void SetMask(bool v) { mask = v; maskExists = true; } 
+	public void SetOutline(bool v) { outline = v; outlineExists = true; } 
 	public void SetLastY(float v) { lastY = v; lastYExists = true; } 
 	public void SetLastX(float v) { lastX = v; lastXExists = true; } 
 	public void SetShader(string v) { shader = v; shaderExists = true; } 
@@ -359,6 +371,10 @@ public class PUGameObjectBase : PUObject {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { mask = bool.Parse(attr); maskExists = true; } 
 		
+		attr = reader.GetAttribute("outline");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { outline = bool.Parse(attr); outlineExists = true; } 
+		
 		attr = reader.GetAttribute("lastY");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { lastY = float.Parse(attr); lastYExists = true; } 
@@ -393,6 +409,7 @@ public class PUGameObjectBase : PUObject {
 		if(anchorExists) { sb.AppendFormat (" {0}=\"{1}\"", "anchor", anchor); }
 		if(activeExists) { sb.AppendFormat (" {0}=\"{1}\"", "active", active.ToString().ToLower()); }
 		if(maskExists) { sb.AppendFormat (" {0}=\"{1}\"", "mask", mask.ToString().ToLower()); }
+		if(outlineExists) { sb.AppendFormat (" {0}=\"{1}\"", "outline", outline.ToString().ToLower()); }
 		if(lastYExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastY", lastY.ToString ("0.##")); }
 		if(lastXExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastX", lastX.ToString ("0.##")); }
 		if(shaderExists) { sb.AppendFormat (" {0}=\"{1}\"", "shader", shader); }

@@ -33,6 +33,7 @@ public partial class PUTable : PUTableBase {
 			string anchor,
 			bool active,
 			bool mask,
+			bool outline,
 			float lastY,
 			float lastX,
 			string shader,
@@ -71,6 +72,9 @@ public partial class PUTable : PUTableBase {
 
 		this.mask = mask;
 		this.maskExists = true;
+
+		this.outline = outline;
+		this.outlineExists = true;
 
 		this.lastY = lastY;
 		this.lastYExists = true;

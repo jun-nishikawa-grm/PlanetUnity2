@@ -59,6 +59,7 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 			string anchor,
 			bool active,
 			bool mask,
+			bool outline,
 			float lastY,
 			float lastX,
 			string shader,
@@ -106,6 +107,9 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 
 		this.mask = mask;
 		this.maskExists = true;
+
+		this.outline = outline;
+		this.outlineExists = true;
 
 		this.lastY = lastY;
 		this.lastYExists = true;

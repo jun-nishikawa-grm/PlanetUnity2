@@ -147,7 +147,7 @@ public partial class PUTable : PUTableBase {
 		cell.LoadIntoPUGameObject (this, cellData);
 		allCells.Add (cell);
 
-		cell.puGameObject.rectTransform.anchoredPosition = new Vector3(0,(contentObject.transform as RectTransform).sizeDelta.y,0);
+		cell.puGameObject.rectTransform.anchoredPosition = new Vector3(0,(contentObject.transform as RectTransform).rect.height,0);
 	}
 
 	public void ReloadTable() {

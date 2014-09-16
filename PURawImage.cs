@@ -37,12 +37,16 @@ public partial class PURawImage : PURawImageBase {
 		}
 
 		if (resourcePathExists) {
-			image.texture = PlanetUnityResourceCache.GetTexture (resourcePath);
+			LoadImageWithResourcePath (resourcePath);
 		}
 
 		if (uvRectExists) {
 			image.uvRect = new Rect (uvRect.x, uvRect.y, uvRect.z, uvRect.w);
 		}
+	}
+
+	public void LoadImageWithResourcePath(string p) {
+		image.texture = PlanetUnityResourceCache.GetTexture (p);
 	}
 
 }

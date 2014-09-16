@@ -102,6 +102,10 @@ public partial class PUGameObject : PUGameObjectBase {
 			}
 		}
 
+		if (outline) {
+			gameObject.AddComponent<Outline> ();
+		}
+
 		if (shaderExists) {
 			Graphic graphic = gameObject.GetComponent<Graphic> ();
 			if (graphic != null) {
@@ -129,6 +133,7 @@ public partial class PUGameObject : PUGameObjectBase {
 		rectTransform = gameObject.GetComponent<RectTransform> ();
 		if (rectTransform != null) {
 			rectTransform.pivot = pivot;
+
 			rectTransform.localPosition = new Vector3 (0, 0, position.z);
 			rectTransform.anchoredPosition = position;
 			rectTransform.localScale = scale;
@@ -136,10 +141,10 @@ public partial class PUGameObject : PUGameObjectBase {
 
 			RectTransform parentTransform = (RectTransform)gameObject.transform.parent;
 			if ((int)size.x == 0) {
-				size.x = parentTransform.sizeDelta.x;
+				size.x = parentTransform.rect.width;
 			}
 			if ((int)size.y == 0) {
-				size.y = parentTransform.sizeDelta.y;
+				size.y = parentTransform.rect.height;
 			}
 			rectTransform.sizeDelta = size;
 
@@ -168,10 +173,8 @@ public partial class PUGameObject : PUGameObjectBase {
 				float mySizeDeltaX = rectTransform.sizeDelta.x;
 				float mySizeDeltaY = rectTransform.sizeDelta.y;
 
-				mySizeDeltaX -= (parentTransform.sizeDelta.x * anchorDeltaX);
-				mySizeDeltaY -= (parentTransform.sizeDelta.y * anchorDeltaY);
-
-
+				mySizeDeltaX -= (parentTransform.rect.width * anchorDeltaX);
+				mySizeDeltaY -= (parentTransform.rect.height * anchorDeltaY);
 
 				rectTransform.sizeDelta = new Vector2 (mySizeDeltaX, mySizeDeltaY);
 			}
@@ -193,15 +196,7 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		parent = _parent;
 
-		Vector3 savedPos = gameObject.transform.localPosition;
-		Vector3 savedScale = gameObject.transform.localScale;
-		Quaternion savedRot = gameObject.transform.localRotation;
-
 		gameObject.transform.SetParent (_parent.gameObject.transform, false);
-
-		gameObject.transform.localPosition = savedPos;
-		gameObject.transform.localRotation = savedRot;
-		gameObject.transform.localScale = savedScale;
 
 		_parent.children.Add (this);
 

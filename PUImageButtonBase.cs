@@ -68,6 +68,7 @@ public partial class PUImageButton : PUImageButtonBase {
 			string anchor,
 			bool active,
 			bool mask,
+			bool outline,
 			float lastY,
 			float lastX,
 			string shader,
@@ -127,6 +128,9 @@ public partial class PUImageButton : PUImageButtonBase {
 
 		this.mask = mask;
 		this.maskExists = true;
+
+		this.outline = outline;
+		this.outlineExists = true;
 
 		this.lastY = lastY;
 		this.lastYExists = true;
