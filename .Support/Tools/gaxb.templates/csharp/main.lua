@@ -258,7 +258,10 @@ function typeForItem(v)
 				appinfo = appinfo[1].content;
 			end
 			
-			if(appinfo == "ENUM" or appinfo == "ENUM_MASK" or appinfo == "NAMED_ENUM") then
+			if(appinfo == "ENUM") then
+				return "int";
+			end
+			if(appinfo == "ENUM_MASK" or appinfo == "NAMED_ENUM") then
 				return capitalizedString(t.namespace).."."..t.name;
 			end
 			if(appinfo == "TYPEDEF") then

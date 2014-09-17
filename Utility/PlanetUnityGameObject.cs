@@ -52,6 +52,10 @@ public class PlanetUnityOverride {
 
 		s = s.Replace("@LANGUAGE", PlanetUnityLanguage.LanguageCode());
 
+		if (s.Equals ("nan")) {
+			return "0";
+		}
+
 		if (s.StartsWith ("@eval(")) {
 
 			string evalListString = s.Substring(6, s.Length-7);
