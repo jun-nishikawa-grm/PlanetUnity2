@@ -28,17 +28,16 @@ public class PUTableHeaderScript : MonoBehaviour {
 		originalY = gameObject.transform.localPosition.y;
 	}
 
-	public void Update()
+	public void LateUpdate()
 	{
 		// Test world position is not above the table top; if so, clamp it?
 
-		float diff = table.gameObject.transform.localPosition.y + (originalY - table.bounds.w) + tableCell.puGameObject.bounds.w;
-
+		float diff = table.contentObject.transform.localPosition.y - table.rectTransform.rect.height;
 		if (diff > 0) {
 			Vector2 pos = gameObject.transform.localPosition;
 			pos.y = originalY - diff;
 			gameObject.transform.localPosition = pos;
-		} else if(gameObject.transform.localPosition.y != originalY) {
+		} else if(gameObject.transform.localPosition.y.Equals(originalY) == false) {
 			Vector2 pos = gameObject.transform.localPosition;
 			pos.y = originalY;
 			gameObject.transform.localPosition = pos;

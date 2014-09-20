@@ -148,7 +148,7 @@ public class PlanetUnityLanguage
 			}
 			return value;
 		}catch{
-			Debug.Log ("Language key " + key + " does not exist");
+			//Debug.Log ("Language key " + key + " does not exist");
 		}
 
 		return key;
