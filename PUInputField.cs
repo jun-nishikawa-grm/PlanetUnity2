@@ -55,7 +55,9 @@ public partial class PUInputField : PUInputFieldBase {
 
 
 		field.onSubmit.AddListener(new UnityEngine.Events.UnityAction<string>((string value) => { 
-			NotificationCenter.postNotification (Scope (), this.onValueChanged, NotificationCenter.Args("sender", this));
+			if(onValueChanged != null){
+				NotificationCenter.postNotification (Scope (), this.onValueChanged, NotificationCenter.Args("sender", this));
+			}
 		}));
 	}
 
