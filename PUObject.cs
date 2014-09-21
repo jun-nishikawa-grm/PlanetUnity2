@@ -20,6 +20,14 @@ using System.Collections;
 
 public partial class PUObject : PUObjectBase {
 
+	public object UserData;
+	public object UserData1;
+	public object UserData2;
+
+	public float UserFloat1;
+	public float UserFloat2;
+	public float UserFloat3;
+
 
 	public override void gaxb_load(XmlReader reader, object _parent, Hashtable args)
 	{

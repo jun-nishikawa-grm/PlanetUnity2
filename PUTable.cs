@@ -17,6 +17,15 @@ using UnityEngine;
 using System;
 using System.Reflection;
 
+public class PUTableUpdateScript : MonoBehaviour {
+
+	public PUTable table;
+
+	public void LateUpdate() {
+		table.LateUpdate ();
+	}
+}
+
 public class PUTableHeaderScript : MonoBehaviour {
 
 	public PUTable table;
@@ -59,6 +68,10 @@ public class PUTableCell {
 	public virtual string XmlPath() {
 		// Subclasses override this method to supply a path to a planet unity xml for this cell
 		return "(subclass needs to define an XmlPath)";
+	}
+
+	public virtual void LateUpdate() {
+		// Subclasses can override to dynamically check their current size
 	}
 
 	public virtual void LoadIntoPUGameObject(PUTable parent, object data) {
@@ -150,6 +163,12 @@ public partial class PUTable : PUTableBase {
 	}
 
 	public void ReloadTable() {
+
+		if(gameObject.GetComponent<PUTableUpdateScript>() == null){
+			PUTableUpdateScript script = (PUTableUpdateScript)gameObject.AddComponent (typeof(PUTableUpdateScript));
+			script.table = this;
+		}
+
 		// 0) Remove all previous content
 		foreach (PUTableCell cell in allCells) {
 			cell.puGameObject.unload ();
@@ -169,6 +188,23 @@ public partial class PUTable : PUTableBase {
 			if (cell.IsHeader ()) {
 				// TODO: Move me to the end of the stuff
 			}
+		}
+
+		CalculateContentSize ();
+	}
+
+	public void LateUpdate() {
+
+		float y = 0;
+
+		// 0) Remove all previous content
+		foreach (PUTableCell cell in allCells) {
+
+			cell.LateUpdate ();
+
+			cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (0, y);
+
+			y += cell.puGameObject.rectTransform.rect.height;
 		}
 
 		CalculateContentSize ();
