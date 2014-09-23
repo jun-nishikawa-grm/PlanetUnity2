@@ -40,8 +40,8 @@ public class PUTableHeaderScript : MonoBehaviour {
 	public void LateUpdate()
 	{
 		// Test world position is not above the table top; if so, clamp it?
+		float diff = (table.contentObject.transform.localPosition.y - table.rectTransform.rect.height) + (gameObject.transform.localPosition.y+tableCell.puGameObject.rectTransform.rect.height);
 
-		float diff = table.contentObject.transform.localPosition.y - table.rectTransform.rect.height;
 		if (diff > 0) {
 			Vector2 pos = gameObject.transform.localPosition;
 			pos.y = originalY - diff;
@@ -184,9 +184,12 @@ public partial class PUTable : PUTableBase {
 			LoadCellForData(allObjects[i]);
 		}
 
-		foreach (PUTableCell cell in allCells) {
+		//foreach (PUTableCell cell in allCells) {
+		for(int i = allCells.Count-1; i >= 0; i--){
+			PUTableCell cell = allCells [i];
 			if (cell.IsHeader ()) {
 				// TODO: Move me to the end of the stuff
+				cell.puGameObject.gameObject.transform.SetParent (cell.puGameObject.gameObject.transform.parent, false);
 			}
 		}
 
