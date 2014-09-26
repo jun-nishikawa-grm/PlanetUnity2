@@ -36,6 +36,7 @@ public partial class PUColorButton : PUColorButtonBase {
 		button = gameObject.GetComponent<Button> ();
 
 		if (onTouchUpExists) {
+		
 			button.onClick.AddListener(() => { 
 				NotificationCenter.postNotification (Scope (), this.onTouchUp, NotificationCenter.Args("sender", this));
 			}); 

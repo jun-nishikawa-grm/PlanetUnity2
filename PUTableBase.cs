@@ -24,6 +24,10 @@ public partial class PUTable : PUTableBase {
 	
 	
 	public PUTable(
+			bool inertia,
+			bool horizontal,
+			bool vertical,
+			float scrollWheelSensitivity,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -46,6 +50,18 @@ public partial class PUTable : PUTableBase {
 			string tag5,
 			string tag6 ) : this()
 	{
+		this.inertia = inertia;
+		this.inertiaExists = true;
+
+		this.horizontal = horizontal;
+		this.horizontalExists = true;
+
+		this.vertical = vertical;
+		this.verticalExists = true;
+
+		this.scrollWheelSensitivity = scrollWheelSensitivity;
+		this.scrollWheelSensitivityExists = true;
+
 		this.bounds = bounds;
 		this.boundsExists = true;
 

@@ -31,6 +31,21 @@ public partial class PUScrollRect : PUScrollRectBase {
 
 		scroll = gameObject.GetComponent<ScrollRect> ();
 		canvasRenderer = gameObject.GetComponent<CanvasRenderer> ();
+
+
+
+		if (inertiaExists) {
+			scroll.inertia = inertia;
+		}
+		if (horizontalExists) {
+			scroll.horizontal = horizontal;
+		}
+		if (verticalExists) {
+			scroll.vertical = vertical;
+		}
+		if (scrollWheelSensitivityExists) {
+			scroll.scrollSensitivity = scrollWheelSensitivity;
+		}
 	}
 
 	public void CalculateContentSize()

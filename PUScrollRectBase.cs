@@ -19,11 +19,40 @@ public partial class PUScrollRect : PUScrollRectBase {
 	
 	public PUScrollRect()
 	{
+		string attr;
+
+		attr = "0";
+		if(attr != null) { scrollWheelSensitivity = float.Parse(attr); scrollWheelSensitivityExists = true; } 
+
 	}
 	
 	
+	public PUScrollRect(
+			bool inertia,
+			bool horizontal,
+			bool vertical,
+			float scrollWheelSensitivity ) : this()
+	{
+		this.inertia = inertia;
+		this.inertiaExists = true;
+
+		this.horizontal = horizontal;
+		this.horizontalExists = true;
+
+		this.vertical = vertical;
+		this.verticalExists = true;
+
+		this.scrollWheelSensitivity = scrollWheelSensitivity;
+		this.scrollWheelSensitivityExists = true;
+	}
+
+	
 	
 	public PUScrollRect(
+			bool inertia,
+			bool horizontal,
+			bool vertical,
+			float scrollWheelSensitivity,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -46,6 +75,18 @@ public partial class PUScrollRect : PUScrollRectBase {
 			string tag5,
 			string tag6 ) : this()
 	{
+		this.inertia = inertia;
+		this.inertiaExists = true;
+
+		this.horizontal = horizontal;
+		this.horizontalExists = true;
+
+		this.vertical = vertical;
+		this.verticalExists = true;
+
+		this.scrollWheelSensitivity = scrollWheelSensitivity;
+		this.scrollWheelSensitivityExists = true;
+
 		this.bounds = bounds;
 		this.boundsExists = true;
 
@@ -119,14 +160,33 @@ public partial class PUScrollRect : PUScrollRectBase {
 public class PUScrollRectBase : PUGameObject {
 
 
+	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
+	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
+
 
 
 
 	// XML Attributes
+	public bool inertia;
+	public bool inertiaExists;
+
+	public bool horizontal;
+	public bool horizontalExists;
+
+	public bool vertical;
+	public bool verticalExists;
+
+	public float scrollWheelSensitivity;
+	public bool scrollWheelSensitivityExists;
+
 
 
 
 	
+	public void SetInertia(bool v) { inertia = v; inertiaExists = true; } 
+	public void SetHorizontal(bool v) { horizontal = v; horizontalExists = true; } 
+	public void SetVertical(bool v) { vertical = v; verticalExists = true; } 
+	public void SetScrollWheelSensitivity(float v) { scrollWheelSensitivity = v; scrollWheelSensitivityExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -199,6 +259,25 @@ public class PUScrollRectBase : PUGameObject {
 		xmlns = reader.GetAttribute("xmlns");
 		
 
+		string attr;
+		attr = reader.GetAttribute("inertia");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { inertia = bool.Parse(attr); inertiaExists = true; } 
+		
+		attr = reader.GetAttribute("horizontal");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { horizontal = bool.Parse(attr); horizontalExists = true; } 
+		
+		attr = reader.GetAttribute("vertical");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { vertical = bool.Parse(attr); verticalExists = true; } 
+		
+		attr = reader.GetAttribute("scrollWheelSensitivity");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr == null) { attr = "0"; }
+		if(attr != null) { scrollWheelSensitivity = float.Parse(attr); scrollWheelSensitivityExists = true; } 
+		
+
 	}
 	
 	
@@ -211,6 +290,10 @@ public class PUScrollRectBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
+		if(inertiaExists) { sb.AppendFormat (" {0}=\"{1}\"", "inertia", inertia.ToString().ToLower()); }
+		if(horizontalExists) { sb.AppendFormat (" {0}=\"{1}\"", "horizontal", horizontal.ToString().ToLower()); }
+		if(verticalExists) { sb.AppendFormat (" {0}=\"{1}\"", "vertical", vertical.ToString().ToLower()); }
+		if(scrollWheelSensitivityExists) { sb.AppendFormat (" {0}=\"{1}\"", "scrollWheelSensitivity", scrollWheelSensitivity.ToString ("0.##")); }
 
 	}
 	
