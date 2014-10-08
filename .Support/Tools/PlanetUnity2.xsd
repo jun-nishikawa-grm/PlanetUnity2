@@ -413,5 +413,15 @@
 			</extension>
 		</complexContent>
 	</complexType>
+	
+	
+	<element name="AspectFit" type="planet:AspectFit"/>
+	<complexType name="AspectFit">
+		<complexContent>
+			<extension base="planet:GameObject">
+				<attribute name="contentSize" type="planet:vec2" use="optional" default="0,0" />
+			</extension>
+		</complexContent>
+	</complexType>
 
 </schema>

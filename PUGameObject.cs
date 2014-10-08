@@ -25,6 +25,8 @@ public partial class PUGameObject : PUGameObjectBase {
 	public GameObject gameObject;
 	public RectTransform rectTransform;
 
+	public CanvasGroup canvasGroup = null;
+
 	private static Dictionary<string, Vector4> stringToAnchorLookup = null;
 
 	public void SetParentGameObject(GameObject p)
@@ -196,11 +198,29 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		parent = _parent;
 
-		gameObject.transform.SetParent (_parent.gameObject.transform, false);
+
+		if (_parent is PUScrollRect) {
+			gameObject.transform.SetParent ((_parent as PUScrollRect).contentObject.transform, false);
+		} else {
+			gameObject.transform.SetParent (_parent.gameObject.transform, false);
+		}
 
 		_parent.children.Add (this);
 
 		gaxb_complete ();
+	}
+
+
+	public void CheckCanvasGroup () {
+		if (canvasGroup == null) {
+			gameObject.AddComponent<CanvasGroup> ();
+			canvasGroup = gameObject.GetComponent<CanvasGroup> ();
+		}
+	}
+
+	public void IgnoreMouse(bool i) {
+		CheckCanvasGroup ();
+		canvasGroup.blocksRaycasts = !i;
 	}
 
 }

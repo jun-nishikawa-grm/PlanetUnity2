@@ -81,6 +81,12 @@ public partial class PUScrollRect : PUScrollRectBase {
 			
 		myRectTransform.sizeDelta = new Vector2 (maxX - minX, maxY - minY);
 	}
+
+	public void SetContentSize(float w, float h)
+	{
+		RectTransform myRectTransform = (RectTransform)contentObject.transform;
+		myRectTransform.sizeDelta = new Vector2(w,h);
+	}
 		
 	public override void gaxb_complete()
 	{
