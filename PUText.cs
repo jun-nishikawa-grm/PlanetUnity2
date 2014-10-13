@@ -36,7 +36,7 @@ public partial class PUText : PUTextBase {
 		}
 
 		if (valueExists) {
-			text.text = value;
+			text.text = PlanetUnityStyle.ReplaceStyleTags(value);
 		}
 
 		if (fontColorExists) {
