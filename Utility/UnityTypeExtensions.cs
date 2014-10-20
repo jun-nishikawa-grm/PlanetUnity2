@@ -156,4 +156,10 @@ public static class ColorExtension
 	{
 		return string.Format ("{0},{1},{2},{3}", c.r, c.g, c.b, c.a);
 	}
+
+	public static string ToHex(this Color color)
+	{
+		Color32 c = color;
+		return "#" + c.r.ToString ("X2") + c.g.ToString ("X2") + c.b.ToString ("X2") + c.a.ToString ("X2");
+	}
 }

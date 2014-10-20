@@ -39,7 +39,7 @@ public partial class PUImageButton : PUImageButtonBase {
 		button = gameObject.GetComponent<Button> ();
 		eventTrigger = gameObject.GetComponent<EventTrigger> ();
 
-		if (pressedResourcePathExists || highlightedResourcePathExists || disabledResourcePathExists) {
+		if (pressedResourcePath != null || highlightedResourcePath != null || disabledResourcePath != null) {
 
 			button.transition = Selectable.Transition.SpriteSwap;
 
