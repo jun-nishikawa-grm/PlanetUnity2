@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using System.Globalization;
+using ComponentAce.Compression.Libs.zlib;
 
 
 public static class RectTransformExtension
@@ -128,6 +129,16 @@ public static class Vector4Extension
 	public static string PUToString(this Vector4 v)
 	{
 		return string.Format ("{0},{1},{2},{3}", v.x, v.y, v.z, v.w);
+	}
+
+	public static float Width(this Vector4 v)
+	{
+		return v.z;
+	}
+
+	public static float Height(this Vector4 v)
+	{
+		return v.w;
 	}
 }
 
