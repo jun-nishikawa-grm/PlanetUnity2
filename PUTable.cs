@@ -138,7 +138,7 @@ public class PUTableCell {
 
 public partial class PUTable : PUTableBase {
 
-	List<object> allObjects = null;
+	public List<object> allObjects = null;
 	List<PUTableCell> allCells = new List<PUTableCell>();
 
 
