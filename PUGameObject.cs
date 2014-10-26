@@ -223,4 +223,53 @@ public partial class PUGameObject : PUGameObjectBase {
 		canvasGroup.blocksRaycasts = !i;
 	}
 
+
+
+	public void UnscheduleForUpdates() {
+		GameObjectLateUpdateScript script1 = gameObject.GetComponent<GameObjectLateUpdateScript> ();
+		if (script1 != null) {
+			script1.enabled = false;
+		}
+
+		GameObjectUpdateScript script2 = gameObject.GetComponent<GameObjectUpdateScript> ();
+		if (script2 != null) {
+			script2.enabled = false;
+		}
+	}
+
+	public void ScheduleForLateUpdate() {
+		gameObject.AddComponent<GameObjectLateUpdateScript> ();
+		GameObjectLateUpdateScript script = gameObject.GetComponent<GameObjectLateUpdateScript> ();
+		script.entity = this;
+	}
+
+	public void ScheduleForUpdate() {
+		gameObject.AddComponent<GameObjectUpdateScript> ();
+		GameObjectUpdateScript script = gameObject.GetComponent<GameObjectUpdateScript> ();
+		script.entity = this;
+	}
+
+	public virtual void Update() {
+
+	}
+
+	public virtual void LateUpdate() {
+
+	}
+}
+
+public class GameObjectLateUpdateScript : MonoBehaviour {
+	public PUGameObject entity;
+
+	public void LateUpdate() {
+		entity.LateUpdate ();
+	}
+}
+
+public class GameObjectUpdateScript : MonoBehaviour {
+	public PUGameObject entity;
+
+	public void Update() {
+		entity.Update ();
+	}
 }
