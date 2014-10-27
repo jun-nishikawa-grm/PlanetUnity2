@@ -295,7 +295,7 @@
 			<enumeration value = "lowerRight"/>
 		</restriction>
     </simpleType>
-
+		
 	<simpleType name="GridLayoutStartAxis">
 		<annotation>
 			<appinfo>NAMED_ENUM</appinfo>
@@ -332,6 +332,8 @@
 				<attribute name="startCorner" type="planet:GridLayoutStartCorner" use="optional" />
 				<attribute name="startAxis" type="planet:GridLayoutStartAxis" use="optional" />
 				<attribute name="childAlignment" type="planet:GridLayoutChildAlignment" use="optional" />
+				<attribute name="fixedRows" type="int" use="optional" />
+				<attribute name="fixedColumns" type="int" use="optional" />
 			</extension>
 		</complexContent>
 	</complexType>

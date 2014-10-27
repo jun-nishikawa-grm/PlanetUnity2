@@ -35,6 +35,17 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 			layout.spacing = spacing;
 		}
 
+		if (fixedRows > 0) {
+			layout.constraint = GridLayoutGroup.Constraint.FixedRowCount;
+			layout.constraintCount = fixedRows;
+		} else if (fixedColumns > 0) {
+			layout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+			layout.constraintCount = fixedColumns;
+		} else {
+			layout.constraint = GridLayoutGroup.Constraint.Flexible;
+		}
+
+
 		if (startAxisExists) {
 			if (startAxis == PlanetUnity2.GridLayoutStartAxis.horizontal)
 				layout.startAxis = GridLayoutGroup.Axis.Horizontal;

@@ -34,7 +34,9 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 			Vector2 spacing,
 			PlanetUnity2.GridLayoutStartCorner startCorner,
 			PlanetUnity2.GridLayoutStartAxis startAxis,
-			PlanetUnity2.GridLayoutChildAlignment childAlignment ) : this()
+			PlanetUnity2.GridLayoutChildAlignment childAlignment,
+			int fixedRows,
+			int fixedColumns ) : this()
 	{
 		this.cellSize = cellSize;
 		this.cellSizeExists = true;
@@ -50,6 +52,12 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 
 		this.childAlignment = childAlignment;
 		this.childAlignmentExists = true;
+
+		this.fixedRows = fixedRows;
+		this.fixedRowsExists = true;
+
+		this.fixedColumns = fixedColumns;
+		this.fixedColumnsExists = true;
 	}
 
 	
@@ -60,6 +68,8 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 			PlanetUnity2.GridLayoutStartCorner startCorner,
 			PlanetUnity2.GridLayoutStartAxis startAxis,
 			PlanetUnity2.GridLayoutChildAlignment childAlignment,
+			int fixedRows,
+			int fixedColumns,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -96,6 +106,12 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 
 		this.childAlignment = childAlignment;
 		this.childAlignmentExists = true;
+
+		this.fixedRows = fixedRows;
+		this.fixedRowsExists = true;
+
+		this.fixedColumns = fixedColumns;
+		this.fixedColumnsExists = true;
 
 		this.bounds = bounds;
 		this.boundsExists = true;
@@ -192,6 +208,12 @@ public class PUGridLayoutGroupBase : PUGameObject {
 	public PlanetUnity2.GridLayoutChildAlignment childAlignment;
 	public bool childAlignmentExists;
 
+	public int fixedRows;
+	public bool fixedRowsExists;
+
+	public int fixedColumns;
+	public bool fixedColumnsExists;
+
 
 
 
@@ -201,6 +223,8 @@ public class PUGridLayoutGroupBase : PUGameObject {
 	public void SetStartCorner(PlanetUnity2.GridLayoutStartCorner v) { startCorner = v; startCornerExists = true; } 
 	public void SetStartAxis(PlanetUnity2.GridLayoutStartAxis v) { startAxis = v; startAxisExists = true; } 
 	public void SetChildAlignment(PlanetUnity2.GridLayoutChildAlignment v) { childAlignment = v; childAlignmentExists = true; } 
+	public void SetFixedRows(int v) { fixedRows = v; fixedRowsExists = true; } 
+	public void SetFixedColumns(int v) { fixedColumns = v; fixedColumnsExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -296,6 +320,14 @@ public class PUGridLayoutGroupBase : PUGameObject {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)System.Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); childAlignmentExists = true; } 
 		
+		attr = reader.GetAttribute("fixedRows");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { fixedRows = int.Parse(attr); fixedRowsExists = true; } 
+		
+		attr = reader.GetAttribute("fixedColumns");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { fixedColumns = int.Parse(attr); fixedColumnsExists = true; } 
+		
 
 	}
 	
@@ -314,6 +346,8 @@ public class PUGridLayoutGroupBase : PUGameObject {
 		if(startCornerExists) { sb.AppendFormat (" {0}=\"{1}\"", "startCorner", (int)startCorner); }
 		if(startAxisExists) { sb.AppendFormat (" {0}=\"{1}\"", "startAxis", (int)startAxis); }
 		if(childAlignmentExists) { sb.AppendFormat (" {0}=\"{1}\"", "childAlignment", (int)childAlignment); }
+		if(fixedRowsExists) { sb.AppendFormat (" {0}=\"{1}\"", "fixedRows", fixedRows); }
+		if(fixedColumnsExists) { sb.AppendFormat (" {0}=\"{1}\"", "fixedColumns", fixedColumns); }
 
 	}
 	
