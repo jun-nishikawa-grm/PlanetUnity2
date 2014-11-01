@@ -1,4 +1,7 @@
-PlanetUnity2
-============
+![Small Planet logo](.Support/images/smallplanet_logo.png)
 
-PlanetUnity2 is an XML driven framework for creating UI utilizing the new GUI system introduced in Unity 4.6
+# Planet Unity
+
+
+PlanetUnity is an XML driven framework for creating user interfaces utilizing the new uGUI system introduced in Unity 4.6.
+
