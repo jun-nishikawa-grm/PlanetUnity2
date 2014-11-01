@@ -38,9 +38,9 @@ public class PlanetUnity2 {
 	};
 
 	public enum CanvasRenderMode {
-		Overlay,
-		OverlayCamera,
-		World,
+		ScreenSpaceOverlay,
+		ScreenSpaceCamera,
+		WorldSpace,
 	};
 
 	public const string USERSTRINGINPUT = "UserStringInput";

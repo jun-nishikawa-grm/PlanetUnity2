@@ -21,7 +21,7 @@ public partial class PUCanvas : PUCanvasBase {
 	{
 		string attr;
 
-		attr = "Overlay";
+		attr = "ScreenSpaceOverlay";
 		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)System.Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); renderModeExists = true; } 
 		attr = "false";
 		if(attr != null) { pixelPerfect = bool.Parse(attr); pixelPerfectExists = true; } 
@@ -264,7 +264,7 @@ public class PUCanvasBase : PUGameObject {
 		string attr;
 		attr = reader.GetAttribute("renderMode");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr == null) { attr = "Overlay"; }
+		if(attr == null) { attr = "ScreenSpaceOverlay"; }
 		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)System.Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); renderModeExists = true; } 
 		
 		attr = reader.GetAttribute("pixelPerfect");

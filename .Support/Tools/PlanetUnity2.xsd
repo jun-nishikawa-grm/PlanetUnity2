@@ -102,9 +102,9 @@
 			<appinfo>NAMED_ENUM</appinfo>
 		</annotation>
         <restriction base="string">
-			<enumeration value = "Overlay"/>
-			<enumeration value = "OverlayCamera"/>
-			<enumeration value = "World"/>
+			<enumeration value = "ScreenSpaceOverlay"/>
+			<enumeration value = "ScreenSpaceCamera"/>
+			<enumeration value = "WorldSpace"/>
 		</restriction>
     </simpleType>
 
@@ -112,7 +112,7 @@
 	<complexType name="Canvas" >
 		<complexContent>
 			<extension base="planet:GameObject">
-				<attribute name="renderMode" type="planet:CanvasRenderMode" use="optional" default="Overlay" />
+				<attribute name="renderMode" type="planet:CanvasRenderMode" use="optional" default="ScreenSpaceOverlay" />
 				<attribute name="pixelPerfect" type="boolean" use="optional" default="false" />
 				<attribute name="referenceResolution" type="planet:vec2" use="optional" />
 				<attribute name="referenceResolutionBias" type="float" use="optional" />

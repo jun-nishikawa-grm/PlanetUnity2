@@ -31,12 +31,12 @@ public partial class PUCanvas : PUCanvasBase {
 		canvas = gameObject.GetComponent<Canvas> ();
 		graphicRaycaster = gameObject.GetComponent<GraphicRaycaster> ();
 
-		if(renderMode == PlanetUnity2.CanvasRenderMode.Overlay)
-			canvas.renderMode = RenderMode.Overlay;
-		if(renderMode == PlanetUnity2.CanvasRenderMode.OverlayCamera)
-			canvas.renderMode = RenderMode.OverlayCamera;
-		if(renderMode == PlanetUnity2.CanvasRenderMode.World)
-			canvas.renderMode = RenderMode.World;
+		if(renderMode == PlanetUnity2.CanvasRenderMode.ScreenSpaceOverlay)
+			canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+		if(renderMode == PlanetUnity2.CanvasRenderMode.ScreenSpaceCamera)
+			canvas.renderMode = RenderMode.ScreenSpaceCamera;
+		if(renderMode == PlanetUnity2.CanvasRenderMode.WorldSpace)
+			canvas.renderMode = RenderMode.WorldSpace;
 
 		if (referenceResolutionExists) {
 			gameObject.AddComponent<ReferenceResolution>();
