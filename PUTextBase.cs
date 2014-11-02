@@ -39,7 +39,8 @@ public partial class PUText : PUTextBase {
 			float lineSpacing,
 			PlanetUnity2.TextAlignment alignment,
 			string value,
-			bool bestFit ) : this()
+			bool bestFit,
+			string onLinkClick ) : this()
 	{
 		this.font = font;
 		this.fontExists = true;
@@ -64,6 +65,9 @@ public partial class PUText : PUTextBase {
 
 		this.bestFit = bestFit;
 		this.bestFitExists = true;
+
+		this.onLinkClick = onLinkClick;
+		this.onLinkClickExists = true;
 	}
 
 	
@@ -77,6 +81,7 @@ public partial class PUText : PUTextBase {
 			PlanetUnity2.TextAlignment alignment,
 			string value,
 			bool bestFit,
+			string onLinkClick,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -122,6 +127,9 @@ public partial class PUText : PUTextBase {
 
 		this.bestFit = bestFit;
 		this.bestFitExists = true;
+
+		this.onLinkClick = onLinkClick;
+		this.onLinkClickExists = true;
 
 		this.bounds = bounds;
 		this.boundsExists = true;
@@ -227,6 +235,9 @@ public class PUTextBase : PUGameObject {
 	public bool bestFit;
 	public bool bestFitExists;
 
+	public string onLinkClick;
+	public bool onLinkClickExists;
+
 
 
 
@@ -239,6 +250,7 @@ public class PUTextBase : PUGameObject {
 	public void SetAlignment(PlanetUnity2.TextAlignment v) { alignment = v; alignmentExists = true; } 
 	public void SetValue(string v) { value = v; valueExists = true; } 
 	public void SetBestFit(bool v) { bestFit = v; bestFitExists = true; } 
+	public void SetOnLinkClick(string v) { onLinkClick = v; onLinkClickExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -347,6 +359,10 @@ public class PUTextBase : PUGameObject {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { bestFit = bool.Parse(attr); bestFitExists = true; } 
 		
+		attr = reader.GetAttribute("onLinkClick");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { onLinkClick = attr; onLinkClickExists = true; } 
+		
 
 	}
 	
@@ -368,6 +384,7 @@ public class PUTextBase : PUGameObject {
 		if(alignmentExists) { sb.AppendFormat (" {0}=\"{1}\"", "alignment", (int)alignment); }
 		if(valueExists) { sb.AppendFormat (" {0}=\"{1}\"", "value", value); }
 		if(bestFitExists) { sb.AppendFormat (" {0}=\"{1}\"", "bestFit", bestFit.ToString().ToLower()); }
+		if(onLinkClickExists) { sb.AppendFormat (" {0}=\"{1}\"", "onLinkClick", onLinkClick); }
 
 	}
 	

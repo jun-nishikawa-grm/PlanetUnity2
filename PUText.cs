@@ -16,8 +16,77 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System;
+
+public class DetectTextClick : EventTrigger {
+
+	public PUText entity;
+
+	public override void OnPointerClick(PointerEventData eventData)
+	{
+		Text t = gameObject.GetComponent<Text>();
+		TextGenerator tGen = t.cachedTextGenerator;
+
+		RectTransform rectTransform = gameObject.transform as RectTransform;
+
+		Vector2 touchPos = rectTransform.InverseTransformPoint(eventData.position);
+
+		UIVertex[] vArray = tGen.GetVerticesArray ();
+
+		string value = t.text;
+
+		for (int i = 0; i < tGen.characterCount; i++) {
+			UIVertex a = vArray[i * 4 + 0];
+			UIVertex c = vArray [i * 4 + 2];
+
+			if (touchPos.x <= c.position.x && touchPos.x >= a.position.x) {
+				if (touchPos.y >= c.position.y && touchPos.y <= a.position.y) {
+					// i is the index into the string which we clicked.  Determine a "link" by finding the previous '['
+					// and the ending ']'
+					int startIndex = -1;
+					int endIndex = -1;
+					for (int k = i; k >= 0; k--) {
+						if (value [k] == '\x0c') {
+							startIndex = k;
+							break;
+						}
+					}
+					for (int k = i; k < value.Length; k++) {
+						if (value [k] == '\x0c') {
+							endIndex = k;
+							break;
+						}
+					}
+
+					if (startIndex >= 0 && endIndex >= 0) {
+						string linkText = value.Substring (startIndex + 1, endIndex - startIndex - 1).Trim ();
+						entity.LinkClicked (linkText);
+						return;
+					}
+				}
+			}
+		}
+	}
+
+}
 
 public partial class PUText : PUTextBase {
+
+	static public Action<string> GlobalOnLinkClickAction;
+	public Action<string> OnLinkClickAction;
+
+	public void LinkClicked(string linkText) {
+		if (OnLinkClickAction != null) {
+			OnLinkClickAction (linkText);
+		}
+		if (OnLinkClickAction == null && GlobalOnLinkClickAction != null) {
+			GlobalOnLinkClickAction (linkText);
+		}
+		if (onLinkClick != null) {
+			NotificationCenter.postNotification (Scope (), onLinkClick, NotificationCenter.Args ("link", linkText));
+		}
+	}
 
 	public Text text;
 	public CanvasRenderer canvasRenderer;
@@ -27,6 +96,12 @@ public partial class PUText : PUTextBase {
 		gameObject = new GameObject ("<Text/>", typeof(RectTransform));
 		gameObject.AddComponent<CanvasRenderer> ();
 		gameObject.AddComponent<Text> ();
+
+		if (onLinkClick != null || OnLinkClickAction != null || GlobalOnLinkClickAction != null) {
+			gameObject.AddComponent<DetectTextClick> ();
+			DetectTextClick script = gameObject.GetComponent<DetectTextClick> ();
+			script.entity = this;
+		}
 
 		text = gameObject.GetComponent<Text> ();
 		canvasRenderer = gameObject.GetComponent<CanvasRenderer> ();

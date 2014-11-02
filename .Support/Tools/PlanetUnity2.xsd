@@ -255,6 +255,8 @@
 				
 				<attribute name="value" type="string" use="required" />
 				<attribute name="bestFit" type="boolean" use="optional" />
+				
+				<attribute name="onLinkClick" type="string" use="optional" />
 			</extension>
 		</complexContent>
 	</complexType>

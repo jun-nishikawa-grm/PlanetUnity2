@@ -143,6 +143,8 @@ public class PlanetUnityStyle
 		foreach (String key in languageDict.Keys) {
 			sb.Replace (key, languageDict [key]);
 		}
+		sb.Replace ("\\n", "\n");
+		sb.Replace ("\\x0c", "\x0c");
 		return sb.ToString ();
 	}
 

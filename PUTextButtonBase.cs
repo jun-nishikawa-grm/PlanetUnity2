@@ -45,6 +45,7 @@ public partial class PUTextButton : PUTextButtonBase {
 			PlanetUnity2.TextAlignment alignment,
 			string value,
 			bool bestFit,
+			string onLinkClick,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -93,6 +94,9 @@ public partial class PUTextButton : PUTextButtonBase {
 
 		this.bestFit = bestFit;
 		this.bestFitExists = true;
+
+		this.onLinkClick = onLinkClick;
+		this.onLinkClickExists = true;
 
 		this.bounds = bounds;
 		this.boundsExists = true;
