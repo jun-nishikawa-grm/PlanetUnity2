@@ -65,6 +65,9 @@ public class PlanetUnityResourceCache
 		if (sprites.ContainsKey(spriteName) == false) {
 			// This wasn't a sprite atlas, must be an individual texture
 			Texture2D texture = GetTexture(s);
+			if (texture == null) {
+				return null;
+			}
 			Sprite sprite = Sprite.Create (texture, new Rect (0, 0, texture.width - 1, texture.height - 1), Vector2.zero);
 			sprites [spriteName] = sprite;
 			return sprite;

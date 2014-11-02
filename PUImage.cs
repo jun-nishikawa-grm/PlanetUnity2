@@ -42,10 +42,11 @@ public partial class PUImage : PUImageBase {
 
 	public void LoadImageWithResourcePath(string p) {
 		image.sprite = PlanetUnityResourceCache.GetSprite (p);
-
-		Vector4 border = image.sprite.border;
-		if (!border.x.Equals(0) || !border.y.Equals(0) || !border.z.Equals(0) || !border.w.Equals(0)) {
-			image.type = Image.Type.Sliced;
+		if (image.sprite != null) {
+			Vector4 border = image.sprite.border;
+			if (!border.x.Equals (0) || !border.y.Equals (0) || !border.z.Equals (0) || !border.w.Equals (0)) {
+				image.type = Image.Type.Sliced;
+			}
 		}
 	}
 
