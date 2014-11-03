@@ -139,6 +139,8 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		Application.targetFrameRate = 60;
+
 		currentGameObject = this;
 
 		ReloadCanvas ();

@@ -256,6 +256,32 @@ public partial class PUGameObject : PUGameObjectBase {
 	public virtual void LateUpdate() {
 
 	}
+
+	#region Performance Wrapped Setters For RectTransform
+	public void RectTransformSafeSetLocalScale(Vector2 t){
+		if (rectTransform != null && Vector2.Distance(rectTransform.localScale, t) > 0.001f) {
+			rectTransform.localScale = t;
+		}
+	}
+
+	public void RectTransformSafeSetPivot(Vector2 t){
+		if (rectTransform != null && Vector2.Distance(rectTransform.pivot, t) > 0.001f) {
+			rectTransform.pivot = t;
+		}
+	}
+
+	public void RectTransformSafeSetAnchoredPosition(Vector2 t){
+		if (rectTransform != null && Vector2.Distance(rectTransform.anchoredPosition, t) > 0.001f) {
+			rectTransform.anchoredPosition = t;
+		}
+	}
+
+	public void RectTransformSafeSetLocalEulerAngles(Vector3 t){
+		if (rectTransform != null && Vector2.Distance(rectTransform.localEulerAngles, t) > 0.001f) {
+			rectTransform.localEulerAngles = t;
+		}
+	}
+	#endregion
 }
 
 public class GameObjectLateUpdateScript : MonoBehaviour {
