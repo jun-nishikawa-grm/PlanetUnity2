@@ -280,12 +280,36 @@
 		</complexContent>
 	</complexType>
 	
+	
+	
+	
+	<simpleType name="SliderDirection">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "LeftToRight"/>
+			<enumeration value = "RightToLeft"/>
+			<enumeration value = "BottomToTop"/>
+			<enumeration value = "TopToBottom"/>
+		</restriction>
+    </simpleType>
+	
 	<element name="Slider" type="planet:Slider" />
 	<complexType name="Slider">
 		<complexContent>
 			<extension base="planet:Image">
 				<attribute name="handleResourcePath" type="string" use="optional" />
+				<attribute name="handleSize" type="planet:vec2" use="optional" default="32,32" />
+				
+			   	<attribute name="fillResourcePath" type="string" use="optional" /> 
+				
 				<attribute name="onValueChanged" type="string" use="optional" />
+				
+				<attribute name="minValue" type="float" use="optional" default="0" />
+				<attribute name="maxValue" type="float" use="optional" default="1" />
+				
+				<attribute name="direction" type="planet:SliderDirection" use="optional" />
 			</extension>
 		</complexContent>
 	</complexType>

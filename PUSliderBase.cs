@@ -19,19 +19,48 @@ public partial class PUSlider : PUSliderBase {
 	
 	public PUSlider()
 	{
+		string attr;
+
+		attr = "32,32";
+		if(attr != null) { handleSize = new Vector2().PUParse(attr); handleSizeExists = true; } 
+		attr = "0";
+		if(attr != null) { minValue = float.Parse(attr); minValueExists = true; } 
+		attr = "1";
+		if(attr != null) { maxValue = float.Parse(attr); maxValueExists = true; } 
+
 	}
 	
 	
 	public PUSlider(
 			string handleResourcePath,
+			Vector2 handleSize,
+			string fillResourcePath,
 			string onValueChanged,
+			float minValue,
+			float maxValue,
+			PlanetUnity2.SliderDirection direction,
 			string resourcePath ) : this()
 	{
 		this.handleResourcePath = handleResourcePath;
 		this.handleResourcePathExists = true;
 
+		this.handleSize = handleSize;
+		this.handleSizeExists = true;
+
+		this.fillResourcePath = fillResourcePath;
+		this.fillResourcePathExists = true;
+
 		this.onValueChanged = onValueChanged;
 		this.onValueChangedExists = true;
+
+		this.minValue = minValue;
+		this.minValueExists = true;
+
+		this.maxValue = maxValue;
+		this.maxValueExists = true;
+
+		this.direction = direction;
+		this.directionExists = true;
 
 		this.resourcePath = resourcePath;
 		this.resourcePathExists = true;
@@ -41,7 +70,12 @@ public partial class PUSlider : PUSliderBase {
 	
 	public PUSlider(
 			string handleResourcePath,
+			Vector2 handleSize,
+			string fillResourcePath,
 			string onValueChanged,
+			float minValue,
+			float maxValue,
+			PlanetUnity2.SliderDirection direction,
 			string resourcePath,
 			Color color,
 			Vector4 bounds,
@@ -69,8 +103,23 @@ public partial class PUSlider : PUSliderBase {
 		this.handleResourcePath = handleResourcePath;
 		this.handleResourcePathExists = true;
 
+		this.handleSize = handleSize;
+		this.handleSizeExists = true;
+
+		this.fillResourcePath = fillResourcePath;
+		this.fillResourcePathExists = true;
+
 		this.onValueChanged = onValueChanged;
 		this.onValueChangedExists = true;
+
+		this.minValue = minValue;
+		this.minValueExists = true;
+
+		this.maxValue = maxValue;
+		this.maxValueExists = true;
+
+		this.direction = direction;
+		this.directionExists = true;
 
 		this.resourcePath = resourcePath;
 		this.resourcePathExists = true;
@@ -161,15 +210,35 @@ public class PUSliderBase : PUImage {
 	public string handleResourcePath;
 	public bool handleResourcePathExists;
 
+	public Vector2 handleSize;
+	public bool handleSizeExists;
+
+	public string fillResourcePath;
+	public bool fillResourcePathExists;
+
 	public string onValueChanged;
 	public bool onValueChangedExists;
+
+	public float minValue;
+	public bool minValueExists;
+
+	public float maxValue;
+	public bool maxValueExists;
+
+	public PlanetUnity2.SliderDirection direction;
+	public bool directionExists;
 
 
 
 
 	
 	public void SetHandleResourcePath(string v) { handleResourcePath = v; handleResourcePathExists = true; } 
+	public void SetHandleSize(Vector2 v) { handleSize = v; handleSizeExists = true; } 
+	public void SetFillResourcePath(string v) { fillResourcePath = v; fillResourcePathExists = true; } 
 	public void SetOnValueChanged(string v) { onValueChanged = v; onValueChangedExists = true; } 
+	public void SetMinValue(float v) { minValue = v; minValueExists = true; } 
+	public void SetMaxValue(float v) { maxValue = v; maxValueExists = true; } 
+	public void SetDirection(PlanetUnity2.SliderDirection v) { direction = v; directionExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -247,9 +316,32 @@ public class PUSliderBase : PUImage {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { handleResourcePath = attr; handleResourcePathExists = true; } 
 		
+		attr = reader.GetAttribute("handleSize");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr == null) { attr = "32,32"; }
+		if(attr != null) { handleSize = new Vector2().PUParse(attr); handleSizeExists = true; } 
+		
+		attr = reader.GetAttribute("fillResourcePath");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { fillResourcePath = attr; fillResourcePathExists = true; } 
+		
 		attr = reader.GetAttribute("onValueChanged");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { onValueChanged = attr; onValueChangedExists = true; } 
+		
+		attr = reader.GetAttribute("minValue");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr == null) { attr = "0"; }
+		if(attr != null) { minValue = float.Parse(attr); minValueExists = true; } 
+		
+		attr = reader.GetAttribute("maxValue");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr == null) { attr = "1"; }
+		if(attr != null) { maxValue = float.Parse(attr); maxValueExists = true; } 
+		
+		attr = reader.GetAttribute("direction");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { direction = (PlanetUnity2.SliderDirection)System.Enum.Parse(typeof(PlanetUnity2.SliderDirection), attr); directionExists = true; } 
 		
 
 	}
@@ -265,7 +357,12 @@ public class PUSliderBase : PUImage {
 		base.gaxb_appendXMLAttributes(sb);
 
 		if(handleResourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "handleResourcePath", handleResourcePath); }
+		if(handleSizeExists) { sb.AppendFormat (" {0}=\"{1}\"", "handleSize", handleSize); }
+		if(fillResourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "fillResourcePath", fillResourcePath); }
 		if(onValueChangedExists) { sb.AppendFormat (" {0}=\"{1}\"", "onValueChanged", onValueChanged); }
+		if(minValueExists) { sb.AppendFormat (" {0}=\"{1}\"", "minValue", minValue.ToString ("0.##")); }
+		if(maxValueExists) { sb.AppendFormat (" {0}=\"{1}\"", "maxValue", maxValue.ToString ("0.##")); }
+		if(directionExists) { sb.AppendFormat (" {0}=\"{1}\"", "direction", (int)direction); }
 
 	}
 	

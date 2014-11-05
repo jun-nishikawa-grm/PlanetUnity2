@@ -25,6 +25,13 @@ interface IPlanetUnity2
 public class PlanetUnity2 {
 	public int baseRenderQueue = 0;
 
+	public enum SliderDirection {
+		LeftToRight,
+		RightToLeft,
+		BottomToTop,
+		TopToBottom,
+	};
+
 	public enum GridLayoutStartCorner {
 		upperLeft,
 		upperRight,

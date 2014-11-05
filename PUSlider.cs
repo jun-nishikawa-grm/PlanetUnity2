@@ -20,9 +20,10 @@ using UnityEngine.UI;
 
 public partial class PUSlider : PUSliderBase {
 
-	PUImage handle;
+	public PUImage handle;
+	public PUImage fill;
 
-	Slider slider;
+	public Slider slider;
 
 	public override void gaxb_init ()
 	{
@@ -35,8 +36,17 @@ public partial class PUSlider : PUSliderBase {
 		gameObject.AddComponent<Slider> ();
 		slider = gameObject.GetComponent<Slider> ();
 
+		if (fillResourcePath != null) {
+			fill = new PUImage (fillResourcePath, Color.white);
+			fill.SetFrame (0, 0, 0, 0, 0.5f, 0.5f, "stretch,stretch");
+			fill.LoadIntoPUGameObject (this);
+		}
+
 		handle = new PUImage (handleResourcePath, Color.white);
-		handle.SetFrame (0, 0, 40, 0, 0.5f, 0.5f, "stretch,right");
+		handle.SetFrame (0, 0, handleSize.x, handleSize.y, 0.5f, 0.5f, "stretch,stretch");
+		if (handleResourcePath == null) {
+			handle.SetColor (Color.clear);
+		}
 		handle.LoadIntoPUGameObject (this);
 
 		if (onValueChanged != null) {
@@ -47,6 +57,29 @@ public partial class PUSlider : PUSliderBase {
 
 		slider.targetGraphic = handle.image;
 		slider.handleRect = handle.rectTransform;
+		if (fill != null) {
+			slider.fillRect = fill.rectTransform;
+		}
+
+		if (direction == PlanetUnity2.SliderDirection.BottomToTop) {
+			slider.direction = Slider.Direction.BottomToTop;
+		} else if (direction == PlanetUnity2.SliderDirection.TopToBottom) {
+			slider.direction = Slider.Direction.TopToBottom;
+		} else if (direction == PlanetUnity2.SliderDirection.LeftToRight) {
+			slider.direction = Slider.Direction.LeftToRight;
+		} else if (direction == PlanetUnity2.SliderDirection.RightToLeft) {
+			slider.direction = Slider.Direction.RightToLeft;
+		}
+
+		if (minValueExists) {
+			slider.minValue = minValue;
+		}
+
+		if (maxValueExists) {
+			slider.maxValue = maxValue;
+		}
+
+		handle.rectTransform.sizeDelta = new Vector2 (handleSize.x, handleSize.y);
 	}
 
 }
