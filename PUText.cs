@@ -36,37 +36,45 @@ public class DetectTextClick : EventTrigger {
 
 		string value = t.text;
 
+		float minDistance = 999999;
+		int minChar = -1;
+
 		for (int i = 0; i < tGen.characterCount; i++) {
 			UIVertex a = vArray[i * 4 + 0];
 			UIVertex c = vArray [i * 4 + 2];
 
-			if (touchPos.x <= c.position.x && touchPos.x >= a.position.x) {
-				if (touchPos.y >= c.position.y && touchPos.y <= a.position.y) {
-					// i is the index into the string which we clicked.  Determine a "link" by finding the previous '['
-					// and the ending ']'
-					int startIndex = -1;
-					int endIndex = -1;
-					for (int k = i; k >= 0; k--) {
-						if (value [k] == '\x0c') {
-							startIndex = k;
-							break;
-						}
-					}
-					for (int k = i; k < value.Length; k++) {
-						if (value [k] == '\x0c') {
-							endIndex = k;
-							break;
-						}
-					}
 
-					if (startIndex >= 0 && endIndex >= 0) {
-						string linkText = value.Substring (startIndex + 1, endIndex - startIndex - 1).Trim ();
-						entity.LinkClicked (linkText);
-						return;
-					}
-				}
+			float d = Vector2.Distance (touchPos, c.position);
+			if (d < minDistance) {
+				minDistance = d;
+				minChar = i;
 			}
 		}
+
+		if(minChar >= 0 && minDistance < 80){
+			// i is the index into the string which we clicked.  Determine a "link" by finding the previous '['
+			// and the ending ']'
+			int startIndex = -1;
+			int endIndex = -1;
+			for (int k = minChar; k >= 0; k--) {
+				if (value [k] == '\x0c') {
+					startIndex = k;
+					break;
+				}
+			}
+			for (int k = minChar; k < value.Length; k++) {
+				if (value [k] == '\x0c') {
+					endIndex = k;
+					break;
+				}
+			}
+
+			if (startIndex >= 0 && endIndex >= 0) {
+				string linkText = value.Substring (startIndex + 1, endIndex - startIndex - 1).Trim ();
+				entity.LinkClicked (linkText);
+			}
+		}
+
 	}
 
 }
