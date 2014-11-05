@@ -280,6 +280,16 @@
 		</complexContent>
 	</complexType>
 	
+	<element name="Slider" type="planet:Slider" />
+	<complexType name="Slider">
+		<complexContent>
+			<extension base="planet:Image">
+				<attribute name="handleResourcePath" type="string" use="optional" />
+				<attribute name="onValueChanged" type="string" use="optional" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
 	<!-- ***************************************************************************************** -->
 	
 	
