@@ -121,6 +121,7 @@ public partial class PUGameObject : PUGameObjectBase {
 	public void unload(){
 		GameObject.Destroy (gameObject);
 		gameObject = null;
+		rectTransform = null;
 	}
 
 	public void unloadAllChildren(){

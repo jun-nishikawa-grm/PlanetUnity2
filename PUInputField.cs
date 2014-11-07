@@ -46,19 +46,29 @@ public partial class PUInputField : PUInputFieldBase {
 		text.supportRichText = false;
 		text.alignment = TextAnchor.UpperLeft;
 
-		field.activeTextColor = fontColor;
 		field.transition = Selectable.Transition.None;
-		field.text = text;
-
-		// There is a bug in Unity code where m_Value is null accessed, this is a workaround
-		typeof(InputField).GetField("m_Value",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(field, "");
 
 
-		field.onSubmit.AddListener(new UnityEngine.Events.UnityAction<string>((string value) => { 
+		// This is probably not the best way to do this, but 4.60.f1 removed the onSubmit event
+		field.onEndEdit.AddListener ((value) => {
 			if(onValueChanged != null){
 				NotificationCenter.postNotification (Scope (), this.onValueChanged, NotificationCenter.Args("sender", this));
 			}
-		}));
+		});
+
+
+		/*
+		// There is a bug in Unity code where m_Value is null accessed, this is a workaround
+		typeof(InputField).GetField("m_Value",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(field, "");
+
+		field.OnSubmit
+
+		field.OnSubmit = (value) => {
+			if(onValueChanged != null){
+				NotificationCenter.postNotification (Scope (), this.onValueChanged, NotificationCenter.Args("sender", this));
+			}
+		};*/
+
 	}
 
 }

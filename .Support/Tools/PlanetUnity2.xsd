@@ -114,8 +114,6 @@
 			<extension base="planet:GameObject">
 				<attribute name="renderMode" type="planet:CanvasRenderMode" use="optional" default="ScreenSpaceOverlay" />
 				<attribute name="pixelPerfect" type="boolean" use="optional" default="false" />
-				<attribute name="referenceResolution" type="planet:vec2" use="optional" />
-				<attribute name="referenceResolutionBias" type="float" use="optional" />
 			</extension>
 		</complexContent>
 	</complexType>

@@ -272,7 +272,6 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 				// Remove all components...
 				DestroyImmediate (canvasObject.GetComponent<GraphicRaycaster> ());
-				DestroyImmediate (canvasObject.GetComponent<ReferenceResolution> ());
 				DestroyImmediate (canvasObject.GetComponent<Canvas> ());
 
 				DestroyImmediate (canvasObject.gameObject);
