@@ -145,6 +145,7 @@ public class PlanetUnityStyle
 		}
 		sb.Replace ("\\n", "\n");
 		sb.Replace ("\\x0c", "\x0c");
+		sb.Replace ("\\x0b", "\x0b");
 		return sb.ToString ();
 	}
 

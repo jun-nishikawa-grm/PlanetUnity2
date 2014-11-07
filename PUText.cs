@@ -57,8 +57,12 @@ public class DetectTextClick : EventTrigger {
 			int startIndex = -1;
 			int endIndex = -1;
 			for (int k = minChar; k >= 0; k--) {
-				if (value [k] == '\x0c') {
+				if (value [k] == '\x0b') {
 					startIndex = k;
+					break;
+				}
+				if (value [k] == '\x0c') {
+					endIndex = -1;
 					break;
 				}
 			}
@@ -67,10 +71,17 @@ public class DetectTextClick : EventTrigger {
 					endIndex = k;
 					break;
 				}
+				if (value [k] == '\x0b') {
+					endIndex = -1;
+					break;
+				}
 			}
 
 			if (startIndex >= 0 && endIndex >= 0) {
 				string linkText = value.Substring (startIndex + 1, endIndex - startIndex - 1).Trim ();
+
+				Debug.Log ("Link Clicked: " + linkText);
+
 				entity.LinkClicked (linkText);
 			}
 		}
