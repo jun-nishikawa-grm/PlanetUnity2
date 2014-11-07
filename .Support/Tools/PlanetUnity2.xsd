@@ -269,11 +269,47 @@
 	</complexType>
 	
 	
+	
+	
+	<simpleType name="InputFieldContentType">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "standard"/>
+			<enumeration value = "autocorrected"/>
+			<enumeration value = "integer"/>
+			<enumeration value = "number"/>
+			<enumeration value = "alphanumeric"/>
+			<enumeration value = "name"/>
+			<enumeration value = "email"/>
+			<enumeration value = "password"/>
+			<enumeration value = "pin"/>
+			<enumeration value = "custom"/>
+		</restriction>
+    </simpleType>
+
+	<simpleType name="InputFieldLineType">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "single"/>
+			<enumeration value = "multiSubmit"/>
+			<enumeration value = "multiNewline"/>
+		</restriction>
+    </simpleType>
+	
 	<element name="InputField" type="planet:InputField" />
 	<complexType name="InputField">
 		<complexContent>
 			<extension base="planet:Text">
 				<attribute name="onValueChanged" type="string" use="optional" />
+				<attribute name="placeholder" type="string" use="optional" />
+				<attribute name="limit" type="int" use="optional" />
+				<attribute name="contentType" type="planet:InputFieldContentType" use="optional" />
+				<attribute name="lineType" type="planet:InputFieldLineType" use="optional" />
+				<attribute name="selectionColor" type="planet:color" use="optional" />
 			</extension>
 		</complexContent>
 	</complexType>

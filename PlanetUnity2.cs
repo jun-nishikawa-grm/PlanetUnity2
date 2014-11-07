@@ -25,6 +25,12 @@ interface IPlanetUnity2
 public class PlanetUnity2 {
 	public int baseRenderQueue = 0;
 
+	public enum InputFieldLineType {
+		single,
+		multiSubmit,
+		multiNewline,
+	};
+
 	public enum SliderDirection {
 		LeftToRight,
 		RightToLeft,
@@ -74,6 +80,19 @@ public class PlanetUnity2 {
 		lowerLeft,
 		lowerCenter,
 		lowerRight,
+	};
+
+	public enum InputFieldContentType {
+		standard,
+		autocorrected,
+		integer,
+		number,
+		alphanumeric,
+		name,
+		email,
+		password,
+		pin,
+		custom,
 	};
 
 	public enum TextAlignment {

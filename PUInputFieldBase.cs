@@ -24,10 +24,30 @@ public partial class PUInputField : PUInputFieldBase {
 	
 	public PUInputField(
 			string onValueChanged,
+			string placeholder,
+			int limit,
+			PlanetUnity2.InputFieldContentType contentType,
+			PlanetUnity2.InputFieldLineType lineType,
+			Color selectionColor,
 			string value ) : this()
 	{
 		this.onValueChanged = onValueChanged;
 		this.onValueChangedExists = true;
+
+		this.placeholder = placeholder;
+		this.placeholderExists = true;
+
+		this.limit = limit;
+		this.limitExists = true;
+
+		this.contentType = contentType;
+		this.contentTypeExists = true;
+
+		this.lineType = lineType;
+		this.lineTypeExists = true;
+
+		this.selectionColor = selectionColor;
+		this.selectionColorExists = true;
 
 		this.value = value;
 		this.valueExists = true;
@@ -37,6 +57,11 @@ public partial class PUInputField : PUInputFieldBase {
 	
 	public PUInputField(
 			string onValueChanged,
+			string placeholder,
+			int limit,
+			PlanetUnity2.InputFieldContentType contentType,
+			PlanetUnity2.InputFieldLineType lineType,
+			Color selectionColor,
 			string font,
 			int fontSize,
 			PlanetUnity2.FontStyle fontStyle,
@@ -70,6 +95,21 @@ public partial class PUInputField : PUInputFieldBase {
 	{
 		this.onValueChanged = onValueChanged;
 		this.onValueChangedExists = true;
+
+		this.placeholder = placeholder;
+		this.placeholderExists = true;
+
+		this.limit = limit;
+		this.limitExists = true;
+
+		this.contentType = contentType;
+		this.contentTypeExists = true;
+
+		this.lineType = lineType;
+		this.lineTypeExists = true;
+
+		this.selectionColor = selectionColor;
+		this.selectionColorExists = true;
 
 		this.font = font;
 		this.fontExists = true;
@@ -181,11 +221,31 @@ public class PUInputFieldBase : PUText {
 	public string onValueChanged;
 	public bool onValueChangedExists;
 
+	public string placeholder;
+	public bool placeholderExists;
+
+	public int limit;
+	public bool limitExists;
+
+	public PlanetUnity2.InputFieldContentType contentType;
+	public bool contentTypeExists;
+
+	public PlanetUnity2.InputFieldLineType lineType;
+	public bool lineTypeExists;
+
+	public Color selectionColor;
+	public bool selectionColorExists;
+
 
 
 
 	
 	public void SetOnValueChanged(string v) { onValueChanged = v; onValueChangedExists = true; } 
+	public void SetPlaceholder(string v) { placeholder = v; placeholderExists = true; } 
+	public void SetLimit(int v) { limit = v; limitExists = true; } 
+	public void SetContentType(PlanetUnity2.InputFieldContentType v) { contentType = v; contentTypeExists = true; } 
+	public void SetLineType(PlanetUnity2.InputFieldLineType v) { lineType = v; lineTypeExists = true; } 
+	public void SetSelectionColor(Color v) { selectionColor = v; selectionColorExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -263,6 +323,26 @@ public class PUInputFieldBase : PUText {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { onValueChanged = attr; onValueChangedExists = true; } 
 		
+		attr = reader.GetAttribute("placeholder");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { placeholder = attr; placeholderExists = true; } 
+		
+		attr = reader.GetAttribute("limit");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { limit = int.Parse(attr); limitExists = true; } 
+		
+		attr = reader.GetAttribute("contentType");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { contentType = (PlanetUnity2.InputFieldContentType)System.Enum.Parse(typeof(PlanetUnity2.InputFieldContentType), attr); contentTypeExists = true; } 
+		
+		attr = reader.GetAttribute("lineType");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { lineType = (PlanetUnity2.InputFieldLineType)System.Enum.Parse(typeof(PlanetUnity2.InputFieldLineType), attr); lineTypeExists = true; } 
+		
+		attr = reader.GetAttribute("selectionColor");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { selectionColor = new Color().PUParse(attr); selectionColorExists = true; } 
+		
 
 	}
 	
@@ -277,6 +357,11 @@ public class PUInputFieldBase : PUText {
 		base.gaxb_appendXMLAttributes(sb);
 
 		if(onValueChangedExists) { sb.AppendFormat (" {0}=\"{1}\"", "onValueChanged", onValueChanged); }
+		if(placeholderExists) { sb.AppendFormat (" {0}=\"{1}\"", "placeholder", placeholder); }
+		if(limitExists) { sb.AppendFormat (" {0}=\"{1}\"", "limit", limit); }
+		if(contentTypeExists) { sb.AppendFormat (" {0}=\"{1}\"", "contentType", (int)contentType); }
+		if(lineTypeExists) { sb.AppendFormat (" {0}=\"{1}\"", "lineType", (int)lineType); }
+		if(selectionColorExists) { sb.AppendFormat (" {0}=\"{1}\"", "selectionColor", selectionColor); }
 
 	}
 	

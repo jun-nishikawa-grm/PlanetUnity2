@@ -48,6 +48,62 @@ public partial class PUInputField : PUInputFieldBase {
 
 		field.transition = Selectable.Transition.None;
 
+		field.textComponent = text;
+
+		if (contentType == PlanetUnity2.InputFieldContentType.standard) {
+			field.contentType = InputField.ContentType.Standard;
+		} else if (contentType == PlanetUnity2.InputFieldContentType.autocorrected) {
+			field.contentType = InputField.ContentType.Autocorrected;
+		} else if (contentType == PlanetUnity2.InputFieldContentType.integer) {
+			field.contentType = InputField.ContentType.IntegerNumber;
+		} else if (contentType == PlanetUnity2.InputFieldContentType.number) {
+			field.contentType = InputField.ContentType.DecimalNumber;
+		} else if (contentType == PlanetUnity2.InputFieldContentType.alphanumeric) {
+			field.contentType = InputField.ContentType.Alphanumeric;
+		} else if (contentType == PlanetUnity2.InputFieldContentType.name) {
+			field.contentType = InputField.ContentType.Name;
+		} else if (contentType == PlanetUnity2.InputFieldContentType.email) {
+			field.contentType = InputField.ContentType.EmailAddress;
+		} else if (contentType == PlanetUnity2.InputFieldContentType.password) {
+			field.contentType = InputField.ContentType.Password;
+		} else if (contentType == PlanetUnity2.InputFieldContentType.pin) {
+			field.contentType = InputField.ContentType.Pin;
+		} else if (contentType == PlanetUnity2.InputFieldContentType.custom) {
+			field.contentType = InputField.ContentType.Custom;
+		}
+
+		if (lineType == PlanetUnity2.InputFieldLineType.single) {
+			field.lineType = InputField.LineType.SingleLine;
+		} else if (lineType == PlanetUnity2.InputFieldLineType.multiSubmit) {
+			field.lineType = InputField.LineType.MultiLineSubmit;
+		} else if (lineType == PlanetUnity2.InputFieldLineType.multiNewline) {
+			field.lineType = InputField.LineType.MultiLineNewline;
+		}
+
+		if (placeholder != null) {
+			PUText placeholderText = new PUText ();
+			placeholderText.SetValue (this.placeholder);
+			placeholderText.LoadIntoPUGameObject (this);
+
+			placeholderText.text.alignment = this.text.alignment;
+			placeholderText.text.font = this.text.font;
+			placeholderText.text.fontSize = this.text.fontSize;
+			placeholderText.text.fontStyle = this.text.fontStyle;
+			placeholderText.text.color = this.text.color - new Color(0,0,0,0.5f);
+			placeholderText.text.lineSpacing = this.text.lineSpacing;
+
+			placeholderText.gameObject.FillParentUI ();
+
+			field.placeholder = placeholderText.text;
+		}
+
+		if (limitExists) {
+			field.characterLimit = limit;
+		}
+
+		if (selectionColorExists) {
+			field.selectionColor = selectionColor;
+		}
 
 		// This is probably not the best way to do this, but 4.60.f1 removed the onSubmit event
 		field.onEndEdit.AddListener ((value) => {
