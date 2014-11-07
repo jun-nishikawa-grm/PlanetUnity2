@@ -2,7 +2,6 @@
 using UnityEngine;
 using System;
 using System.Globalization;
-using ComponentAce.Compression.Libs.zlib;
 
 
 public static class RectTransformExtension
