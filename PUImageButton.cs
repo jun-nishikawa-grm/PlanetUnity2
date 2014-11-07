@@ -23,8 +23,6 @@ public partial class PUImageButton : PUImageButtonBase {
 
 	public Button button;
 
-	public EventTrigger eventTrigger;
-
 	public override void gaxb_init ()
 	{
 		base.gaxb_init ();
@@ -34,10 +32,8 @@ public partial class PUImageButton : PUImageButtonBase {
 		}
 
 		gameObject.AddComponent<Button> ();
-		gameObject.AddComponent<EventTrigger> ();
 
 		button = gameObject.GetComponent<Button> ();
-		eventTrigger = gameObject.GetComponent<EventTrigger> ();
 
 		if (pressedResourcePath != null || highlightedResourcePath != null || disabledResourcePath != null) {
 

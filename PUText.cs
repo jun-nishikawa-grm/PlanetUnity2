@@ -19,75 +19,77 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class DetectTextClick : EventTrigger {
+public class DetectTextClick : Button {
 
 	public PUText entity;
 
-	public override void OnPointerClick(PointerEventData eventData)
-	{
-		Text t = gameObject.GetComponent<Text>();
-		TextGenerator tGen = t.cachedTextGenerator;
+	protected override void Start() {
+		transition = Transition.None;
 
-		RectTransform rectTransform = gameObject.transform as RectTransform;
+		onClick.AddListener (() => {
 
-		Vector2 touchPos = rectTransform.InverseTransformPoint(eventData.position);
+			Text t = gameObject.GetComponent<Text> ();
+			TextGenerator tGen = t.cachedTextGenerator;
 
-		UIVertex[] vArray = tGen.GetVerticesArray ();
+			RectTransform rectTransform = gameObject.transform as RectTransform;
 
-		string value = t.text;
+			Vector2 touchPos = rectTransform.InverseTransformPoint (Input.mousePosition);
 
-		float minDistance = 999999;
-		int minChar = -1;
+			UIVertex[] vArray = tGen.GetVerticesArray ();
 
-		for (int i = 0; i < tGen.characterCount; i++) {
-			UIVertex a = vArray[i * 4 + 0];
-			UIVertex c = vArray [i * 4 + 2];
+			string value = t.text;
+
+			float minDistance = 999999;
+			int minChar = -1;
+
+			for (int i = 0; i < tGen.characterCount; i++) {
+				UIVertex c = vArray [i * 4 + 2];
 
 
-			float d = Vector2.Distance (touchPos, c.position);
-			if (d < minDistance) {
-				minDistance = d;
-				minChar = i;
-			}
-		}
-
-		if(minChar >= 0 && minDistance < 80){
-			// i is the index into the string which we clicked.  Determine a "link" by finding the previous '['
-			// and the ending ']'
-			int startIndex = -1;
-			int endIndex = -1;
-			for (int k = minChar; k >= 0; k--) {
-				if (value [k] == '\x0b') {
-					startIndex = k;
-					break;
-				}
-				if (value [k] == '\x0c') {
-					endIndex = -1;
-					break;
-				}
-			}
-			for (int k = minChar; k < value.Length; k++) {
-				if (value [k] == '\x0c') {
-					endIndex = k;
-					break;
-				}
-				if (value [k] == '\x0b') {
-					endIndex = -1;
-					break;
+				float d = Vector2.Distance (touchPos, c.position);
+				if (d < minDistance) {
+					minDistance = d;
+					minChar = i;
 				}
 			}
 
-			if (startIndex >= 0 && endIndex >= 0) {
-				string linkText = value.Substring (startIndex + 1, endIndex - startIndex - 1).Trim ();
+			if (minChar >= 0 && minDistance < 80) {
+				// i is the index into the string which we clicked.  Determine a "link" by finding the previous '['
+				// and the ending ']'
+				int startIndex = -1;
+				int endIndex = -1;
+				for (int k = minChar; k >= 0; k--) {
+					if (value [k] == '\x0b') {
+						startIndex = k;
+						break;
+					}
+					if (value [k] == '\x0c') {
+						endIndex = -1;
+						break;
+					}
+				}
+				for (int k = minChar; k < value.Length; k++) {
+					if (value [k] == '\x0c') {
+						endIndex = k;
+						break;
+					}
+					if (value [k] == '\x0b') {
+						endIndex = -1;
+						break;
+					}
+				}
 
-				Debug.Log ("Link Clicked: " + linkText);
+				if (startIndex >= 0 && endIndex >= 0) {
+					string linkText = value.Substring (startIndex + 1, endIndex - startIndex - 1).Trim ();
 
-				entity.LinkClicked (linkText);
+					Debug.Log ("Link Clicked: " + linkText);
+
+					entity.LinkClicked (linkText);
+				}
 			}
-		}
 
+		});
 	}
-
 }
 
 public partial class PUText : PUTextBase {
