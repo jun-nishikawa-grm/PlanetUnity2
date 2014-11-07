@@ -55,20 +55,6 @@ public partial class PUInputField : PUInputFieldBase {
 				NotificationCenter.postNotification (Scope (), this.onValueChanged, NotificationCenter.Args("sender", this));
 			}
 		});
-
-
-		/*
-		// There is a bug in Unity code where m_Value is null accessed, this is a workaround
-		typeof(InputField).GetField("m_Value",BindingFlags.Instance|BindingFlags.NonPublic).SetValue(field, "");
-
-		field.OnSubmit
-
-		field.OnSubmit = (value) => {
-			if(onValueChanged != null){
-				NotificationCenter.postNotification (Scope (), this.onValueChanged, NotificationCenter.Args("sender", this));
-			}
-		};*/
-
 	}
 
 }
