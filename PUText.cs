@@ -41,9 +41,14 @@ public class DetectTextClick : Button {
 
 			float minDistance = 999999;
 			int minChar = -1;
+			int numVertices = tGen.vertexCount;
 
 			for (int i = 0; i < tGen.characterCount; i++) {
-				UIVertex c = vArray [i * 4 + 2];
+				int idx = i * 4 + 2;
+				if(idx >= numVertices)
+					break;
+
+				UIVertex c = vArray [idx];
 
 
 				float d = Vector2.Distance (touchPos, c.position);
