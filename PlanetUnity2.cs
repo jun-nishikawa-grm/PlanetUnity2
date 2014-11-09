@@ -45,6 +45,13 @@ public class PlanetUnity2 {
 		lowerRight,
 	};
 
+	public enum ImageType {
+		simple,
+		filled,
+		sliced,
+		tiled,
+	};
+
 	public enum GridLayoutStartAxis {
 		horizontal,
 		vertical,

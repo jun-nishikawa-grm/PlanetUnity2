@@ -461,12 +461,16 @@ function mixedAttributesForClass(v)
 		if(u ~= v) then
 			for i,a in ipairs(v.attributes) do
 				if(a.use == "required") then
-					table.insert(attributes, a);
+					if(a.id ~= "GAXBIgnoreConstructor") then
+						table.insert(attributes, a);
+					end
 				end
 			end
 		else
 			for i,a in ipairs(v.attributes) do
-				table.insert(attributes, a);
+				if(a.id ~= "GAXBIgnoreConstructor") then
+					table.insert(attributes, a);
+				end
 			end
 		end
 		v = v.extension;

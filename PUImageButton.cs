@@ -45,10 +45,10 @@ public partial class PUImageButton : PUImageButtonBase {
 				states.pressedSprite = PlanetUnityResourceCache.GetSprite (pressedResourcePath);
 			}
 			if (highlightedResourcePathExists) {
-				states.pressedSprite = PlanetUnityResourceCache.GetSprite (highlightedResourcePath);
+				states.highlightedSprite = PlanetUnityResourceCache.GetSprite (highlightedResourcePath);
 			}
 			if (disabledResourcePathExists) {
-				states.pressedSprite = PlanetUnityResourceCache.GetSprite (disabledResourcePath);
+				states.disabledSprite = PlanetUnityResourceCache.GetSprite (disabledResourcePath);
 			}
 
 			button.spriteState = states;

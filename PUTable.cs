@@ -134,6 +134,10 @@ public class PUTableCell {
 		});
 	}
 
+	public void unload() {
+		NotificationCenter.removeObserver (this);
+		puGameObject.unload ();
+	}
 }
 
 public partial class PUTable : PUTableBase {
@@ -211,6 +215,14 @@ public partial class PUTable : PUTableBase {
 		}
 
 		CalculateContentSize ();
+	}
+
+	public override void unload() {
+
+		foreach (PUTableCell cell in allCells) {
+			cell.unload ();
+		}
+		base.unload ();
 	}
 
 }

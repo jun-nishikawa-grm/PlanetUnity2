@@ -78,6 +78,7 @@ public partial class PUSlider : PUSliderBase {
 			PlanetUnity2.SliderDirection direction,
 			string resourcePath,
 			Color color,
+			PlanetUnity2.ImageType type,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -126,6 +127,9 @@ public partial class PUSlider : PUSliderBase {
 
 		this.color = color;
 		this.colorExists = true;
+
+		this.type = type;
+		this.typeExists = true;
 
 		this.bounds = bounds;
 		this.boundsExists = true;

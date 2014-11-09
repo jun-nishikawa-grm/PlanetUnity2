@@ -38,6 +38,7 @@ public partial class PUImage : PUImageBase {
 	public PUImage(
 			string resourcePath,
 			Color color,
+			PlanetUnity2.ImageType type,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -65,6 +66,9 @@ public partial class PUImage : PUImageBase {
 
 		this.color = color;
 		this.colorExists = true;
+
+		this.type = type;
+		this.typeExists = true;
 
 		this.bounds = bounds;
 		this.boundsExists = true;
@@ -152,12 +156,16 @@ public class PUImageBase : PUGameObject {
 	public Color color;
 	public bool colorExists;
 
+	public PlanetUnity2.ImageType type;
+	public bool typeExists;
+
 
 
 
 	
 	public void SetResourcePath(string v) { resourcePath = v; resourcePathExists = true; } 
 	public void SetColor(Color v) { color = v; colorExists = true; } 
+	public void SetType(PlanetUnity2.ImageType v) { type = v; typeExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -239,6 +247,10 @@ public class PUImageBase : PUGameObject {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { color = new Color().PUParse(attr); colorExists = true; } 
 		
+		attr = reader.GetAttribute("type");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { type = (PlanetUnity2.ImageType)System.Enum.Parse(typeof(PlanetUnity2.ImageType), attr); typeExists = true; } 
+		
 
 	}
 	
@@ -254,6 +266,7 @@ public class PUImageBase : PUGameObject {
 
 		if(resourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "resourcePath", resourcePath); }
 		if(colorExists) { sb.AppendFormat (" {0}=\"{1}\"", "color", color); }
+		if(typeExists) { sb.AppendFormat (" {0}=\"{1}\"", "type", (int)type); }
 
 	}
 	

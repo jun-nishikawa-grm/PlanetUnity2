@@ -69,6 +69,8 @@ public partial class PUGameObject : PUGameObjectBase {
 			gameObject = new GameObject ("<GameObject />", typeof(RectTransform));
 		}
 
+		gameObject.AddComponent<GameObjectRemoveFromNotificationCenter> ();
+
 		if (titleExists) {
 			gameObject.name = title;
 		}
@@ -118,13 +120,17 @@ public partial class PUGameObject : PUGameObjectBase {
 		gameObject.SetActive (active);
 	}
 
-	public void unload(){
+	public virtual void unload(){
+		unloadAllChildren ();
+
+		NotificationCenter.removeObserver (this);
+
 		GameObject.Destroy (gameObject);
 		gameObject = null;
 		rectTransform = null;
 	}
 
-	public void unloadAllChildren(){
+	public virtual void unloadAllChildren(){
 		foreach (PUGameObject go in children) {
 			go.unload ();
 		}
@@ -193,20 +199,24 @@ public partial class PUGameObject : PUGameObjectBase {
 
 	public void LoadIntoPUGameObject(PUGameObject _parent)
 	{
-		gaxb_load (null, null, null);
-		gaxb_init ();
-		gaxb_final (null, _parent, null);
+		// Sanity check to make sure this wasn't called multiple times
+		if (gameObject == null) {
+			gaxb_load (null, null, null);
+			gaxb_init ();
+			gaxb_final (null, _parent, null);
+		}
 
 		parent = _parent;
 
+		if (_parent != null) {
+			if (_parent is PUScrollRect) {
+				gameObject.transform.SetParent ((_parent as PUScrollRect).contentObject.transform, false);
+			} else {
+				gameObject.transform.SetParent (_parent.gameObject.transform, false);
+			}
 
-		if (_parent is PUScrollRect) {
-			gameObject.transform.SetParent ((_parent as PUScrollRect).contentObject.transform, false);
-		} else {
-			gameObject.transform.SetParent (_parent.gameObject.transform, false);
+			_parent.children.Add (this);
 		}
-
-		_parent.children.Add (this);
 
 		gaxb_complete ();
 	}
@@ -283,6 +293,12 @@ public partial class PUGameObject : PUGameObjectBase {
 		}
 	}
 	#endregion
+}
+
+public class GameObjectRemoveFromNotificationCenter : MonoBehaviour {
+	void OnDestroy() {
+		NotificationCenter.removeObserver (this);
+	}
 }
 
 public class GameObjectLateUpdateScript : MonoBehaviour {

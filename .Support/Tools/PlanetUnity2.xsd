@@ -149,6 +149,20 @@
 			</extension>
 		</complexContent>
 	</complexType>
+	
+	
+	
+	<simpleType name="ImageType">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "simple"/>
+			<enumeration value = "filled"/>
+			<enumeration value = "sliced"/>
+			<enumeration value = "tiled"/>
+		</restriction>
+    </simpleType>
 
 	<element name="Image" type="planet:Image"/>
 	<complexType name="Image">
@@ -156,6 +170,7 @@
 			<extension base="planet:GameObject">
 				<attribute name="resourcePath" type="string" use="required" />
 				<attribute name="color" type="planet:color" use="optional" />
+				<attribute name="type" type="planet:ImageType" use="optional" id="GAXBIgnoreConstructor" />
 			</extension>
 		</complexContent>
 	</complexType>

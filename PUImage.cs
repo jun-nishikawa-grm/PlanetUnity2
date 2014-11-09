@@ -48,6 +48,21 @@ public partial class PUImage : PUImageBase {
 				image.type = Image.Type.Sliced;
 			}
 		}
+
+		if (typeExists) {
+			if (type == PlanetUnity2.ImageType.filled) {
+				image.type = Image.Type.Filled;
+			}
+			if (type == PlanetUnity2.ImageType.simple) {
+				image.type = Image.Type.Simple;
+			}
+			if (type == PlanetUnity2.ImageType.sliced) {
+				image.type = Image.Type.Sliced;
+			}
+			if (type == PlanetUnity2.ImageType.tiled) {
+				image.type = Image.Type.Tiled;
+			}
+		}
 	}
 
 }

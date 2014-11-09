@@ -132,13 +132,32 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	private GameObject planetUnityContainer;
 	private PUCanvas canvas;
 
+	private Canvas rootCanvas;
+
 	private bool shouldReloadMainXML = false;
 
 	static public PlanetUnityGameObject currentGameObject = null;
 
+	static public GameObject MainContainer() {
+		return currentGameObject.Container ();
+	}
+
+	static public PUCanvas MainCanvas() {
+		return currentGameObject.Canvas ();
+	}
+
+
+	public GameObject Container() {
+		return planetUnityContainer;
+	}
+
+	public PUCanvas Canvas() {
+		return canvas;
+	}
+
 	// Use this for initialization
 	void Start () {
-
+	
 		Application.targetFrameRate = 60;
 
 		currentGameObject = this;
@@ -193,17 +212,15 @@ public class PlanetUnityGameObject : MonoBehaviour {
 
 			canvas.gaxb_unload ();
 
+			canvas.unload ();
+
 			DestroyImmediate (canvas.gameObject);
 			canvas = null;
 		}
 
 		SafeRemoveAllChildren ();
 	}
-
-	public PUCanvas Canvas() {
-		return canvas;
-	}
-
+		
 	public void LoadCanvasXML (string xml) {
 
 		if (xmlPath == null || PlanetUnityOverride.xmlFromPath (xmlPath) == null) {
@@ -217,11 +234,27 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		planetUnityContainer = GameObject.Find ("PlanetUnityContainer");
 		if (planetUnityContainer == null) {
 			planetUnityContainer = new GameObject ("PlanetUnityContainer");
-		}
 
+			planetUnityContainer.AddComponent<Canvas> ();
+			rootCanvas = planetUnityContainer.GetComponent<Canvas> ();
+		}
+			
 		//UnityEngine.Debug.Log ("LoadCanvasXML");
 
 		canvas = (PUCanvas)PlanetUnity2.loadXML (xml, planetUnityContainer, null);
+
+
+		// This is kind of silly, but we need to do this because we want the root canvas to match
+		// the canvas of the loaded scene, but we can't just grab the contents of the sub canvas
+		// because unity sets it to inherited and those contents don't persist
+		if (canvas.renderMode == PlanetUnity2.CanvasRenderMode.ScreenSpaceOverlay)
+			rootCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+		if (canvas.renderMode == PlanetUnity2.CanvasRenderMode.ScreenSpaceCamera)
+			rootCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+		if (canvas.renderMode == PlanetUnity2.CanvasRenderMode.WorldSpace)
+			rootCanvas.renderMode = RenderMode.WorldSpace;
+		rootCanvas.pixelPerfect = canvas.pixelPerfect;
+		// End silly section
 
 		#if UNITY_EDITOR
 		foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
