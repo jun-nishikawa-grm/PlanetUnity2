@@ -67,7 +67,7 @@ public class PUTableCell {
 
 	public virtual string XmlPath() {
 		// Subclasses override this method to supply a path to a planet unity xml for this cell
-		return "(subclass needs to define an XmlPath)";
+		return null;
 	}
 
 	public virtual void LateUpdate() {
@@ -79,46 +79,55 @@ public class PUTableCell {
 		table = parent;
 		cellData = data;
 
-		puGameObject = (PUGameObject)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath(XmlPath ()), parent.contentObject, null);
+		string xmlPath = XmlPath ();
 
-		// Attach all of the PlanetUnity objects
-		try {
-			FieldInfo field = this.GetType ().GetField ("scene");
-			if (field != null) {
-				field.SetValue (this, puGameObject);
+		if (xmlPath != null) {
+			puGameObject = (PUGameObject)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath (xmlPath), parent.contentObject, null);
+
+			// Attach all of the PlanetUnity objects
+			try {
+				FieldInfo field = this.GetType ().GetField ("scene");
+				if (field != null) {
+					field.SetValue (this, puGameObject);
+				}
+
+				puGameObject.PerformOnChildren (val => {
+					PUGameObject oo = val as PUGameObject;
+					if (oo != null && oo.title != null) {
+						field = this.GetType ().GetField (oo.title);
+						if (field != null) {
+							field.SetValue (this, oo);
+						}
+					}
+					return true;
+				});
+			} catch (Exception e) {
+				UnityEngine.Debug.Log ("TableCell error: " + e);
 			}
 
-			puGameObject.PerformOnChildren (val => {
-				PUGameObject oo = val as PUGameObject;
-				if (oo != null && oo.title != null) {
-					field = this.GetType ().GetField (oo.title);
-					if (field != null) {
-						field.SetValue (this, oo);
-					}
-				}
-				return true;
-			});
-		} catch (Exception e) {
-			UnityEngine.Debug.Log ("TableCell error: " + e);
-		}
+			try {
+				// Attach all of the named GameObjects
+				FieldInfo[] fields = this.GetType ().GetFields ();
+				foreach (FieldInfo field in fields) {
+					if (field.FieldType == typeof(GameObject)) {
 
-		try {
-			// Attach all of the named GameObjects
-			FieldInfo[] fields = this.GetType ().GetFields ();
-			foreach (FieldInfo field in fields) {
-				if (field.FieldType == typeof(GameObject)) {
+						GameObject[] pAllObjects = (GameObject[])Resources.FindObjectsOfTypeAll (typeof(GameObject));
 
-					GameObject[] pAllObjects = (GameObject[])Resources.FindObjectsOfTypeAll (typeof(GameObject));
-
-					foreach (GameObject pObject in pAllObjects) {
-						if (pObject.name.Equals (field.Name)) {
-							field.SetValue (this, pObject);
+						foreach (GameObject pObject in pAllObjects) {
+							if (pObject.name.Equals (field.Name)) {
+								field.SetValue (this, pObject);
+							}
 						}
 					}
 				}
+			} catch (Exception e) {
+				UnityEngine.Debug.Log ("TableCell error: " + e);
 			}
-		} catch (Exception e) {
-			UnityEngine.Debug.Log ("TableCell error: " + e);
+		} else {
+			puGameObject = new PUGameObject ();
+			puGameObject.SetFrame (0, 0, 0, 60, 0, 0, "bottom,stretch");
+			puGameObject.LoadIntoPUGameObject (parent);
+			puGameObject.gameObject.transform.SetParent(parent.contentObject.transform, false);
 		}
 
 		if (IsHeader ()) {

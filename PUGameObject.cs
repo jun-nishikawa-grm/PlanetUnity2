@@ -87,10 +87,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			this.SetSize (new Vector2 (bounds.z, bounds.w));
 		}
 
-		// Never modofiy the RectTransform of the Canvas directly, it does bad things
-		if (this is PUCanvas == false) {
-			UpdateRectTransform ();
-		}
+		UpdateRectTransform ();
 
 		gameObject.layer = LayerMask.NameToLayer ("UI");
 
@@ -149,12 +146,25 @@ public partial class PUGameObject : PUGameObjectBase {
 			rectTransform.localEulerAngles = rotation;
 
 			RectTransform parentTransform = (RectTransform)gameObject.transform.parent;
-			if ((int)size.x == 0) {
-				size.x = parentTransform.rect.width;
+			float parentW = Screen.width;
+			float parentH = Screen.height;
+
+			if (parentTransform != null) {
+				Canvas rootCanvas = parentTransform.GetComponent<Canvas> ();
+
+				if (rootCanvas == null || rootCanvas.isRootCanvas == false) {
+					parentW = parentTransform.rect.width;
+					parentH = parentTransform.rect.height;
+				}
+
+				if ((int)size.x == 0) {
+					size.x = parentW;
+				}
+				if ((int)size.y == 0) {
+					size.y = parentH;
+				}
 			}
-			if ((int)size.y == 0) {
-				size.y = parentTransform.rect.height;
-			}
+
 			rectTransform.sizeDelta = size;
 
 			if (anchorExists) {
@@ -182,8 +192,8 @@ public partial class PUGameObject : PUGameObjectBase {
 				float mySizeDeltaX = rectTransform.sizeDelta.x;
 				float mySizeDeltaY = rectTransform.sizeDelta.y;
 
-				mySizeDeltaX -= (parentTransform.rect.width * anchorDeltaX);
-				mySizeDeltaY -= (parentTransform.rect.height * anchorDeltaY);
+				mySizeDeltaX -= (parentW * anchorDeltaX);
+				mySizeDeltaY -= (parentH * anchorDeltaY);
 
 				rectTransform.sizeDelta = new Vector2 (mySizeDeltaX, mySizeDeltaY);
 			}

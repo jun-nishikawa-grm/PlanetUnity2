@@ -41,6 +41,8 @@ public partial class PUCanvas : PUCanvasBase {
 		canvas.pixelPerfect = pixelPerfect;
 
 		rectTransform = gameObject.transform as RectTransform;
+
+		SetFrame (0, 0, 0, 0, 0, 0, "stretch,stretch");
 	}
 
 }

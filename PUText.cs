@@ -58,7 +58,7 @@ public class DetectTextClick : Button {
 				}
 			}
 
-			if (minChar >= 0 && minDistance < 80) {
+			if (minChar >= 0 && minDistance < 80 && minChar < value.Length) {
 				// i is the index into the string which we clicked.  Determine a "link" by finding the previous '['
 				// and the ending ']'
 				int startIndex = -1;
