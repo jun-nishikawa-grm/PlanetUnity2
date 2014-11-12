@@ -37,6 +37,16 @@ public partial class PUCode : PUCodeBase {
 	{
 		controller = null;
 	}
+		
+	public override void unload(){
+
+		// If we are a singleton, we need to not delete our gameobject...
+		if (singleton) {
+			gameObject = null;
+		}
+
+		base.unload ();
+	}
 
 	public override void gaxb_unload()
 	{
