@@ -22,6 +22,10 @@ public interface IPUCode {
 
 }
 
+public interface IPUSingletonCode : IPUCode {
+	void SingletonStart();
+}
+
 public partial class PUCode : PUCodeBase {
 
 	IPUCode controller;
@@ -83,6 +87,9 @@ public partial class PUCode : PUCodeBase {
 			if (instances [_class] != null && instances [_class] != this) {
 				GameObject.DestroyImmediate (this.gameObject);
 				controller = (IPUCode)instances[_class];
+				if (controller is IPUSingletonCode) {
+					((IPUSingletonCode)controller).SingletonStart ();
+				}
 			} else {
 				MonoBehaviour.DontDestroyOnLoad(this.gameObject);
 				this.gameObject.transform.parent = null;
