@@ -2,7 +2,93 @@
 using UnityEngine;
 using System;
 using System.Globalization;
+using System.Collections.Generic;
+using ICSharpCode.SharpZipLib.Checksums;
 
+
+public class RandomR
+{
+	// Implementation of take from http://www.opensource.apple.com/source/Libc/Libc-583/stdlib/FreeBSD/rand.c
+	// Under the following open source licences
+	/*-
+	 * Copyright (c) 1990, 1993
+	 *	The Regents of the University of California.  All rights reserved.
+	 *
+	 * Redistribution and use in source and binary forms, with or without
+	 * modification, are permitted provided that the following conditions
+	 * are met:
+	 * 1. Redistributions of source code must retain the above copyright
+	 *    notice, this list of conditions and the following disclaimer.
+	 * 2. Redistributions in binary form must reproduce the above copyright
+	 *    notice, this list of conditions and the following disclaimer in the
+	 *    documentation and/or other materials provided with the distribution.
+	 * 3. All advertising materials mentioning features or use of this software
+	 *    must display the following acknowledgement:
+	 *	This product includes software developed by the University of
+	 *	California, Berkeley and its contributors.
+	 * 4. Neither the name of the University nor the names of its contributors
+	 *    may be used to endorse or promote products derived from this software
+	 *    without specific prior written permission.
+	 *
+	 * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+	 * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+	 * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+	 * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+	 * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+	 * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+	 * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+	 * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+	 * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+	 * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+	 * SUCH DAMAGE.
+	 *
+	 * Posix rand_r function added May 1999 by Wes Peters <wes@softweyr.com>.
+	 */
+	public static uint Rand(ref uint ctx)
+	{
+		/*
+	     * Compute x = (7^5 * x) mod (2^31 - 1)
+	     * wihout overflowing 31 bits:
+	     *      (2^31 - 1) = 127773 * (7^5) + 2836
+	     * From "Random number generators: good ones are hard to find",
+	     * Park and Miller, Communications of the ACM, vol. 31, no. 10,
+	     * October 1988, p. 1195.
+	     */
+		const int RAND_MAX = 0x7fffffff;
+		uint hi, lo, x;
+
+		/* Can't be initialized with 0, so use another value. */
+		if (ctx == 0)
+			ctx = 123459876;
+		hi = ctx / 127773;
+		lo = ctx % 127773;
+		x = 16807 * lo - 2836 * hi;
+		if (x < 0)
+			x += 0x7fffffff;
+		return ((ctx = x) % ((uint)RAND_MAX + 1));
+	}
+
+	public static List<object> RandomList(List<object> list, uint rnd) {
+		List<object> s = new List<object>(list);
+		uint count = (uint)list.Count;
+
+		for(int i = 0; i < count; i++) {
+			uint x = RandomR.Rand(ref rnd) % count;
+			uint y = RandomR.Rand(ref rnd) % count;
+
+			object t = s [(int)x];
+			s [(int)x] = s [(int)y];
+			s [(int)y] = t;
+		}
+
+		return s;
+	}
+
+	public static object RandomObjectFromList(List<object> list, uint rnd) {
+		if(list.Count == 0) return null;
+		return list [(int)(rnd % list.Count)];
+	}
+}
 
 public static class RectTransformExtension
 {
@@ -93,6 +179,17 @@ public static class Vector2Extension
 	public static string PUToString(this Vector2 v)
 	{
 		return string.Format ("{0},{1}", v.x, v.y);
+	}
+
+	public static float AngleSignedBetweenVectors(this Vector2 a, Vector2 b)
+	{
+		const float Epsilon = 1.192092896e-07F;
+		Vector2 a2 = a.normalized;
+		Vector2 b2 = b.normalized;
+
+		float angle = Mathf.Atan2(a2.x * b2.y - a2.y * b2.x, Vector2.Dot(a2, b2));
+		if( Mathf.Abs(angle) < Epsilon ) return 0.0f;
+		return angle;
 	}
 }
 
