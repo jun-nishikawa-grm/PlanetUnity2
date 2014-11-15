@@ -83,8 +83,14 @@ public class PlanetUnityOverride {
 			}
 
 			if (rectTransform) {
-				mathParser.LocalVariables.Add ("w", Convert.ToDecimal(rectTransform.rect.width));
-				mathParser.LocalVariables.Add ("h", Convert.ToDecimal(rectTransform.rect.height));
+				// Work around for unity stretching canvas bug
+				if (o is PUCanvas && (int)rectTransform.rect.width == 100 && (int)rectTransform.rect.height == 100) {
+					mathParser.LocalVariables.Add ("w", Convert.ToDecimal (Screen.width));
+					mathParser.LocalVariables.Add ("h", Convert.ToDecimal (Screen.height));
+				} else {
+					mathParser.LocalVariables.Add ("w", Convert.ToDecimal (rectTransform.rect.width));
+					mathParser.LocalVariables.Add ("h", Convert.ToDecimal (rectTransform.rect.height));
+				}
 			}
 
 			foreach (string part in parts) {
