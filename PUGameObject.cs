@@ -153,8 +153,13 @@ public partial class PUGameObject : PUGameObjectBase {
 				Canvas rootCanvas = parentTransform.GetComponent<Canvas> ();
 
 				if (rootCanvas == null || rootCanvas.isRootCanvas == false) {
-					parentW = parentTransform.rect.width;
-					parentH = parentTransform.rect.height;
+					// Work around for unity issue where the rect transform of a sub canvas does not update soon enough
+					if (rootCanvas != null && (int)parentTransform.rect.width == 100 && (int)parentTransform.rect.height == 100) {
+
+					} else {
+						parentW = parentTransform.rect.width;
+						parentH = parentTransform.rect.height;
+					}
 				}
 
 				if ((int)size.x == 0) {
