@@ -191,6 +191,11 @@ public static class Vector2Extension
 		if( Mathf.Abs(angle) < Epsilon ) return 0.0f;
 		return angle;
 	}
+
+	public static float SqrDistance(this Vector2 a, Vector2 b)
+	{
+		return (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y);
+	}
 }
 
 public static class Vector3Extension
