@@ -5,6 +5,48 @@ using System.Globalization;
 using System.Collections.Generic;
 using ICSharpCode.SharpZipLib.Checksums;
 
+// Right now if is just a utility holder for random math stuff
+public class MathR
+{
+	public static float DegreeToRadian(float angle)
+	{
+		return Mathf.PI * angle / 180.0f;
+	}
+
+	public static float RadianToDegree(float angle)
+	{
+		return angle * (180.0f / Mathf.PI);
+	}
+
+	public static float CatmullRomSpline(float x, float v0, float v1, float v2, float v3)
+	{
+		const float M11	= 0.0f;
+		const float M12	= 1.0f;
+		const float M13	= 0.0f;
+		const float M14	= 0.0f;
+		const float M21	= -0.5f;
+		const float M22	= 0.0f;
+		const float M23	= 0.5f;
+		const float M24	= 0.0f;
+		const float M31	= 1.0f;
+		const float M32	= -2.5f;
+		const float M33	= 2.0f;
+		const float M34	= -0.5f;
+		const float M41	= -0.5f;
+		const float M42	= 1.5f;
+		const float M43	= -1.5f;
+		const float M44	= 0.5f;
+		float c1,c2,c3,c4;
+
+		c1 = M12*v1;
+		c2 = M21*v0 + M23*v2;
+		c3 = M31*v0 + M32*v1 + M33*v2 + M34*v3;
+		c4 = M41*v0 + M42*v1 + M43*v2 + M44*v3;
+
+		return(((c4*x + c3)*x +c2)*x + c1);
+	}
+
+}
 
 public class RandomR
 {
