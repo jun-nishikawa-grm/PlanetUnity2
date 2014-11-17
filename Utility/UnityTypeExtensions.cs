@@ -3,7 +3,6 @@ using UnityEngine;
 using System;
 using System.Globalization;
 using System.Collections.Generic;
-using ICSharpCode.SharpZipLib.Checksums;
 
 // Right now if is just a utility holder for random math stuff
 public class MathR
