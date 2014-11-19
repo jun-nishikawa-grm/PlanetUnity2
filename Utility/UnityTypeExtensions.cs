@@ -96,8 +96,8 @@ public class RandomR
 	     * Park and Miller, Communications of the ACM, vol. 31, no. 10,
 	     * October 1988, p. 1195.
 	     */
-		const int RAND_MAX = 0x7fffffff;
-		uint hi, lo, x;
+		const uint RAND_MAX = 0x7fffffff;
+		long hi, lo, x;
 
 		/* Can't be initialized with 0, so use another value. */
 		if (ctx == 0)
@@ -107,7 +107,7 @@ public class RandomR
 		x = 16807 * lo - 2836 * hi;
 		if (x < 0)
 			x += 0x7fffffff;
-		return ((ctx = x) % ((uint)RAND_MAX + 1));
+		return ((ctx = (uint)x) % (RAND_MAX + 1));
 	}
 
 	public static List<object> RandomList(List<object> list, uint rnd) {
