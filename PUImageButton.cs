@@ -31,9 +31,7 @@ public partial class PUImageButton : PUImageButtonBase {
 			gameObject.name = "<ImageButton/>";
 		}
 
-		gameObject.AddComponent<Button> ();
-
-		button = gameObject.GetComponent<Button> ();
+		button = gameObject.AddComponent<Button> ();
 
 		if (pressedResourcePath != null || highlightedResourcePath != null || disabledResourcePath != null) {
 

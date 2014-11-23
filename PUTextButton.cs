@@ -29,9 +29,7 @@ public partial class PUTextButton : PUTextButtonBase {
 			gameObject.name = "<TextButton/>";
 		}
 
-		gameObject.AddComponent<Button> ();
-
-		button = gameObject.GetComponent<Button> ();
+		button = gameObject.AddComponent<Button> ();
 
 		if (onTouchUpExists) {
 			button.onClick.AddListener(() => { 

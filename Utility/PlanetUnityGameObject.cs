@@ -241,8 +241,7 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		if (planetUnityContainer == null) {
 			planetUnityContainer = new GameObject ("PlanetUnityContainer");
 
-			planetUnityContainer.AddComponent<Canvas> ();
-			rootCanvas = planetUnityContainer.GetComponent<Canvas> ();
+			rootCanvas = planetUnityContainer.AddComponent<Canvas> ();
 		}
 			
 		//UnityEngine.Debug.Log ("LoadCanvasXML");

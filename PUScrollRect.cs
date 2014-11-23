@@ -26,13 +26,9 @@ public partial class PUScrollRect : PUScrollRectBase {
 	public override void gaxb_init ()
 	{
 		gameObject = new GameObject ("<ScrollRect/>", typeof(RectTransform));
-		gameObject.AddComponent<CanvasRenderer> ();
-		gameObject.AddComponent<ScrollRect> ();
 
-		scroll = gameObject.GetComponent<ScrollRect> ();
-		canvasRenderer = gameObject.GetComponent<CanvasRenderer> ();
-
-
+		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
+		scroll = gameObject.AddComponent<ScrollRect> ();
 
 		if (inertiaExists) {
 			scroll.inertia = inertia;

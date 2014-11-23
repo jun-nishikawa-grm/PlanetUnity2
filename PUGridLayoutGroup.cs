@@ -23,9 +23,8 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 	public override void gaxb_init ()
 	{
 		gameObject = new GameObject ("<GridLayoutGroup/>", typeof(RectTransform));
-		gameObject.AddComponent<GridLayoutGroup> ();
 
-		layout = gameObject.GetComponent<GridLayoutGroup> ();
+		layout = gameObject.AddComponent<GridLayoutGroup> ();
 
 		if (cellSizeExists) {
 			layout.cellSize = cellSize;

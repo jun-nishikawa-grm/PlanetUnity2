@@ -33,8 +33,7 @@ public partial class PUSlider : PUSliderBase {
 			gameObject.name = "<Slider/>";
 		}
 
-		gameObject.AddComponent<Slider> ();
-		slider = gameObject.GetComponent<Slider> ();
+		slider = gameObject.AddComponent<Slider> ();
 
 		if (fillResourcePath != null) {
 			fill = new PUImage (fillResourcePath, Color.white);

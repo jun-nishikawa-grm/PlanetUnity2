@@ -25,12 +25,9 @@ public partial class PURawImage : PURawImageBase {
 	public override void gaxb_init ()
 	{
 		gameObject = new GameObject ("<RawImage/>", typeof(RectTransform));
-		gameObject.AddComponent<CanvasRenderer> ();
-		gameObject.AddComponent<RawImage> ();
 
-
-		image = gameObject.GetComponent<RawImage> ();
-		canvasRenderer = gameObject.GetComponent<CanvasRenderer> ();
+		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
+		image = gameObject.AddComponent<RawImage> ();
 
 		if (colorExists) {
 			image.color = color;

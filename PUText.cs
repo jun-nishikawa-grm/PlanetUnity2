@@ -120,17 +120,15 @@ public partial class PUText : PUTextBase {
 	public override void gaxb_init ()
 	{
 		gameObject = new GameObject ("<Text/>", typeof(RectTransform));
-		gameObject.AddComponent<CanvasRenderer> ();
-		gameObject.AddComponent<Text> ();
+
+		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
+		text = gameObject.AddComponent<Text> ();
 
 		if (onLinkClick != null || OnLinkClickAction != null || GlobalOnLinkClickAction != null) {
 			gameObject.AddComponent<DetectTextClick> ();
 			DetectTextClick script = gameObject.GetComponent<DetectTextClick> ();
 			script.entity = this;
 		}
-
-		text = gameObject.GetComponent<Text> ();
-		canvasRenderer = gameObject.GetComponent<CanvasRenderer> ();
 
 		if (titleExists == false && valueExists) {
 			gameObject.name = string.Format("\"{0}\"", value);

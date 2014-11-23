@@ -24,9 +24,8 @@ public partial class PUVerticalLayoutGroup : PUVerticalLayoutGroupBase {
 	public override void gaxb_init ()
 	{
 		gameObject = new GameObject ("<PUVerticalLayoutGroup/>", typeof(RectTransform));
-		gameObject.AddComponent<VerticalLayoutGroup> ();
 
-		layout = gameObject.GetComponent<VerticalLayoutGroup> ();
+		layout = gameObject.AddComponent<VerticalLayoutGroup> ();
 
 		if (spacingExists) {
 			layout.spacing = spacing;

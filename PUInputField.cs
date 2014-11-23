@@ -34,10 +34,9 @@ public partial class PUInputField : PUInputFieldBase {
 
 		// Next, we create a new gameObject, and put the Text-created gameObject inside me
 		gameObject = new GameObject ("<InputField/>", typeof(RectTransform));
-		gameObject.AddComponent<CanvasRenderer> ();
-		gameObject.AddComponent<InputField> ();
 
-		field = gameObject.GetComponent<InputField> ();
+		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
+		field = gameObject.AddComponent<InputField> ();
 
 		// Move the text to be the child of the input field
 		textGameObject.transform.SetParent (gameObject.transform, false);

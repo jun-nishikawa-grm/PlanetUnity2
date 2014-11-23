@@ -31,9 +31,7 @@ public partial class PUColorButton : PUColorButtonBase {
 			gameObject.name = "<ColorButton/>";
 		}
 
-		gameObject.AddComponent<Button> ();
-
-		button = gameObject.GetComponent<Button> ();
+		button = gameObject.AddComponent<Button> ();
 
 		if (onTouchUpExists) {
 		

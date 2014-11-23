@@ -26,12 +26,9 @@ public partial class PUMovie : PUMovieBase {
 	public override void gaxb_init ()
 	{
 		gameObject = new GameObject ("<Movie/>", typeof(RectTransform));
-		gameObject.AddComponent<CanvasRenderer> ();
-		gameObject.AddComponent<RawImage> ();
 
-
-		image = gameObject.GetComponent<RawImage> ();
-		canvasRenderer = gameObject.GetComponent<CanvasRenderer> ();
+		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
+		image = gameObject.AddComponent<RawImage> ();
 
 		if (colorExists) {
 			image.color = color;

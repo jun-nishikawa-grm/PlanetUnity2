@@ -23,9 +23,8 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 	public override void gaxb_init ()
 	{
 		gameObject = new GameObject ("<PUHorizontalLayoutGroup/>", typeof(RectTransform));
-		gameObject.AddComponent<HorizontalLayoutGroup> ();
 
-		layout = gameObject.GetComponent<HorizontalLayoutGroup> ();
+		layout = gameObject.AddComponent<HorizontalLayoutGroup> ();
 
 		if (spacingExists) {
 			layout.spacing = spacing;

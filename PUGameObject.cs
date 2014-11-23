@@ -239,8 +239,7 @@ public partial class PUGameObject : PUGameObjectBase {
 
 	public void CheckCanvasGroup () {
 		if (canvasGroup == null) {
-			gameObject.AddComponent<CanvasGroup> ();
-			canvasGroup = gameObject.GetComponent<CanvasGroup> ();
+			canvasGroup = gameObject.AddComponent<CanvasGroup> ();
 		}
 	}
 

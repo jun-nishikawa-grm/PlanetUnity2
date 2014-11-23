@@ -28,11 +28,9 @@ public partial class PUColor : PUColorBase {
 	public override void gaxb_init ()
 	{
 		gameObject = new GameObject ("<Color/>", typeof(RectTransform));
-		gameObject.AddComponent<CanvasRenderer> ();
-		gameObject.AddComponent<Image> ();
 
-		image = gameObject.GetComponent<Image> ();
-		canvasRenderer = gameObject.GetComponent<CanvasRenderer> ();
+		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
+		image = gameObject.AddComponent<Image> ();
 
 		if (image && colorExists) {
 			image.color = color;

@@ -25,11 +25,9 @@ public partial class PUCanvas : PUCanvasBase {
 	public override void gaxb_init ()
 	{
 		gameObject = new GameObject("<Canvas/>", typeof(RectTransform));
-		gameObject.AddComponent<Canvas>();
-		gameObject.AddComponent<GraphicRaycaster>();
 
-		canvas = gameObject.GetComponent<Canvas> ();
-		graphicRaycaster = gameObject.GetComponent<GraphicRaycaster> ();
+		canvas = gameObject.AddComponent<Canvas>();
+		graphicRaycaster = gameObject.AddComponent<GraphicRaycaster>();
 
 		if (renderMode == PlanetUnity2.CanvasRenderMode.ScreenSpaceOverlay)
 			canvas.renderMode = RenderMode.ScreenSpaceOverlay;
