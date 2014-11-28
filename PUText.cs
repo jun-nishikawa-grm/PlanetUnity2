@@ -42,6 +42,8 @@ public class DetectTextClick : Button {
 			float minDistance = 999999;
 			int minChar = -1;
 			int numVertices = tGen.vertexCount;
+			int linkID = 0;
+			int clickedLinkID = -1;
 
 			for (int i = 0; i < tGen.characterCount; i++) {
 				int idx = i * 4 + 2;
@@ -50,9 +52,13 @@ public class DetectTextClick : Button {
 
 				UIVertex c = vArray [idx];
 
+				if (i < value.Length && value [i] == '\x0c') {
+					linkID++;
+				}
 
 				float d = Vector2.Distance (touchPos, c.position);
 				if (d < minDistance) {
+					clickedLinkID = linkID;
 					minDistance = d;
 					minChar = i;
 				}
@@ -89,7 +95,7 @@ public class DetectTextClick : Button {
 
 					Debug.Log ("Link Clicked: " + linkText);
 
-					entity.LinkClicked (linkText);
+					entity.LinkClicked (linkText, clickedLinkID);
 				}
 			}
 
@@ -99,15 +105,15 @@ public class DetectTextClick : Button {
 
 public partial class PUText : PUTextBase {
 
-	static public Action<string> GlobalOnLinkClickAction;
-	public Action<string> OnLinkClickAction;
+	static public Action<string, int> GlobalOnLinkClickAction;
+	public Action<string, int> OnLinkClickAction;
 
-	public void LinkClicked(string linkText) {
+	public void LinkClicked(string linkText, int linkID) {
 		if (OnLinkClickAction != null) {
-			OnLinkClickAction (linkText);
+			OnLinkClickAction (linkText, linkID);
 		}
 		if (OnLinkClickAction == null && GlobalOnLinkClickAction != null) {
-			GlobalOnLinkClickAction (linkText);
+			GlobalOnLinkClickAction (linkText, linkID);
 		}
 		if (onLinkClick != null) {
 			NotificationCenter.postNotification (Scope (), onLinkClick, NotificationCenter.Args ("link", linkText));
