@@ -135,12 +135,18 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	public string xmlPath;
 	public bool editorPreview = true;
 
-	private GameObject planetUnityContainer;
+	private static GameObject planetUnityContainer;
 	private PUCanvas canvas;
 
 	private Canvas rootCanvas;
 
 	private bool shouldReloadMainXML = false;
+
+	static public void SetReferenceResolution(float w, float h) {
+		CanvasScaler scaler = planetUnityContainer.AddComponent<CanvasScaler>();
+		scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+		scaler.referenceResolution = new Vector2(w, h);
+	}
 
 	static public PlanetUnityGameObject currentGameObject = null;
 
