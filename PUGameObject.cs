@@ -117,7 +117,17 @@ public partial class PUGameObject : PUGameObjectBase {
 		gameObject.SetActive (active);
 	}
 
+	public virtual void removeChild(object child){
+		children.Remove (child);
+	}
+
 	public virtual void unload(){
+
+		PUGameObject p = parent as PUGameObject;
+		if (p != null) {
+			p.removeChild (this);
+		}
+
 		unloadAllChildren ();
 
 		NotificationCenter.removeObserver (this);
@@ -128,8 +138,9 @@ public partial class PUGameObject : PUGameObjectBase {
 	}
 
 	public virtual void unloadAllChildren(){
-		foreach (PUGameObject go in children) {
-			go.unload ();
+		for(int i = children.Count-1; i >= 0; i--) {
+			PUGameObject p = children [i] as PUGameObject;
+			p.unload ();
 		}
 		children.Clear ();
 	}
