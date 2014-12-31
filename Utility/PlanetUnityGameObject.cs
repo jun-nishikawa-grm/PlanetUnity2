@@ -135,6 +135,9 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	public string xmlPath;
 	public bool editorPreview = true;
 
+	public Vector2 referenceResolution;
+	public bool scaleAutomatically;
+
 	private static GameObject planetUnityContainer;
 	private PUCanvas canvas;
 
@@ -301,6 +304,10 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		CheckForEventSystem ();
 
 		LoadCanvasXML (PlanetUnityOverride.xmlFromPath (xmlPath));
+
+		if (scaleAutomatically) {
+			SetReferenceResolution (referenceResolution.x, referenceResolution.y);
+		}
 	}
 
 	public void SafeRemoveAllChildren() {
