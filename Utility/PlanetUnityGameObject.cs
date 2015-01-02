@@ -263,8 +263,10 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		// because unity sets it to inherited and those contents don't persist
 		if (canvas.renderMode == PlanetUnity2.CanvasRenderMode.ScreenSpaceOverlay)
 			rootCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-		if (canvas.renderMode == PlanetUnity2.CanvasRenderMode.ScreenSpaceCamera)
+		if (canvas.renderMode == PlanetUnity2.CanvasRenderMode.ScreenSpaceCamera) {
 			rootCanvas.renderMode = RenderMode.ScreenSpaceCamera;
+			rootCanvas.worldCamera = Camera.main;
+		}
 		if (canvas.renderMode == PlanetUnity2.CanvasRenderMode.WorldSpace)
 			rootCanvas.renderMode = RenderMode.WorldSpace;
 		rootCanvas.pixelPerfect = canvas.pixelPerfect;
