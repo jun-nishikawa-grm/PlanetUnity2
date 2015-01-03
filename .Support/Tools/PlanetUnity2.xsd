@@ -118,6 +118,13 @@
 		</complexContent>
 	</complexType>
 	
+	<element name="Switcher" type="planet:Switcher"/>
+	<complexType name="Switcher">
+		<complexContent>
+			<extension base="planet:GameObject">
+			</extension>
+		</complexContent>
+	</complexType>
 	
 	<element name="Color" type="planet:Color"/>
 	<complexType name="Color">
