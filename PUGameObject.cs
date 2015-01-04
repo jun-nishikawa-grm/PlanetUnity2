@@ -274,14 +274,12 @@ public partial class PUGameObject : PUGameObjectBase {
 	}
 
 	public void ScheduleForLateUpdate() {
-		gameObject.AddComponent<GameObjectLateUpdateScript> ();
-		GameObjectLateUpdateScript script = gameObject.GetComponent<GameObjectLateUpdateScript> ();
+		GameObjectLateUpdateScript script = gameObject.AddComponent<GameObjectLateUpdateScript> ();
 		script.entity = this;
 	}
 
 	public void ScheduleForUpdate() {
-		gameObject.AddComponent<GameObjectUpdateScript> ();
-		GameObjectUpdateScript script = gameObject.GetComponent<GameObjectUpdateScript> ();
+		GameObjectUpdateScript script = gameObject.AddComponent<GameObjectUpdateScript> ();
 		script.entity = this;
 	}
 

@@ -25,9 +25,13 @@ public partial class PUSwitcher : PUSwitcherBase {
 			return;
 		}
 
+		foreach (PUGameObject child in children) {
+			LeanTween.cancel (child.gameObject);
+		}
+
 		HideIndex (currentIndex, 0.0f);
 		currentIndex = i;
-		ShowIndex (currentIndex, 0.66f);
+		ShowIndex (currentIndex, 0.15f);
 	}
 
 	private void HideIndex(int idx, float delay) {
@@ -36,7 +40,7 @@ public partial class PUSwitcher : PUSwitcherBase {
 
 			child.gameObject.SetActive (true);
 			child.canvasGroup.alpha = 1;
-			LeanTween.alpha (child.gameObject, 0.0f, 1.33f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
+			LeanTween.alpha (child.gameObject, 0.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
 				child.gameObject.SetActive (false);
 			});
 		}
@@ -48,7 +52,7 @@ public partial class PUSwitcher : PUSwitcherBase {
 
 			child.gameObject.SetActive (true);
 			child.canvasGroup.alpha = 0;
-			LeanTween.alpha (child.gameObject, 1.0f, 1.33f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
+			LeanTween.alpha (child.gameObject, 1.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
 
 			});
 		}
