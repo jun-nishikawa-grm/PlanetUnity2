@@ -27,9 +27,10 @@ public partial class PUSwitcher : PUSwitcherBase {
 		if (currentIndex == i) {
 			return;
 		}
-
+			
 		foreach (PUGameObject child in children) {
 			LeanTween.cancel (child.gameObject);
+			child.gameObject.SetActive (false);
 		}
 
 		HideIndex (currentIndex, 0.0f);
