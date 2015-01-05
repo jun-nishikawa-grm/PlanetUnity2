@@ -237,6 +237,20 @@ public static class Vector2Extension
 	{
 		return (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y);
 	}
+
+	public static Vector2 RotateLeft(this Vector2 v)
+	{
+		float x = -v.y;
+		float y = v.x;
+		return new Vector2(x, y);
+	}
+
+	public static Vector2 RotateZ(this Vector2 v, float radians)
+	{
+		float x = v.x * Mathf.Cos (radians) - v.y * Mathf.Sin (radians);
+		float y = v.x * Mathf.Sin (radians) + v.y * Mathf.Cos (radians);
+		return new Vector2(x, y);
+	}
 }
 
 public static class Vector3Extension
@@ -253,6 +267,51 @@ public static class Vector3Extension
 	public static string PUToString(this Vector3 v)
 	{
 		return string.Format ("{0},{1},{2}", v.x, v.y, v.z);
+	}
+
+	public static Vector3 RotateLeft(this Vector3 v)
+	{
+		float x = -v.y;
+		float y = v.x;
+		v.x = x;
+		v.y = y;
+		return v;
+	}
+
+	public static Vector3 RotateRight(this Vector3 v)
+	{
+		float x = v.y;
+		float y = v.x;
+		v.x = x;
+		v.y = y;
+		return v;
+	}
+
+	public static Vector3 RotateLeftAboutY(this Vector3 v)
+	{
+		float x = -v.z;
+		float z = v.x;
+		v.x = x;
+		v.z = z;
+		return v;
+	}
+
+	public static Vector3 RotateRightAboutY(this Vector3 v)
+	{
+		float x = v.z;
+		float z = -v.x;
+		v.x = x;
+		v.z = z;
+		return v;
+	}
+
+	public static Vector3 RotateZ(this Vector3 v, float radians)
+	{
+		float x = v.x * Mathf.Cos (radians) - v.y * Mathf.Sin (radians);
+		float y = v.x * Mathf.Sin (radians) + v.y * Mathf.Cos (radians);
+		v.x = x;
+		v.y = y;
+		return v;
 	}
 }
 
