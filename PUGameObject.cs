@@ -257,6 +257,7 @@ public partial class PUGameObject : PUGameObjectBase {
 	public void IgnoreMouse(bool i) {
 		CheckCanvasGroup ();
 		canvasGroup.blocksRaycasts = !i;
+		canvasGroup.interactable = !i;
 	}
 
 

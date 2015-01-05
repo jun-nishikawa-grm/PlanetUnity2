@@ -19,6 +19,9 @@ public partial class PUSwitcher : PUSwitcherBase {
 		SwitchTo (0);
 	}
 
+	public int CurrentIndex() {
+		return currentIndex;
+	}
 
 	public void SwitchTo(int i) {
 		if (currentIndex == i) {
