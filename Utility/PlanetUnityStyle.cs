@@ -110,10 +110,10 @@ public class PlanetUnityStyle
 		} catch {}
 			
 		if (!allLanguages.TryGetValue (code, out languageDict)) {
-			string stringsFile = PlanetUnityResourceCache.GetTextFile ("languages/" + code + "/Localizable.styles");
+			string stringsFile = PlanetUnityResourceCache.GetTextFile ("Languages/" + code + "/Localizable.styles");
 			if (stringsFile == null) {
 				// default to English in cases where
-				stringsFile = PlanetUnityResourceCache.GetTextFile ("languages/en/Localizable.styles");
+				stringsFile = PlanetUnityResourceCache.GetTextFile ("Languages/en/Localizable.styles");
 			}
 
 			if (stringsFile != null) {

@@ -109,10 +109,10 @@ public class PlanetUnityLanguage
 		} catch {}
 			
 		if (!allLanguages.TryGetValue (code, out languageDict)) {
-			string stringsFile = PlanetUnityResourceCache.GetTextFile ("languages/" + code + "/Localizable.strings");
+			string stringsFile = PlanetUnityResourceCache.GetTextFile ("Languages/" + code + "/Localizable.strings");
 			if (stringsFile == null) {
 				// default to English in cases where
-				stringsFile = PlanetUnityResourceCache.GetTextFile ("languages/en/Localizable.strings");
+				stringsFile = PlanetUnityResourceCache.GetTextFile ("Languages/en/Localizable.strings");
 			}
 
 			if (stringsFile != null) {
