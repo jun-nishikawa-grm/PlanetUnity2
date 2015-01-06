@@ -58,6 +58,7 @@ public partial class PUCanvas : PUCanvasBase {
 			float lastY,
 			float lastX,
 			string shader,
+			bool ignoreMouse,
 			string title,
 			string tag,
 			string tag1,
@@ -111,6 +112,9 @@ public partial class PUCanvas : PUCanvasBase {
 
 		this.shader = shader;
 		this.shaderExists = true;
+
+		this.ignoreMouse = ignoreMouse;
+		this.ignoreMouseExists = true;
 
 		this.title = title;
 		this.titleExists = true;

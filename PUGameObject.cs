@@ -114,6 +114,10 @@ public partial class PUGameObject : PUGameObjectBase {
 			}
 		}
 
+		if (ignoreMouse) {
+			IgnoreMouse (true);
+		}
+
 		gameObject.SetActive (active);
 	}
 

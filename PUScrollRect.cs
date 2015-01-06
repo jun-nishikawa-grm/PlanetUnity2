@@ -74,6 +74,17 @@ public partial class PUScrollRect : PUScrollRectBase {
 			if (tMaxY > maxY)
 				maxY = tMaxY;
 		}
+
+		// If the scroller is locked on an axis, use the parents size for that axis
+		if (scroll.horizontal == false) {
+			minX = 0;
+			maxX = ((RectTransform)myRectTransform.parent).rect.width;
+		}
+
+		if (scroll.vertical == false) {
+			minY = 0;
+			maxY = ((RectTransform)myRectTransform.parent).rect.height;
+		}
 			
 		myRectTransform.sizeDelta = new Vector2 (maxX - minX, maxY - minY);
 	}

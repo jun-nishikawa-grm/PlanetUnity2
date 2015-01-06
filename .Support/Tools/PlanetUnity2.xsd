@@ -88,6 +88,7 @@
 		        <attribute name="lastX" type="float" use="optional" />
 		
 				<attribute name="shader" type="string" use="optional" />
+				<attribute name="ignoreMouse" type="boolean" use="optional" />
 			</extension>
 		</complexContent>
 	</complexType>
