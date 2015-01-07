@@ -1,9 +1,4 @@
 
-
-using UnityEngine;
-using System.Xml;
-using System.Collections;
-
 public partial class PUSwitcher : PUSwitcherBase {
 
 	private int currentIndex = -1;
@@ -29,7 +24,9 @@ public partial class PUSwitcher : PUSwitcherBase {
 		}
 			
 		foreach (PUGameObject child in children) {
-			LeanTween.cancel (child.gameObject);
+			#if PLANETUNITY2_LEANTWEEN
+				LeanTween.cancel (child.gameObject);
+			#endif
 			child.gameObject.SetActive (false);
 		}
 
@@ -44,9 +41,13 @@ public partial class PUSwitcher : PUSwitcherBase {
 
 			child.gameObject.SetActive (true);
 			child.canvasGroup.alpha = 1;
-			LeanTween.alpha (child.gameObject, 0.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
+			#if PLANETUNITY2_LEANTWEEN
+				LeanTween.alpha (child.gameObject, 0.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
+					child.gameObject.SetActive (false);
+				});
+			#else
 				child.gameObject.SetActive (false);
-			});
+			#endif
 		}
 	}
 
@@ -56,9 +57,11 @@ public partial class PUSwitcher : PUSwitcherBase {
 
 			child.gameObject.SetActive (true);
 			child.canvasGroup.alpha = 0;
-			LeanTween.alpha (child.gameObject, 1.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
+			#if PLANETUNITY2_LEANTWEEN
+				LeanTween.alpha (child.gameObject, 1.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
 
-			});
+				});
+			#endif
 		}
 	}
 
