@@ -136,6 +136,8 @@ public class PUTableCell {
 			script.tableCell = this;
 		}
 
+		puGameObject.parent = table;
+
 		// We want to bridge all notifications to my scope; this allows developers to handle notifications
 		// at the table cell level, or at the scene controller level, with ease
 		NotificationCenter.addObserver (this, "*", puGameObject, (args,name) => {
@@ -159,6 +161,19 @@ public partial class PUTable : PUTableBase {
 		allObjects = new List<object> (objects);
 	}
 
+	public PUTableCell TableCellForPUGameObject(PUGameObject baseObject){
+		foreach(PUTableCell cell in allCells){
+			if (cell.puGameObject.Equals (baseObject)) {
+				return cell;
+			}
+		}
+		return null;
+	}
+
+	public object ObjectForTableCell(PUTableCell cell){
+		int idx = allCells.IndexOf (cell);
+		return allObjects [(allObjects.Count-idx)-1];
+	}
 
 	public void LoadCellForData(object cellData) {
 
