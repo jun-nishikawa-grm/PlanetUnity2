@@ -24,7 +24,7 @@ public partial class PUSwitcher : PUSwitcherBase {
 		}
 			
 		foreach (PUGameObject child in children) {
-			#if PLANETUNITY2_LEANTWEEN
+			#if PU2_LEANTWEEN
 				LeanTween.cancel (child.gameObject);
 			#endif
 			child.gameObject.SetActive (false);
@@ -41,7 +41,7 @@ public partial class PUSwitcher : PUSwitcherBase {
 
 			child.gameObject.SetActive (true);
 			child.canvasGroup.alpha = 1;
-			#if PLANETUNITY2_LEANTWEEN
+			#if PU2_LEANTWEEN
 				LeanTween.alpha (child.gameObject, 0.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
 					child.gameObject.SetActive (false);
 				});
@@ -57,7 +57,7 @@ public partial class PUSwitcher : PUSwitcherBase {
 
 			child.gameObject.SetActive (true);
 			child.canvasGroup.alpha = 0;
-			#if PLANETUNITY2_LEANTWEEN
+			#if PU2_LEANTWEEN
 				LeanTween.alpha (child.gameObject, 1.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
 
 				});

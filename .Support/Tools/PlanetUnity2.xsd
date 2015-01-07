@@ -89,6 +89,9 @@
 		
 				<attribute name="shader" type="string" use="optional" />
 				<attribute name="ignoreMouse" type="boolean" use="optional" />
+				
+				<attribute name="components" type="string" use="optional" />
+				
 			</extension>
 		</complexContent>
 	</complexType>

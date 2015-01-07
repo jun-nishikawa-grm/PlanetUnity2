@@ -53,7 +53,8 @@ public partial class PUGameObject : PUGameObjectBase {
 			float lastY,
 			float lastX,
 			string shader,
-			bool ignoreMouse ) : this()
+			bool ignoreMouse,
+			string components ) : this()
 	{
 		this.bounds = bounds;
 		this.boundsExists = true;
@@ -96,6 +97,9 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		this.ignoreMouse = ignoreMouse;
 		this.ignoreMouseExists = true;
+
+		this.components = components;
+		this.componentsExists = true;
 	}
 
 	
@@ -115,6 +119,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			float lastX,
 			string shader,
 			bool ignoreMouse,
+			string components,
 			string title,
 			string tag,
 			string tag1,
@@ -165,6 +170,9 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		this.ignoreMouse = ignoreMouse;
 		this.ignoreMouseExists = true;
+
+		this.components = components;
+		this.componentsExists = true;
 
 		this.title = title;
 		this.titleExists = true;
@@ -249,6 +257,9 @@ public class PUGameObjectBase : PUObject {
 	public bool ignoreMouse;
 	public bool ignoreMouseExists;
 
+	public string components;
+	public bool componentsExists;
+
 
 
 
@@ -267,6 +278,7 @@ public class PUGameObjectBase : PUObject {
 	public void SetLastX(float v) { lastX = v; lastXExists = true; } 
 	public void SetShader(string v) { shader = v; shaderExists = true; } 
 	public void SetIgnoreMouse(bool v) { ignoreMouse = v; ignoreMouseExists = true; } 
+	public void SetComponents(string v) { components = v; componentsExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -403,6 +415,10 @@ public class PUGameObjectBase : PUObject {
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr != null) { ignoreMouse = bool.Parse(attr); ignoreMouseExists = true; } 
 		
+		attr = reader.GetAttribute("components");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { components = attr; componentsExists = true; } 
+		
 
 	}
 	
@@ -430,6 +446,7 @@ public class PUGameObjectBase : PUObject {
 		if(lastXExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastX", lastX.ToString ("0.##")); }
 		if(shaderExists) { sb.AppendFormat (" {0}=\"{1}\"", "shader", shader); }
 		if(ignoreMouseExists) { sb.AppendFormat (" {0}=\"{1}\"", "ignoreMouse", ignoreMouse.ToString().ToLower()); }
+		if(componentsExists) { sb.AppendFormat (" {0}=\"{1}\"", "components", components); }
 
 	}
 	

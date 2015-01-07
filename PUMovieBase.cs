@@ -62,6 +62,7 @@ public partial class PUMovie : PUMovieBase {
 			float lastX,
 			string shader,
 			bool ignoreMouse,
+			string components,
 			string title,
 			string tag,
 			string tag1,
@@ -124,6 +125,9 @@ public partial class PUMovie : PUMovieBase {
 
 		this.ignoreMouse = ignoreMouse;
 		this.ignoreMouseExists = true;
+
+		this.components = components;
+		this.componentsExists = true;
 
 		this.title = title;
 		this.titleExists = true;

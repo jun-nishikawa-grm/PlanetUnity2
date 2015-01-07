@@ -19,6 +19,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine.UI;
+using System.ComponentModel.Design.Serialization;
 
 public partial class PUGameObject : PUGameObjectBase {
 
@@ -116,6 +117,13 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		if (ignoreMouse) {
 			IgnoreMouse (true);
+		}
+
+		if(components != null){
+			string[] allComponentNames = components.Split (',');
+			foreach (string componentName in allComponentNames) {
+				gameObject.AddComponent (componentName);
+			}
 		}
 
 		gameObject.SetActive (active);
