@@ -16,6 +16,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 public class PlanetUnityResourceCache
 {
@@ -35,7 +36,18 @@ public class PlanetUnityResourceCache
 
 		Texture2D t = Resources.Load (s) as Texture2D;
 		if (t == null) {
-			return null;
+			if (s.EndsWith (".png") || s.EndsWith (".jpg")) {
+				string filePath = Application.streamingAssetsPath + "/" + s;
+				if (File.Exists(filePath))     {
+					t = new Texture2D(2, 2, TextureFormat.ARGB32, false);
+					t.LoadImage(File.ReadAllBytes(filePath));
+				}
+			}
+
+			if (t == null) {
+				Debug.Log ("Unable to load streaming asset: " + Application.streamingAssetsPath + "/" + s);
+				return null;
+			}
 		}
 		t.filterMode = FilterMode.Bilinear;
 		#if UNITY_EDITOR
