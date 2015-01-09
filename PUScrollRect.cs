@@ -104,7 +104,7 @@ public partial class PUScrollRect : PUScrollRectBase {
 			Transform t = gameObject.transform.GetChild (i);
 			t.SetParent (contentObject.transform, false);
 		}
-		contentObject.transform.SetParent (gameObject.transform);
+		contentObject.transform.SetParent (gameObject.transform, false);
 
 		contentObject.layer = LayerMask.NameToLayer ("UI");
 
