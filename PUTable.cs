@@ -60,6 +60,12 @@ public class PUTableCell {
 	public PUGameObject puGameObject = null;
 	public object cellData = null;
 
+
+	private GameObject cellGameObject;
+	private RectTransform cellTransform;
+	private RectTransform tableTransform;
+	private RectTransform tableContentTransform;
+
 	public virtual bool IsHeader() {
 		// Subclasses override this method to specify this cell should act as a section header
 		return false;
@@ -72,6 +78,26 @@ public class PUTableCell {
 
 	public virtual void LateUpdate() {
 		// Subclasses can override to dynamically check their current size
+	}
+
+	public void TestForVisibility() {
+
+		// Note to self: cell are arranged from bottom of content object (pos 0) to the top (pos height)
+		// Note to self: table scrolling is positive (as you scroll up, the anchored position increases)
+
+		float bottomOfCell = (cellTransform.anchoredPosition.y) + tableContentTransform.anchoredPosition.y - (tableContentTransform.rect.height - tableTransform.rect.height);
+		float topOfCell = bottomOfCell + cellTransform.rect.height;
+		float tableViewHeight = tableTransform.rect.height;
+
+		if (cellGameObject.activeSelf) {
+			if (bottomOfCell > tableViewHeight || topOfCell < 0) {
+				cellGameObject.SetActive (false);
+			}
+		} else {
+			if (bottomOfCell < tableViewHeight && topOfCell > 0) {
+				cellGameObject.SetActive (true);
+			}
+		}
 	}
 
 	public virtual void LoadIntoPUGameObject(PUTable parent, object data) {
@@ -143,6 +169,11 @@ public class PUTableCell {
 		NotificationCenter.addObserver (this, "*", puGameObject, (args,name) => {
 			NotificationCenter.postNotification(table.Scope(), name, args);
 		});
+
+		cellGameObject = puGameObject.gameObject;
+		cellTransform = cellGameObject.transform as RectTransform;
+		tableTransform = table.rectTransform;
+		tableContentTransform = table.contentObject.transform as RectTransform;
 	}
 
 	public void unload() {
@@ -224,14 +255,16 @@ public partial class PUTable : PUTableBase {
 		CalculateContentSize ();
 	}
 
+
 	public void LateUpdate() {
 
 		float y = 0;
 
 		// 0) Remove all previous content
 		foreach (PUTableCell cell in allCells) {
-
 			cell.LateUpdate ();
+
+			cell.TestForVisibility ();
 
 			cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (0, y);
 
@@ -239,6 +272,7 @@ public partial class PUTable : PUTableBase {
 		}
 
 		CalculateContentSize ();
+
 	}
 
 	public override void unload() {
