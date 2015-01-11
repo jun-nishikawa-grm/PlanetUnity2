@@ -84,25 +84,28 @@ public class PUTableHeaderScript : MonoBehaviour {
 	{
 		cellTransform.anchoredPosition = DesiredAnchorPosition ();
 
+		float bottomOfCell = (cellTransform.anchoredPosition.y) + tableContentTransform.anchoredPosition.y - (tableContentTransform.rect.height - tableTransform.rect.height);
+		Vector2 otherPos = cellTransform.anchoredPosition;
+		float distance = 99999.0f;
+
 		// Get my sibling's top of cell, allow it to push me out of the way
 		if (nextHeaderTransform != null) {
-
 			PUTableHeaderScript otherScript = nextHeaderTransform.GetComponent<PUTableHeaderScript> ();
-			Vector2 otherPos = otherScript.DesiredAnchorPosition ();
-			float bottomOfCell = (cellTransform.anchoredPosition.y) + tableContentTransform.anchoredPosition.y - (tableContentTransform.rect.height - tableTransform.rect.height);
+			otherPos = otherScript.DesiredAnchorPosition ();
+			distance = cellTransform.anchoredPosition.y - otherPos.y;
+		}
 
-			float distance = cellTransform.anchoredPosition.y - otherPos.y;
-			if (distance < cellTransform.rect.height) {
-				cellTransform.anchoredPosition = new Vector2 (otherPos.x, otherPos.y + cellTransform.rect.height);
-				tableCell.puGameObject.canvasGroup.alpha = LeanTween.easeInCubic (0, 1, distance / cellTransform.rect.height);
-			} else if (bottomOfCell < 0) {
-				tableCell.puGameObject.canvasGroup.alpha = LeanTween.easeInCubic (0, 1, (bottomOfCell+cellTransform.rect.height) / cellTransform.rect.height);
-			} else {
-				if (tableCell.puGameObject.canvasGroup.alpha.Equals (1.0f) == false) {
-					tableCell.puGameObject.canvasGroup.alpha = 1.0f;
-				}
+		if (distance < cellTransform.rect.height) {
+			cellTransform.anchoredPosition = new Vector2 (otherPos.x, otherPos.y + cellTransform.rect.height);
+			tableCell.puGameObject.canvasGroup.alpha = LeanTween.easeInCubic (0, 1, distance / cellTransform.rect.height);
+		} else if (bottomOfCell < 0) {
+			tableCell.puGameObject.canvasGroup.alpha = LeanTween.easeInCubic (0, 1, (bottomOfCell+cellTransform.rect.height) / cellTransform.rect.height);
+		} else {
+			if (tableCell.puGameObject.canvasGroup.alpha.Equals (1.0f) == false) {
+				tableCell.puGameObject.canvasGroup.alpha = 1.0f;
 			}
 		}
+
 	}
 }
 
