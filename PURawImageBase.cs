@@ -52,6 +52,7 @@ public partial class PURawImage : PURawImageBase {
 			string anchor,
 			bool active,
 			bool mask,
+			Vector4 maskInset,
 			bool outline,
 			float lastY,
 			float lastX,
@@ -102,6 +103,9 @@ public partial class PURawImage : PURawImageBase {
 
 		this.mask = mask;
 		this.maskExists = true;
+
+		this.maskInset = maskInset;
+		this.maskInsetExists = true;
 
 		this.outline = outline;
 		this.outlineExists = true;

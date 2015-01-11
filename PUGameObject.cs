@@ -17,9 +17,68 @@ using UnityEngine;
 using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine.UI;
-using System.ComponentModel.Design.Serialization;
+
+
+
+public class MaskGraphic : Graphic {
+
+	public float insetTop = 0;
+	public float insetBottom = 0;
+	public float insetLeft = 0;
+	public float insetRight = 0;
+
+
+	protected override void OnFillVBO (List<UIVertex> vbo)
+	{
+		Vector2 corner1 = Vector2.zero;
+		Vector2 corner2 = Vector2.zero;
+
+		corner1.x = 0f;
+		corner1.y = 0f;
+		corner2.x = 1f;
+		corner2.y = 1f;
+
+		corner1.x -= rectTransform.pivot.x;
+		corner1.y -= rectTransform.pivot.y;
+		corner2.x -= rectTransform.pivot.x;
+		corner2.y -= rectTransform.pivot.y;
+
+		corner1.x *= rectTransform.rect.width;
+		corner1.y *= rectTransform.rect.height;
+		corner2.x *= rectTransform.rect.width;
+		corner2.y *= rectTransform.rect.height;
+
+		corner2.y -= insetTop;
+		corner2.x -= insetRight;
+
+		corner1.y -= insetBottom;
+		corner1.x -= insetLeft;
+
+		vbo.Clear();
+
+		UIVertex vert = UIVertex.simpleVert;
+
+		vert.position = new Vector2(corner1.x, corner1.y);
+		vert.color = color;
+		vbo.Add(vert);
+
+		vert.position = new Vector2(corner1.x, corner2.y);
+		vert.color = color;
+		vbo.Add(vert);
+
+		vert.position = new Vector2(corner2.x, corner2.y);
+		vert.color = color;
+		vbo.Add(vert);
+
+		vert.position = new Vector2(corner2.x, corner1.y);
+		vert.color = color;
+		vbo.Add(vert);
+	}
+
+}
+
+
 
 public partial class PUGameObject : PUGameObjectBase {
 
@@ -97,7 +156,14 @@ public partial class PUGameObject : PUGameObjectBase {
 
 			// Mask requires a Graphic; if we don't have one, add one and tell it now to draw it...
 			if (gameObject.GetComponent<Graphic> () == null) {
-				gameObject.AddComponent<RawImage> ();
+				MaskGraphic graphic = gameObject.AddComponent<MaskGraphic> ();
+
+				if (maskInsetExists) {
+					graphic.insetLeft = maskInset.x;
+					graphic.insetRight = maskInset.y;
+					graphic.insetTop = maskInset.z;
+					graphic.insetBottom = maskInset.w;
+				}
 
 				Mask maskComponent = gameObject.GetComponent<Mask> ();
 				maskComponent.showMaskGraphic = false;

@@ -32,24 +32,76 @@ public class PUTableHeaderScript : MonoBehaviour {
 	public PUTableCell tableCell;
 	private float originalY;
 
+	RectTransform cellTransform;
+	RectTransform nextHeaderTransform;
+	RectTransform tableTransform;
+	RectTransform tableContentTransform;
+
 	public void Start()
 	{
-		originalY = gameObject.transform.localPosition.y;
+		if (cellTransform == null) {
+			cellTransform = tableCell.puGameObject.rectTransform;
+		}
+		if (tableTransform == null) {
+			tableTransform = table.rectTransform as RectTransform;
+		}
+		if (tableContentTransform == null) {
+			tableContentTransform = table.contentObject.transform as RectTransform;
+		}
+		if (nextHeaderTransform == null) {
+			if ((cellTransform.GetSiblingIndex () + 1) < tableContentTransform.childCount) {
+				nextHeaderTransform = tableContentTransform.GetChild (cellTransform.GetSiblingIndex () + 1) as RectTransform;
+				if (nextHeaderTransform.GetComponent<PUTableHeaderScript> () == null) {
+					nextHeaderTransform = null;
+				}
+			}
+		}
+
+		tableCell.puGameObject.CheckCanvasGroup ();
+
+		originalY = cellTransform.anchoredPosition.y;
+	}
+
+	public Vector2 DesiredAnchorPosition() {
+		float bottomOfCell = (cellTransform.anchoredPosition.y) + tableContentTransform.anchoredPosition.y - (tableContentTransform.rect.height - tableTransform.rect.height);
+		float topOfCell = bottomOfCell + cellTransform.rect.height;
+		float tableViewHeight = tableTransform.rect.height;
+
+		if (topOfCell > tableViewHeight) {
+			Vector2 pos = cellTransform.anchoredPosition;
+			pos.y = originalY + (tableViewHeight - topOfCell);
+			return pos;
+		} else if(cellTransform.anchoredPosition.y.Equals(originalY) == false) {
+			Vector2 pos = cellTransform.anchoredPosition;
+			pos.y = originalY;
+			return pos;
+		}
+
+		return cellTransform.anchoredPosition;
 	}
 
 	public void LateUpdate()
 	{
-		// Test world position is not above the table top; if so, clamp it?
-		float diff = (table.contentObject.transform.localPosition.y - table.rectTransform.rect.height) + (gameObject.transform.localPosition.y+tableCell.puGameObject.rectTransform.rect.height);
+		cellTransform.anchoredPosition = DesiredAnchorPosition ();
 
-		if (diff > 0) {
-			Vector2 pos = gameObject.transform.localPosition;
-			pos.y = originalY - diff;
-			gameObject.transform.localPosition = pos;
-		} else if(gameObject.transform.localPosition.y.Equals(originalY) == false) {
-			Vector2 pos = gameObject.transform.localPosition;
-			pos.y = originalY;
-			gameObject.transform.localPosition = pos;
+		// Get my sibling's top of cell, allow it to push me out of the way
+		if (nextHeaderTransform != null) {
+
+			PUTableHeaderScript otherScript = nextHeaderTransform.GetComponent<PUTableHeaderScript> ();
+			Vector2 otherPos = otherScript.DesiredAnchorPosition ();
+			float bottomOfCell = (cellTransform.anchoredPosition.y) + tableContentTransform.anchoredPosition.y - (tableContentTransform.rect.height - tableTransform.rect.height);
+
+			float distance = cellTransform.anchoredPosition.y - otherPos.y;
+			if (distance < cellTransform.rect.height) {
+				cellTransform.anchoredPosition = new Vector2 (otherPos.x, otherPos.y + cellTransform.rect.height);
+				tableCell.puGameObject.canvasGroup.alpha = LeanTween.easeInCubic (0, 1, distance / cellTransform.rect.height);
+			} else if (bottomOfCell < 0) {
+				tableCell.puGameObject.canvasGroup.alpha = LeanTween.easeInCubic (0, 1, (bottomOfCell+cellTransform.rect.height) / cellTransform.rect.height);
+			} else {
+				if (tableCell.puGameObject.canvasGroup.alpha.Equals (1.0f) == false) {
+					tableCell.puGameObject.canvasGroup.alpha = 1.0f;
+				}
+			}
 		}
 	}
 }
@@ -84,18 +136,19 @@ public class PUTableCell {
 
 		// Note to self: cell are arranged from bottom of content object (pos 0) to the top (pos height)
 		// Note to self: table scrolling is positive (as you scroll up, the anchored position increases)
+		if (IsHeader () == false) {
+			float bottomOfCell = (cellTransform.anchoredPosition.y) + tableContentTransform.anchoredPosition.y - (tableContentTransform.rect.height - tableTransform.rect.height);
+			float topOfCell = bottomOfCell + cellTransform.rect.height;
+			float tableViewHeight = tableTransform.rect.height;
 
-		float bottomOfCell = (cellTransform.anchoredPosition.y) + tableContentTransform.anchoredPosition.y - (tableContentTransform.rect.height - tableTransform.rect.height);
-		float topOfCell = bottomOfCell + cellTransform.rect.height;
-		float tableViewHeight = tableTransform.rect.height;
-
-		if (cellGameObject.activeSelf) {
-			if (bottomOfCell > tableViewHeight || topOfCell < 0) {
-				cellGameObject.SetActive (false);
-			}
-		} else {
-			if (bottomOfCell < tableViewHeight && topOfCell > 0) {
-				cellGameObject.SetActive (true);
+			if (cellGameObject.activeSelf) {
+				if (bottomOfCell > tableViewHeight || topOfCell < 0) {
+					cellGameObject.SetActive (false);
+				}
+			} else {
+				if (bottomOfCell < tableViewHeight && topOfCell > 0) {
+					cellGameObject.SetActive (true);
+				}
 			}
 		}
 	}
