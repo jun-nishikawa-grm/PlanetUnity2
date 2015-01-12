@@ -107,8 +107,10 @@ public class DetectTextClick : MonoBehaviour, IPointerClickHandler, ICanvasRayca
 		
 	public void OnPointerClick(PointerEventData eventData) {
 		TestForHit (Input.mousePosition, eventData.pressEventCamera, (linkText, clickedLinkID) => {
-			Debug.Log ("Link Clicked: " + linkText);
-			entity.LinkClicked (linkText, clickedLinkID);
+			if(entity != null){
+				Debug.Log ("Link Clicked: " + linkText);
+				entity.LinkClicked (linkText, clickedLinkID);
+			}
 		});
 	}
 }
