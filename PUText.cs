@@ -19,86 +19,96 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class DetectTextClick : Button {
+public class DetectTextClick : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter {
 
 	public PUText entity;
 
-	protected override void Start() {
-		transition = Transition.None;
 
-		onClick.AddListener (() => {
+	public bool TestForHit(Vector2 screenPoint, Camera eventCamera, Action<string, int> block) {
 
-			Text t = gameObject.GetComponent<Text> ();
-			TextGenerator tGen = t.cachedTextGenerator;
+		Text t = gameObject.GetComponent<Text> ();
+		TextGenerator tGen = t.cachedTextGenerator;
 
-			RectTransform rectTransform = gameObject.transform as RectTransform;
+		RectTransform rectTransform = gameObject.transform as RectTransform;
 
-			Vector2 touchPos = rectTransform.InverseTransformPoint (Input.mousePosition);
+		Vector2 touchPos;
+		RectTransformUtility.ScreenPointToLocalPointInRectangle (rectTransform, screenPoint, eventCamera, out touchPos);
 
-			UIVertex[] vArray = tGen.GetVerticesArray ();
+		UIVertex[] vArray = tGen.GetVerticesArray ();
 
-			string value = t.text;
+		string value = t.text;
 
-			float minDistance = 999999;
-			int minChar = -1;
-			int numVertices = tGen.vertexCount;
-			int linkID = 0;
-			int clickedLinkID = -1;
+		float minDistance = 999999;
+		int minChar = -1;
+		int numVertices = tGen.vertexCount;
+		int linkID = 0;
+		int clickedLinkID = -1;
 
-			for (int i = 0; i < tGen.characterCount; i++) {
-				int idx = i * 4 + 2;
-				if(idx >= numVertices)
+		for (int i = 0; i < tGen.characterCount; i++) {
+			int idx = i * 4 + 2;
+			if(idx >= numVertices)
+				break;
+
+			UIVertex c = vArray [idx];
+
+			if (i < value.Length && value [i] == '\x0c') {
+				linkID++;
+			}
+
+			float d = Vector2.Distance (touchPos, c.position);
+			if (d < minDistance) {
+				clickedLinkID = linkID;
+				minDistance = d;
+				minChar = i;
+			}
+		}
+
+		if (minChar >= 0 && minDistance < 80 && minChar < value.Length) {
+			// i is the index into the string which we clicked.  Determine a "link" by finding the previous '['
+			// and the ending ']'
+			int startIndex = -1;
+			int endIndex = -1;
+			for (int k = minChar; k >= 0; k--) {
+				if (value [k] == '\x0b') {
+					startIndex = k;
 					break;
-
-				UIVertex c = vArray [idx];
-
-				if (i < value.Length && value [i] == '\x0c') {
-					linkID++;
 				}
-
-				float d = Vector2.Distance (touchPos, c.position);
-				if (d < minDistance) {
-					clickedLinkID = linkID;
-					minDistance = d;
-					minChar = i;
+				if (value [k] == '\x0c') {
+					endIndex = -1;
+					break;
+				}
+			}
+			for (int k = minChar; k < value.Length; k++) {
+				if (value [k] == '\x0c') {
+					endIndex = k;
+					break;
+				}
+				if (value [k] == '\x0b') {
+					endIndex = -1;
+					break;
 				}
 			}
 
-			if (minChar >= 0 && minDistance < 80 && minChar < value.Length) {
-				// i is the index into the string which we clicked.  Determine a "link" by finding the previous '['
-				// and the ending ']'
-				int startIndex = -1;
-				int endIndex = -1;
-				for (int k = minChar; k >= 0; k--) {
-					if (value [k] == '\x0b') {
-						startIndex = k;
-						break;
-					}
-					if (value [k] == '\x0c') {
-						endIndex = -1;
-						break;
-					}
-				}
-				for (int k = minChar; k < value.Length; k++) {
-					if (value [k] == '\x0c') {
-						endIndex = k;
-						break;
-					}
-					if (value [k] == '\x0b') {
-						endIndex = -1;
-						break;
-					}
-				}
-
-				if (startIndex >= 0 && endIndex >= 0) {
+			if (startIndex >= 0 && endIndex >= 0) {
+				if (block != null) {
 					string linkText = value.Substring (startIndex + 1, endIndex - startIndex - 1).Trim ();
-
-					Debug.Log ("Link Clicked: " + linkText);
-
-					entity.LinkClicked (linkText, clickedLinkID);
+					block (linkText, clickedLinkID);
 				}
+				return true;
 			}
+		}
 
+		return false;
+	}
+
+	public bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera) {
+		return TestForHit(screenPoint, eventCamera, null);
+	}
+		
+	public void OnPointerClick(PointerEventData eventData) {
+		TestForHit (Input.mousePosition, eventData.pressEventCamera, (linkText, clickedLinkID) => {
+			Debug.Log ("Link Clicked: " + linkText);
+			entity.LinkClicked (linkText, clickedLinkID);
 		});
 	}
 }
