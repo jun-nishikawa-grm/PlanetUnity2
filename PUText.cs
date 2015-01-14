@@ -117,15 +117,21 @@ public class DetectTextClick : MonoBehaviour, IPointerClickHandler, ICanvasRayca
 
 public partial class PUText : PUTextBase {
 
-	static public Action<string, int> GlobalOnLinkClickAction;
+	static public Action<string, int, PUGameObject> GlobalOnLinkClickAction;
 	public Action<string, int> OnLinkClickAction;
+	public Func<string, int, string> TranslateLinkAction;
 
 	public void LinkClicked(string linkText, int linkID) {
+
+		if (TranslateLinkAction != null) {
+			linkText = TranslateLinkAction (linkText, linkID);
+		}
+
 		if (OnLinkClickAction != null) {
 			OnLinkClickAction (linkText, linkID);
 		}
 		if (OnLinkClickAction == null && GlobalOnLinkClickAction != null) {
-			GlobalOnLinkClickAction (linkText, linkID);
+			GlobalOnLinkClickAction (linkText, linkID, this);
 		}
 		if (onLinkClick != null) {
 			NotificationCenter.postNotification (Scope (), onLinkClick, NotificationCenter.Args ("link", linkText));
