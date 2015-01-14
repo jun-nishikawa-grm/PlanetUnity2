@@ -42,6 +42,6 @@ public partial class PUAspectFit : PUAspectFitBase {
 
 		gameObject.AddComponent<AspectRatioContentSize> ();
 		fitter = gameObject.GetComponent<AspectRatioContentSize> ();
-		fitter.contentSize = contentSize;
+		fitter.contentSize = contentSize.Value;
 	}		
 }

@@ -30,6 +30,21 @@ TYPEMAP["byte"] = "char";
 TYPEMAP["date"] = "DateTime";
 TYPEMAP["dateTime"] = "DateTime";
 
+
+NULLTYPEMAP = {};
+--NULLTYPEMAP["bool"] = "bool?";
+NULLTYPEMAP["short"] = "short?";
+NULLTYPEMAP["int"] = "int?";
+NULLTYPEMAP["long"] = "long?";
+NULLTYPEMAP["float"] = "float?";
+NULLTYPEMAP["double"] = "double?";
+NULLTYPEMAP["char"] = "char?";
+
+NULLTYPEMAP["Vector2"] = "Vector2?";
+NULLTYPEMAP["Vector3"] = "Vector3?";
+NULLTYPEMAP["Vector4"] = "Vector4?";
+NULLTYPEMAP["Color"] = "Color?";
+
 function printAllKeys(t)
 	print("===============")
 	for k,v in pairs(t) do
@@ -227,6 +242,38 @@ function isEnumForItem(v)
 		end
 	end
 	return false;
+end
+
+function nullableTypeForItem(v)
+	local sourceT = typeForItem(v);
+	local nulledV = NULLTYPEMAP[sourceT];
+	if(nulledV ~= null) then
+		return nulledV;
+	end
+	
+	-- Need to handle ENUM_MASK and NAMED_ENUM
+	t = TYPEMAP[v.type];
+	if(t == nil) then
+		t = v;
+	
+		-- If type is a function, then this is a reference to another type.  Call the function to dereference the other type
+		if(type(t.type) == "table") then
+			t = t.type;
+		end
+		
+		if(t.type == "simple") then
+			local appinfo = gaxb_xpath(t.xml, "./XMLSchema:annotation/XMLSchema:appinfo");
+			if(appinfo ~= nil) then
+				appinfo = appinfo[1].content;
+			end
+			
+			if(appinfo == "ENUM_MASK" or appinfo == "NAMED_ENUM") then
+				return capitalizedString(t.namespace).."."..t.name.."?";
+			end
+		end
+	end
+	
+	return sourceT;
 end
 
 function typeForItem(v)

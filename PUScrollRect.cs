@@ -30,17 +30,12 @@ public partial class PUScrollRect : PUScrollRectBase {
 		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
 		scroll = gameObject.AddComponent<ScrollRect> ();
 
-		if (inertiaExists) {
-			scroll.inertia = inertia;
-		}
-		if (horizontalExists) {
-			scroll.horizontal = horizontal;
-		}
-		if (verticalExists) {
-			scroll.vertical = vertical;
-		}
-		if (scrollWheelSensitivityExists) {
-			scroll.scrollSensitivity = scrollWheelSensitivity;
+		scroll.inertia = inertia;
+		scroll.horizontal = horizontal;
+		scroll.vertical = vertical;
+
+		if (scrollWheelSensitivity != null) {
+			scroll.scrollSensitivity = (float)scrollWheelSensitivity;
 		}
 	}
 

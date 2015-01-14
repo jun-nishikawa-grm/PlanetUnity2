@@ -26,15 +26,15 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 
 		layout = gameObject.AddComponent<HorizontalLayoutGroup> ();
 
-		if (spacingExists) {
-			layout.spacing = spacing;
+		if (spacing != null) {
+			layout.spacing = (float)spacing;
 		}
 
-		if (paddingExists) {
-			layout.padding = new RectOffset((int)padding.x, (int)padding.y, (int)padding.z, (int)padding.w);
+		if (padding != null) {
+			layout.padding = new RectOffset((int)padding.Value.x, (int)padding.Value.y, (int)padding.Value.z, (int)padding.Value.w);
 		}
 
-		if(childAlignmentExists) {
+		if(childAlignment != null) {
 			if (childAlignment == PlanetUnity2.GridLayoutChildAlignment.upperLeft)
 				layout.childAlignment = TextAnchor.UpperLeft;
 			if (childAlignment == PlanetUnity2.GridLayoutChildAlignment.upperCenter)

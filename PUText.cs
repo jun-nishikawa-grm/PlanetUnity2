@@ -154,16 +154,16 @@ public partial class PUText : PUTextBase {
 			script.entity = this;
 		}
 
-		if (titleExists == false && valueExists) {
+		if (title == null && value != null) {
 			gameObject.name = string.Format("\"{0}\"", value);
 		}
 
-		if (valueExists) {
+		if (value != null) {
 			text.text = PlanetUnityStyle.ReplaceStyleTags(value);
 		}
 
-		if (fontColorExists) {
-			text.color = fontColor;
+		if (fontColor != null) {
+			text.color = fontColor.Value;
 		}
 
 		if (font != null) {
@@ -172,11 +172,11 @@ public partial class PUText : PUTextBase {
 			text.font = PlanetUnityResourceCache.GetFont("Arial");
 		}
 
-		if (fontSizeExists) {
-			text.fontSize = fontSize;
+		if (fontSize != null) {
+			text.fontSize = (int)fontSize;
 		}
 
-		if (fontStyleExists) {
+		if (fontStyle != null) {
 			if(fontStyle == PlanetUnity2.FontStyle.bold)
 				text.fontStyle = FontStyle.Bold;
 			if(fontStyle == PlanetUnity2.FontStyle.italic)
@@ -187,7 +187,7 @@ public partial class PUText : PUTextBase {
 				text.fontStyle = FontStyle.BoldAndItalic;
 		}
 
-		if (alignmentExists) {
+		if (alignment != null) {
 			if(alignment == PlanetUnity2.TextAlignment.lowerCenter)
 				text.alignment = TextAnchor.LowerCenter;
 			if(alignment == PlanetUnity2.TextAlignment.lowerLeft)

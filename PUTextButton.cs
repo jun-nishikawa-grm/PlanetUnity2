@@ -25,13 +25,13 @@ public partial class PUTextButton : PUTextButtonBase {
 	{
 		base.gaxb_init ();
 
-		if (titleExists == false) {
+		if (title == null) {
 			gameObject.name = "<TextButton/>";
 		}
 
 		button = gameObject.AddComponent<Button> ();
 
-		if (onTouchUpExists) {
+		if (onTouchUp != null) {
 			button.onClick.AddListener(() => { 
 				NotificationCenter.postNotification (Scope (), this.onTouchUp, NotificationCenter.Args("sender", this));
 			}); 

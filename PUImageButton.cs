@@ -27,7 +27,7 @@ public partial class PUImageButton : PUImageButtonBase {
 	{
 		base.gaxb_init ();
 
-		if (titleExists == false) {
+		if (title == null) {
 			gameObject.name = "<ImageButton/>";
 		}
 
@@ -39,20 +39,20 @@ public partial class PUImageButton : PUImageButtonBase {
 
 			SpriteState states = button.spriteState;
 
-			if (pressedResourcePathExists) {
+			if (pressedResourcePath != null) {
 				states.pressedSprite = PlanetUnityResourceCache.GetSprite (pressedResourcePath);
 			}
-			if (highlightedResourcePathExists) {
+			if (highlightedResourcePath != null) {
 				states.highlightedSprite = PlanetUnityResourceCache.GetSprite (highlightedResourcePath);
 			}
-			if (disabledResourcePathExists) {
+			if (disabledResourcePath != null) {
 				states.disabledSprite = PlanetUnityResourceCache.GetSprite (disabledResourcePath);
 			}
 
 			button.spriteState = states;
 		}
 
-		if (onTouchUpExists) {
+		if (onTouchUp != null) {
 			button.onClick.AddListener(() => { 
 				NotificationCenter.postNotification (Scope (), this.onTouchUp, NotificationCenter.Args("sender", this));
 			}); 

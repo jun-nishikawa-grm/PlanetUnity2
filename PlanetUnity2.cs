@@ -205,7 +205,6 @@ public class PlanetUnity2 {
 								if ((reader.NodeType == XmlNodeType.Text) && (reader.HasValue))
 								{
 									rootEntity.GetType ().GetField (valueName).SetValue (rootEntity, reader.Value);
-									rootEntity.GetType ().GetField (valueName+"Exists").SetValue (rootEntity, true);
 								}
 							}
 							else

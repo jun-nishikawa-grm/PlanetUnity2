@@ -29,16 +29,16 @@ public partial class PURawImage : PURawImageBase {
 		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
 		image = gameObject.AddComponent<RawImage> ();
 
-		if (colorExists) {
-			image.color = color;
+		if (color != null) {
+			image.color = color.Value;
 		}
 
-		if (resourcePathExists) {
+		if (resourcePath != null) {
 			LoadImageWithResourcePath (resourcePath);
 		}
 
-		if (uvRectExists) {
-			image.uvRect = new Rect (uvRect.x, uvRect.y, uvRect.z, uvRect.w);
+		if (uvRect != null) {
+			image.uvRect = new Rect (uvRect.Value.x, uvRect.Value.y, uvRect.Value.z, uvRect.Value.w);
 		}
 	}
 

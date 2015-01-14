@@ -97,7 +97,7 @@ public partial class PUCode : PUCodeBase {
 		}
 
 
-		if (controller == null && _classExists) {
+		if (controller == null && _class != null) {
 			// Attach all of the PlanetUnity objects
 			try {
 				controller = (IPUCode)gameObject.AddComponent(Type.GetType (_class, true));

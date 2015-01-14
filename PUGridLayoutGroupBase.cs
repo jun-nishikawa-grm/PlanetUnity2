@@ -22,9 +22,9 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 		string attr;
 
 		attr = "100,100";
-		if(attr != null) { cellSize = new Vector2().PUParse(attr); cellSizeExists = true; } 
+		if(attr != null) { cellSize = new Vector2().PUParse(attr); } 
 		attr = "0,0";
-		if(attr != null) { spacing = new Vector2().PUParse(attr); spacingExists = true; } 
+		if(attr != null) { spacing = new Vector2().PUParse(attr); } 
 
 	}
 	
@@ -39,25 +39,18 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 			int fixedColumns ) : this()
 	{
 		this.cellSize = cellSize;
-		this.cellSizeExists = true;
 
 		this.spacing = spacing;
-		this.spacingExists = true;
 
 		this.startCorner = startCorner;
-		this.startCornerExists = true;
 
 		this.startAxis = startAxis;
-		this.startAxisExists = true;
 
 		this.childAlignment = childAlignment;
-		this.childAlignmentExists = true;
 
 		this.fixedRows = fixedRows;
-		this.fixedRowsExists = true;
 
 		this.fixedColumns = fixedColumns;
-		this.fixedColumnsExists = true;
 	}
 
 	
@@ -96,97 +89,66 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 			string tag6 ) : this()
 	{
 		this.cellSize = cellSize;
-		this.cellSizeExists = true;
 
 		this.spacing = spacing;
-		this.spacingExists = true;
 
 		this.startCorner = startCorner;
-		this.startCornerExists = true;
 
 		this.startAxis = startAxis;
-		this.startAxisExists = true;
 
 		this.childAlignment = childAlignment;
-		this.childAlignmentExists = true;
 
 		this.fixedRows = fixedRows;
-		this.fixedRowsExists = true;
 
 		this.fixedColumns = fixedColumns;
-		this.fixedColumnsExists = true;
 
 		this.bounds = bounds;
-		this.boundsExists = true;
 
 		this.position = position;
-		this.positionExists = true;
 
 		this.size = size;
-		this.sizeExists = true;
 
 		this.rotation = rotation;
-		this.rotationExists = true;
 
 		this.scale = scale;
-		this.scaleExists = true;
 
 		this.pivot = pivot;
-		this.pivotExists = true;
 
 		this.anchor = anchor;
-		this.anchorExists = true;
 
 		this.active = active;
-		this.activeExists = true;
 
 		this.mask = mask;
-		this.maskExists = true;
 
 		this.maskInset = maskInset;
-		this.maskInsetExists = true;
 
 		this.outline = outline;
-		this.outlineExists = true;
 
 		this.lastY = lastY;
-		this.lastYExists = true;
 
 		this.lastX = lastX;
-		this.lastXExists = true;
 
 		this.shader = shader;
-		this.shaderExists = true;
 
 		this.ignoreMouse = ignoreMouse;
-		this.ignoreMouseExists = true;
 
 		this.components = components;
-		this.componentsExists = true;
 
 		this.title = title;
-		this.titleExists = true;
 
 		this.tag = tag;
-		this.tagExists = true;
 
 		this.tag1 = tag1;
-		this.tag1Exists = true;
 
 		this.tag2 = tag2;
-		this.tag2Exists = true;
 
 		this.tag3 = tag3;
-		this.tag3Exists = true;
 
 		this.tag4 = tag4;
-		this.tag4Exists = true;
 
 		this.tag5 = tag5;
-		this.tag5Exists = true;
 
 		this.tag6 = tag6;
-		this.tag6Exists = true;
 	}
 
 
@@ -205,38 +167,15 @@ public class PUGridLayoutGroupBase : PUGameObject {
 
 
 	// XML Attributes
-	public Vector2 cellSize;
-	public bool cellSizeExists;
-
-	public Vector2 spacing;
-	public bool spacingExists;
-
-	public PlanetUnity2.GridLayoutStartCorner startCorner;
-	public bool startCornerExists;
-
-	public PlanetUnity2.GridLayoutStartAxis startAxis;
-	public bool startAxisExists;
-
-	public PlanetUnity2.GridLayoutChildAlignment childAlignment;
-	public bool childAlignmentExists;
-
-	public int fixedRows;
-	public bool fixedRowsExists;
-
-	public int fixedColumns;
-	public bool fixedColumnsExists;
+	public Vector2? cellSize;
+	public Vector2? spacing;
+	public PlanetUnity2.GridLayoutStartCorner? startCorner;
+	public PlanetUnity2.GridLayoutStartAxis? startAxis;
+	public PlanetUnity2.GridLayoutChildAlignment? childAlignment;
+	public int? fixedRows;
+	public int? fixedColumns;
 
 
-
-
-	
-	public void SetCellSize(Vector2 v) { cellSize = v; cellSizeExists = true; } 
-	public void SetSpacing(Vector2 v) { spacing = v; spacingExists = true; } 
-	public void SetStartCorner(PlanetUnity2.GridLayoutStartCorner v) { startCorner = v; startCornerExists = true; } 
-	public void SetStartAxis(PlanetUnity2.GridLayoutStartAxis v) { startAxis = v; startAxisExists = true; } 
-	public void SetChildAlignment(PlanetUnity2.GridLayoutChildAlignment v) { childAlignment = v; childAlignmentExists = true; } 
-	public void SetFixedRows(int v) { fixedRows = v; fixedRowsExists = true; } 
-	public void SetFixedColumns(int v) { fixedColumns = v; fixedColumnsExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -256,9 +195,6 @@ public class PUGridLayoutGroupBase : PUGameObject {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("GridLayoutGroupExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -314,32 +250,32 @@ public class PUGridLayoutGroupBase : PUGameObject {
 		attr = reader.GetAttribute("cellSize");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "100,100"; }
-		if(attr != null) { cellSize = new Vector2().PUParse(attr); cellSizeExists = true; } 
+		if(attr != null) { cellSize = new Vector2().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("spacing");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0,0"; }
-		if(attr != null) { spacing = new Vector2().PUParse(attr); spacingExists = true; } 
+		if(attr != null) { spacing = new Vector2().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("startCorner");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { startCorner = (PlanetUnity2.GridLayoutStartCorner)Enum.Parse(typeof(PlanetUnity2.GridLayoutStartCorner), attr); startCornerExists = true; } 
+		if(attr != null) { startCorner = (PlanetUnity2.GridLayoutStartCorner)Enum.Parse(typeof(PlanetUnity2.GridLayoutStartCorner), attr); } 
 		
 		attr = reader.GetAttribute("startAxis");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { startAxis = (PlanetUnity2.GridLayoutStartAxis)Enum.Parse(typeof(PlanetUnity2.GridLayoutStartAxis), attr); startAxisExists = true; } 
+		if(attr != null) { startAxis = (PlanetUnity2.GridLayoutStartAxis)Enum.Parse(typeof(PlanetUnity2.GridLayoutStartAxis), attr); } 
 		
 		attr = reader.GetAttribute("childAlignment");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); childAlignmentExists = true; } 
+		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); } 
 		
 		attr = reader.GetAttribute("fixedRows");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { fixedRows = int.Parse(attr); fixedRowsExists = true; } 
+		if(attr != null) { fixedRows = int.Parse(attr); } 
 		
 		attr = reader.GetAttribute("fixedColumns");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { fixedColumns = int.Parse(attr); fixedColumnsExists = true; } 
+		if(attr != null) { fixedColumns = int.Parse(attr); } 
 		
 
 	}
@@ -354,13 +290,13 @@ public class PUGridLayoutGroupBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(cellSizeExists) { sb.AppendFormat (" {0}=\"{1}\"", "cellSize", cellSize); }
-		if(spacingExists) { sb.AppendFormat (" {0}=\"{1}\"", "spacing", spacing); }
-		if(startCornerExists) { sb.AppendFormat (" {0}=\"{1}\"", "startCorner", (int)startCorner); }
-		if(startAxisExists) { sb.AppendFormat (" {0}=\"{1}\"", "startAxis", (int)startAxis); }
-		if(childAlignmentExists) { sb.AppendFormat (" {0}=\"{1}\"", "childAlignment", (int)childAlignment); }
-		if(fixedRowsExists) { sb.AppendFormat (" {0}=\"{1}\"", "fixedRows", fixedRows); }
-		if(fixedColumnsExists) { sb.AppendFormat (" {0}=\"{1}\"", "fixedColumns", fixedColumns); }
+		if(cellSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "cellSize", cellSize); }
+		if(spacing != null) { sb.AppendFormat (" {0}=\"{1}\"", "spacing", spacing); }
+		if(startCorner != null) { sb.AppendFormat (" {0}=\"{1}\"", "startCorner", (int)startCorner); }
+		if(startAxis != null) { sb.AppendFormat (" {0}=\"{1}\"", "startAxis", (int)startAxis); }
+		if(childAlignment != null) { sb.AppendFormat (" {0}=\"{1}\"", "childAlignment", (int)childAlignment); }
+		if(fixedRows != null) { sb.AppendFormat (" {0}=\"{1}\"", "fixedRows", fixedRows); }
+		if(fixedColumns != null) { sb.AppendFormat (" {0}=\"{1}\"", "fixedColumns", fixedColumns); }
 
 	}
 	

@@ -30,11 +30,11 @@ public partial class PUMovie : PUMovieBase {
 		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
 		image = gameObject.AddComponent<RawImage> ();
 
-		if (colorExists) {
-			image.color = color;
+		if (color != null) {
+			image.color = color.Value;
 		}
 
-		if (resourcePathExists) {
+		if (resourcePath != null) {
 
 			// Why, oh why are movie textures not supported in iOS?
 			#if (UNITY_IOS || UNITY_ANDROID)

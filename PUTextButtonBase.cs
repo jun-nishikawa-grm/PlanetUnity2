@@ -27,10 +27,8 @@ public partial class PUTextButton : PUTextButtonBase {
 			string value ) : this()
 	{
 		this.onTouchUp = onTouchUp;
-		this.onTouchUpExists = true;
 
 		this.value = value;
-		this.valueExists = true;
 	}
 
 	
@@ -72,106 +70,72 @@ public partial class PUTextButton : PUTextButtonBase {
 			string tag6 ) : this()
 	{
 		this.onTouchUp = onTouchUp;
-		this.onTouchUpExists = true;
 
 		this.font = font;
-		this.fontExists = true;
 
 		this.fontSize = fontSize;
-		this.fontSizeExists = true;
 
 		this.fontStyle = fontStyle;
-		this.fontStyleExists = true;
 
 		this.fontColor = fontColor;
-		this.fontColorExists = true;
 
 		this.lineSpacing = lineSpacing;
-		this.lineSpacingExists = true;
 
 		this.alignment = alignment;
-		this.alignmentExists = true;
 
 		this.value = value;
-		this.valueExists = true;
 
 		this.bestFit = bestFit;
-		this.bestFitExists = true;
 
 		this.onLinkClick = onLinkClick;
-		this.onLinkClickExists = true;
 
 		this.bounds = bounds;
-		this.boundsExists = true;
 
 		this.position = position;
-		this.positionExists = true;
 
 		this.size = size;
-		this.sizeExists = true;
 
 		this.rotation = rotation;
-		this.rotationExists = true;
 
 		this.scale = scale;
-		this.scaleExists = true;
 
 		this.pivot = pivot;
-		this.pivotExists = true;
 
 		this.anchor = anchor;
-		this.anchorExists = true;
 
 		this.active = active;
-		this.activeExists = true;
 
 		this.mask = mask;
-		this.maskExists = true;
 
 		this.maskInset = maskInset;
-		this.maskInsetExists = true;
 
 		this.outline = outline;
-		this.outlineExists = true;
 
 		this.lastY = lastY;
-		this.lastYExists = true;
 
 		this.lastX = lastX;
-		this.lastXExists = true;
 
 		this.shader = shader;
-		this.shaderExists = true;
 
 		this.ignoreMouse = ignoreMouse;
-		this.ignoreMouseExists = true;
 
 		this.components = components;
-		this.componentsExists = true;
 
 		this.title = title;
-		this.titleExists = true;
 
 		this.tag = tag;
-		this.tagExists = true;
 
 		this.tag1 = tag1;
-		this.tag1Exists = true;
 
 		this.tag2 = tag2;
-		this.tag2Exists = true;
 
 		this.tag3 = tag3;
-		this.tag3Exists = true;
 
 		this.tag4 = tag4;
-		this.tag4Exists = true;
 
 		this.tag5 = tag5;
-		this.tag5Exists = true;
 
 		this.tag6 = tag6;
-		this.tag6Exists = true;
 	}
 
 
@@ -191,13 +155,8 @@ public class PUTextButtonBase : PUText {
 
 	// XML Attributes
 	public string onTouchUp;
-	public bool onTouchUpExists;
 
 
-
-
-	
-	public void SetOnTouchUp(string v) { onTouchUp = v; onTouchUpExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -217,9 +176,6 @@ public class PUTextButtonBase : PUText {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("TextButtonExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -274,7 +230,7 @@ public class PUTextButtonBase : PUText {
 		string attr;
 		attr = reader.GetAttribute("onTouchUp");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { onTouchUp = attr; onTouchUpExists = true; } 
+		if(attr != null) { onTouchUp = attr; } 
 		
 
 	}
@@ -289,7 +245,7 @@ public class PUTextButtonBase : PUText {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(onTouchUpExists) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchUp", onTouchUp); }
+		if(onTouchUp != null) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchUp", onTouchUp); }
 
 	}
 	

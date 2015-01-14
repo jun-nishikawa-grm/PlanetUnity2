@@ -32,25 +32,18 @@ public partial class PUInputField : PUInputFieldBase {
 			string value ) : this()
 	{
 		this.onValueChanged = onValueChanged;
-		this.onValueChangedExists = true;
 
 		this.placeholder = placeholder;
-		this.placeholderExists = true;
 
 		this.limit = limit;
-		this.limitExists = true;
 
 		this.contentType = contentType;
-		this.contentTypeExists = true;
 
 		this.lineType = lineType;
-		this.lineTypeExists = true;
 
 		this.selectionColor = selectionColor;
-		this.selectionColorExists = true;
 
 		this.value = value;
-		this.valueExists = true;
 	}
 
 	
@@ -97,121 +90,82 @@ public partial class PUInputField : PUInputFieldBase {
 			string tag6 ) : this()
 	{
 		this.onValueChanged = onValueChanged;
-		this.onValueChangedExists = true;
 
 		this.placeholder = placeholder;
-		this.placeholderExists = true;
 
 		this.limit = limit;
-		this.limitExists = true;
 
 		this.contentType = contentType;
-		this.contentTypeExists = true;
 
 		this.lineType = lineType;
-		this.lineTypeExists = true;
 
 		this.selectionColor = selectionColor;
-		this.selectionColorExists = true;
 
 		this.font = font;
-		this.fontExists = true;
 
 		this.fontSize = fontSize;
-		this.fontSizeExists = true;
 
 		this.fontStyle = fontStyle;
-		this.fontStyleExists = true;
 
 		this.fontColor = fontColor;
-		this.fontColorExists = true;
 
 		this.lineSpacing = lineSpacing;
-		this.lineSpacingExists = true;
 
 		this.alignment = alignment;
-		this.alignmentExists = true;
 
 		this.value = value;
-		this.valueExists = true;
 
 		this.bestFit = bestFit;
-		this.bestFitExists = true;
 
 		this.onLinkClick = onLinkClick;
-		this.onLinkClickExists = true;
 
 		this.bounds = bounds;
-		this.boundsExists = true;
 
 		this.position = position;
-		this.positionExists = true;
 
 		this.size = size;
-		this.sizeExists = true;
 
 		this.rotation = rotation;
-		this.rotationExists = true;
 
 		this.scale = scale;
-		this.scaleExists = true;
 
 		this.pivot = pivot;
-		this.pivotExists = true;
 
 		this.anchor = anchor;
-		this.anchorExists = true;
 
 		this.active = active;
-		this.activeExists = true;
 
 		this.mask = mask;
-		this.maskExists = true;
 
 		this.maskInset = maskInset;
-		this.maskInsetExists = true;
 
 		this.outline = outline;
-		this.outlineExists = true;
 
 		this.lastY = lastY;
-		this.lastYExists = true;
 
 		this.lastX = lastX;
-		this.lastXExists = true;
 
 		this.shader = shader;
-		this.shaderExists = true;
 
 		this.ignoreMouse = ignoreMouse;
-		this.ignoreMouseExists = true;
 
 		this.components = components;
-		this.componentsExists = true;
 
 		this.title = title;
-		this.titleExists = true;
 
 		this.tag = tag;
-		this.tagExists = true;
 
 		this.tag1 = tag1;
-		this.tag1Exists = true;
 
 		this.tag2 = tag2;
-		this.tag2Exists = true;
 
 		this.tag3 = tag3;
-		this.tag3Exists = true;
 
 		this.tag4 = tag4;
-		this.tag4Exists = true;
 
 		this.tag5 = tag5;
-		this.tag5Exists = true;
 
 		this.tag6 = tag6;
-		this.tag6Exists = true;
 	}
 
 
@@ -231,33 +185,13 @@ public class PUInputFieldBase : PUText {
 
 	// XML Attributes
 	public string onValueChanged;
-	public bool onValueChangedExists;
-
 	public string placeholder;
-	public bool placeholderExists;
-
-	public int limit;
-	public bool limitExists;
-
-	public PlanetUnity2.InputFieldContentType contentType;
-	public bool contentTypeExists;
-
-	public PlanetUnity2.InputFieldLineType lineType;
-	public bool lineTypeExists;
-
-	public Color selectionColor;
-	public bool selectionColorExists;
+	public int? limit;
+	public PlanetUnity2.InputFieldContentType? contentType;
+	public PlanetUnity2.InputFieldLineType? lineType;
+	public Color? selectionColor;
 
 
-
-
-	
-	public void SetOnValueChanged(string v) { onValueChanged = v; onValueChangedExists = true; } 
-	public void SetPlaceholder(string v) { placeholder = v; placeholderExists = true; } 
-	public void SetLimit(int v) { limit = v; limitExists = true; } 
-	public void SetContentType(PlanetUnity2.InputFieldContentType v) { contentType = v; contentTypeExists = true; } 
-	public void SetLineType(PlanetUnity2.InputFieldLineType v) { lineType = v; lineTypeExists = true; } 
-	public void SetSelectionColor(Color v) { selectionColor = v; selectionColorExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -277,9 +211,6 @@ public class PUInputFieldBase : PUText {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("InputFieldExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -334,27 +265,27 @@ public class PUInputFieldBase : PUText {
 		string attr;
 		attr = reader.GetAttribute("onValueChanged");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { onValueChanged = attr; onValueChangedExists = true; } 
+		if(attr != null) { onValueChanged = attr; } 
 		
 		attr = reader.GetAttribute("placeholder");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { placeholder = attr; placeholderExists = true; } 
+		if(attr != null) { placeholder = attr; } 
 		
 		attr = reader.GetAttribute("limit");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { limit = int.Parse(attr); limitExists = true; } 
+		if(attr != null) { limit = int.Parse(attr); } 
 		
 		attr = reader.GetAttribute("contentType");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { contentType = (PlanetUnity2.InputFieldContentType)Enum.Parse(typeof(PlanetUnity2.InputFieldContentType), attr); contentTypeExists = true; } 
+		if(attr != null) { contentType = (PlanetUnity2.InputFieldContentType)Enum.Parse(typeof(PlanetUnity2.InputFieldContentType), attr); } 
 		
 		attr = reader.GetAttribute("lineType");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { lineType = (PlanetUnity2.InputFieldLineType)Enum.Parse(typeof(PlanetUnity2.InputFieldLineType), attr); lineTypeExists = true; } 
+		if(attr != null) { lineType = (PlanetUnity2.InputFieldLineType)Enum.Parse(typeof(PlanetUnity2.InputFieldLineType), attr); } 
 		
 		attr = reader.GetAttribute("selectionColor");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { selectionColor = new Color().PUParse(attr); selectionColorExists = true; } 
+		if(attr != null) { selectionColor = new Color().PUParse(attr); } 
 		
 
 	}
@@ -369,12 +300,12 @@ public class PUInputFieldBase : PUText {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(onValueChangedExists) { sb.AppendFormat (" {0}=\"{1}\"", "onValueChanged", onValueChanged); }
-		if(placeholderExists) { sb.AppendFormat (" {0}=\"{1}\"", "placeholder", placeholder); }
-		if(limitExists) { sb.AppendFormat (" {0}=\"{1}\"", "limit", limit); }
-		if(contentTypeExists) { sb.AppendFormat (" {0}=\"{1}\"", "contentType", (int)contentType); }
-		if(lineTypeExists) { sb.AppendFormat (" {0}=\"{1}\"", "lineType", (int)lineType); }
-		if(selectionColorExists) { sb.AppendFormat (" {0}=\"{1}\"", "selectionColor", selectionColor); }
+		if(onValueChanged != null) { sb.AppendFormat (" {0}=\"{1}\"", "onValueChanged", onValueChanged); }
+		if(placeholder != null) { sb.AppendFormat (" {0}=\"{1}\"", "placeholder", placeholder); }
+		if(limit != null) { sb.AppendFormat (" {0}=\"{1}\"", "limit", limit); }
+		if(contentType != null) { sb.AppendFormat (" {0}=\"{1}\"", "contentType", (int)contentType); }
+		if(lineType != null) { sb.AppendFormat (" {0}=\"{1}\"", "lineType", (int)lineType); }
+		if(selectionColor != null) { sb.AppendFormat (" {0}=\"{1}\"", "selectionColor", selectionColor); }
 
 	}
 	

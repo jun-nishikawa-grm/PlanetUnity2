@@ -131,7 +131,7 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		gameObject.AddComponent<GameObjectRemoveFromNotificationCenter> ();
 
-		if (titleExists) {
+		if (title != null) {
 			gameObject.name = title;
 		}
 
@@ -142,9 +142,9 @@ public partial class PUGameObject : PUGameObjectBase {
 			SetParentGameObject (parentEntity.gameObject);
 		}
 
-		if (boundsExists) {
-			this.SetPosition (new Vector3 (bounds.x, bounds.y, 0.0f));
-			this.SetSize (new Vector2 (bounds.z, bounds.w));
+		if (bounds != null) {
+			this.position = new Vector3 (bounds.Value.x, bounds.Value.y, 0.0f);
+			this.size = new Vector2 (bounds.Value.z, bounds.Value.w);
 		}
 
 		UpdateRectTransform ();
@@ -158,11 +158,11 @@ public partial class PUGameObject : PUGameObjectBase {
 			if (gameObject.GetComponent<Graphic> () == null) {
 				MaskGraphic graphic = gameObject.AddComponent<MaskGraphic> ();
 
-				if (maskInsetExists) {
-					graphic.insetLeft = maskInset.x;
-					graphic.insetRight = maskInset.y;
-					graphic.insetTop = maskInset.z;
-					graphic.insetBottom = maskInset.w;
+				if (maskInset != null) {
+					graphic.insetLeft = maskInset.Value.x;
+					graphic.insetRight = maskInset.Value.y;
+					graphic.insetTop = maskInset.Value.z;
+					graphic.insetBottom = maskInset.Value.w;
 				}
 
 				Mask maskComponent = gameObject.GetComponent<Mask> ();
@@ -174,7 +174,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			gameObject.AddComponent<Outline> ();
 		}
 
-		if (shaderExists) {
+		if (shader != null) {
 			Graphic graphic = gameObject.GetComponent<Graphic> ();
 			if (graphic != null) {
 				graphic.material = new Material (Shader.Find (shader));
@@ -227,12 +227,12 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		rectTransform = gameObject.GetComponent<RectTransform> ();
 		if (rectTransform != null) {
-			rectTransform.pivot = pivot;
+			rectTransform.pivot = pivot.Value;
 
-			rectTransform.localPosition = new Vector3 (0, 0, position.z);
-			rectTransform.anchoredPosition = position;
-			rectTransform.localScale = scale;
-			rectTransform.localEulerAngles = rotation;
+			rectTransform.localPosition = new Vector3 (0, 0, position.Value.z);
+			rectTransform.anchoredPosition = position.Value;
+			rectTransform.localScale = scale.Value;
+			rectTransform.localEulerAngles = rotation.Value;
 
 			RectTransform parentTransform = (RectTransform)gameObject.transform.parent;
 			float parentW = Screen.width;
@@ -251,17 +251,17 @@ public partial class PUGameObject : PUGameObjectBase {
 					}
 				}
 
-				if ((int)size.x == 0) {
-					size.x = parentW;
+				if ((int)size.Value.x == 0) {
+					size = new Vector2 (parentW, size.Value.y);
 				}
-				if ((int)size.y == 0) {
-					size.y = parentH;
+				if ((int)size.Value.y == 0) {
+					size = new Vector2 (size.Value.x, parentH);
 				}
 			}
 
-			rectTransform.sizeDelta = size;
+			rectTransform.sizeDelta = size.Value;
 
-			if (anchorExists) {
+			if (anchor != null) {
 				int numCommas = anchor.NumberOfOccurancesOfChar (',');
 				Vector4 values = new Vector4 ();
 
@@ -295,10 +295,10 @@ public partial class PUGameObject : PUGameObjectBase {
 	}
 
 	public void SetFrame(float x, float y, float w, float h, float pivotX, float pivotY, string anchor) {
-		SetPosition (new Vector3 (x, y, 0));
-		SetSize (new Vector2 (w, h));
-		SetPivot (new Vector2 (pivotX, pivotY));
-		SetAnchor (anchor);
+		position = new Vector3 (x, y, 0);
+		size = new Vector2 (w, h);
+		pivot = new Vector2 (pivotX, pivotY);
+		this.anchor = anchor;
 	}
 
 	public void LoadIntoPUGameObject(PUGameObject _parent)

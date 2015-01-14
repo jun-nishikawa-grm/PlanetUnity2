@@ -22,11 +22,11 @@ public partial class PUText : PUTextBase {
 		string attr;
 
 		attr = "12";
-		if(attr != null) { fontSize = int.Parse(attr); fontSizeExists = true; } 
+		if(attr != null) { fontSize = int.Parse(attr); } 
 		attr = "0,0,0,1";
-		if(attr != null) { fontColor = new Color().PUParse(attr); fontColorExists = true; } 
+		if(attr != null) { fontColor = new Color().PUParse(attr); } 
 		attr = "middleCenter";
-		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); alignmentExists = true; } 
+		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); } 
 
 	}
 	
@@ -43,31 +43,22 @@ public partial class PUText : PUTextBase {
 			string onLinkClick ) : this()
 	{
 		this.font = font;
-		this.fontExists = true;
 
 		this.fontSize = fontSize;
-		this.fontSizeExists = true;
 
 		this.fontStyle = fontStyle;
-		this.fontStyleExists = true;
 
 		this.fontColor = fontColor;
-		this.fontColorExists = true;
 
 		this.lineSpacing = lineSpacing;
-		this.lineSpacingExists = true;
 
 		this.alignment = alignment;
-		this.alignmentExists = true;
 
 		this.value = value;
-		this.valueExists = true;
 
 		this.bestFit = bestFit;
-		this.bestFitExists = true;
 
 		this.onLinkClick = onLinkClick;
-		this.onLinkClickExists = true;
 	}
 
 	
@@ -108,103 +99,70 @@ public partial class PUText : PUTextBase {
 			string tag6 ) : this()
 	{
 		this.font = font;
-		this.fontExists = true;
 
 		this.fontSize = fontSize;
-		this.fontSizeExists = true;
 
 		this.fontStyle = fontStyle;
-		this.fontStyleExists = true;
 
 		this.fontColor = fontColor;
-		this.fontColorExists = true;
 
 		this.lineSpacing = lineSpacing;
-		this.lineSpacingExists = true;
 
 		this.alignment = alignment;
-		this.alignmentExists = true;
 
 		this.value = value;
-		this.valueExists = true;
 
 		this.bestFit = bestFit;
-		this.bestFitExists = true;
 
 		this.onLinkClick = onLinkClick;
-		this.onLinkClickExists = true;
 
 		this.bounds = bounds;
-		this.boundsExists = true;
 
 		this.position = position;
-		this.positionExists = true;
 
 		this.size = size;
-		this.sizeExists = true;
 
 		this.rotation = rotation;
-		this.rotationExists = true;
 
 		this.scale = scale;
-		this.scaleExists = true;
 
 		this.pivot = pivot;
-		this.pivotExists = true;
 
 		this.anchor = anchor;
-		this.anchorExists = true;
 
 		this.active = active;
-		this.activeExists = true;
 
 		this.mask = mask;
-		this.maskExists = true;
 
 		this.maskInset = maskInset;
-		this.maskInsetExists = true;
 
 		this.outline = outline;
-		this.outlineExists = true;
 
 		this.lastY = lastY;
-		this.lastYExists = true;
 
 		this.lastX = lastX;
-		this.lastXExists = true;
 
 		this.shader = shader;
-		this.shaderExists = true;
 
 		this.ignoreMouse = ignoreMouse;
-		this.ignoreMouseExists = true;
 
 		this.components = components;
-		this.componentsExists = true;
 
 		this.title = title;
-		this.titleExists = true;
 
 		this.tag = tag;
-		this.tagExists = true;
 
 		this.tag1 = tag1;
-		this.tag1Exists = true;
 
 		this.tag2 = tag2;
-		this.tag2Exists = true;
 
 		this.tag3 = tag3;
-		this.tag3Exists = true;
 
 		this.tag4 = tag4;
-		this.tag4Exists = true;
 
 		this.tag5 = tag5;
-		this.tag5Exists = true;
 
 		this.tag6 = tag6;
-		this.tag6Exists = true;
 	}
 
 
@@ -224,45 +182,16 @@ public class PUTextBase : PUGameObject {
 
 	// XML Attributes
 	public string font;
-	public bool fontExists;
-
-	public int fontSize;
-	public bool fontSizeExists;
-
-	public PlanetUnity2.FontStyle fontStyle;
-	public bool fontStyleExists;
-
-	public Color fontColor;
-	public bool fontColorExists;
-
-	public float lineSpacing;
-	public bool lineSpacingExists;
-
-	public PlanetUnity2.TextAlignment alignment;
-	public bool alignmentExists;
-
+	public int? fontSize;
+	public PlanetUnity2.FontStyle? fontStyle;
+	public Color? fontColor;
+	public float? lineSpacing;
+	public PlanetUnity2.TextAlignment? alignment;
 	public string value;
-	public bool valueExists;
-
 	public bool bestFit;
-	public bool bestFitExists;
-
 	public string onLinkClick;
-	public bool onLinkClickExists;
 
 
-
-
-	
-	public void SetFont(string v) { font = v; fontExists = true; } 
-	public void SetFontSize(int v) { fontSize = v; fontSizeExists = true; } 
-	public void SetFontStyle(PlanetUnity2.FontStyle v) { fontStyle = v; fontStyleExists = true; } 
-	public void SetFontColor(Color v) { fontColor = v; fontColorExists = true; } 
-	public void SetLineSpacing(float v) { lineSpacing = v; lineSpacingExists = true; } 
-	public void SetAlignment(PlanetUnity2.TextAlignment v) { alignment = v; alignmentExists = true; } 
-	public void SetValue(string v) { value = v; valueExists = true; } 
-	public void SetBestFit(bool v) { bestFit = v; bestFitExists = true; } 
-	public void SetOnLinkClick(string v) { onLinkClick = v; onLinkClickExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -282,9 +211,6 @@ public class PUTextBase : PUGameObject {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("TextExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -339,42 +265,42 @@ public class PUTextBase : PUGameObject {
 		string attr;
 		attr = reader.GetAttribute("font");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { font = attr; fontExists = true; } 
+		if(attr != null) { font = attr; } 
 		
 		attr = reader.GetAttribute("fontSize");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "12"; }
-		if(attr != null) { fontSize = int.Parse(attr); fontSizeExists = true; } 
+		if(attr != null) { fontSize = int.Parse(attr); } 
 		
 		attr = reader.GetAttribute("fontStyle");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { fontStyle = (PlanetUnity2.FontStyle)Enum.Parse(typeof(PlanetUnity2.FontStyle), attr); fontStyleExists = true; } 
+		if(attr != null) { fontStyle = (PlanetUnity2.FontStyle)Enum.Parse(typeof(PlanetUnity2.FontStyle), attr); } 
 		
 		attr = reader.GetAttribute("fontColor");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0,0,0,1"; }
-		if(attr != null) { fontColor = new Color().PUParse(attr); fontColorExists = true; } 
+		if(attr != null) { fontColor = new Color().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("lineSpacing");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { lineSpacing = float.Parse(attr); lineSpacingExists = true; } 
+		if(attr != null) { lineSpacing = float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("alignment");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "middleCenter"; }
-		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); alignmentExists = true; } 
+		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); } 
 		
 		attr = reader.GetAttribute("value");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { value = attr; valueExists = true; } 
+		if(attr != null) { value = attr; } 
 		
 		attr = reader.GetAttribute("bestFit");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { bestFit = bool.Parse(attr); bestFitExists = true; } 
+		if(attr != null) { bestFit = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("onLinkClick");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { onLinkClick = attr; onLinkClickExists = true; } 
+		if(attr != null) { onLinkClick = attr; } 
 		
 
 	}
@@ -389,15 +315,15 @@ public class PUTextBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(fontExists) { sb.AppendFormat (" {0}=\"{1}\"", "font", font); }
-		if(fontSizeExists) { sb.AppendFormat (" {0}=\"{1}\"", "fontSize", fontSize); }
-		if(fontStyleExists) { sb.AppendFormat (" {0}=\"{1}\"", "fontStyle", (int)fontStyle); }
-		if(fontColorExists) { sb.AppendFormat (" {0}=\"{1}\"", "fontColor", fontColor); }
-		if(lineSpacingExists) { sb.AppendFormat (" {0}=\"{1}\"", "lineSpacing", lineSpacing.ToString ("0.##")); }
-		if(alignmentExists) { sb.AppendFormat (" {0}=\"{1}\"", "alignment", (int)alignment); }
-		if(valueExists) { sb.AppendFormat (" {0}=\"{1}\"", "value", value); }
-		if(bestFitExists) { sb.AppendFormat (" {0}=\"{1}\"", "bestFit", bestFit.ToString().ToLower()); }
-		if(onLinkClickExists) { sb.AppendFormat (" {0}=\"{1}\"", "onLinkClick", onLinkClick); }
+		if(font != null) { sb.AppendFormat (" {0}=\"{1}\"", "font", font); }
+		if(fontSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "fontSize", fontSize); }
+		if(fontStyle != null) { sb.AppendFormat (" {0}=\"{1}\"", "fontStyle", (int)fontStyle); }
+		if(fontColor != null) { sb.AppendFormat (" {0}=\"{1}\"", "fontColor", fontColor); }
+		if(lineSpacing != null) { sb.AppendFormat (" {0}=\"{1}\"", "lineSpacing", lineSpacing.Value.ToString ("0.##")); }
+		if(alignment != null) { sb.AppendFormat (" {0}=\"{1}\"", "alignment", (int)alignment); }
+		if(value != null) { sb.AppendFormat (" {0}=\"{1}\"", "value", value); }
+		if(bestFit != false) { sb.AppendFormat (" {0}=\"{1}\"", "bestFit", bestFit.ToString().ToLower()); }
+		if(onLinkClick != null) { sb.AppendFormat (" {0}=\"{1}\"", "onLinkClick", onLinkClick); }
 
 	}
 	

@@ -27,13 +27,13 @@ public partial class PUColorButton : PUColorButtonBase {
 	{
 		base.gaxb_init ();
 
-		if (titleExists == false) {
+		if (title == null) {
 			gameObject.name = "<ColorButton/>";
 		}
 
 		button = gameObject.AddComponent<Button> ();
 
-		if (onTouchUpExists) {
+		if (onTouchUp != null) {
 		
 			button.onClick.AddListener(() => { 
 				NotificationCenter.postNotification (Scope (), this.onTouchUp, NotificationCenter.Args("sender", this));

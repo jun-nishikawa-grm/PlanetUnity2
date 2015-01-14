@@ -22,9 +22,9 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 		string attr;
 
 		attr = "0";
-		if(attr != null) { spacing = float.Parse(attr); spacingExists = true; } 
+		if(attr != null) { spacing = float.Parse(attr); } 
 		attr = "0,0,0,0";
-		if(attr != null) { padding = new Vector4().PUParse(attr); paddingExists = true; } 
+		if(attr != null) { padding = new Vector4().PUParse(attr); } 
 
 	}
 	
@@ -35,13 +35,10 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 			PlanetUnity2.GridLayoutChildAlignment childAlignment ) : this()
 	{
 		this.spacing = spacing;
-		this.spacingExists = true;
 
 		this.padding = padding;
-		this.paddingExists = true;
 
 		this.childAlignment = childAlignment;
-		this.childAlignmentExists = true;
 	}
 
 	
@@ -76,85 +73,58 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 			string tag6 ) : this()
 	{
 		this.spacing = spacing;
-		this.spacingExists = true;
 
 		this.padding = padding;
-		this.paddingExists = true;
 
 		this.childAlignment = childAlignment;
-		this.childAlignmentExists = true;
 
 		this.bounds = bounds;
-		this.boundsExists = true;
 
 		this.position = position;
-		this.positionExists = true;
 
 		this.size = size;
-		this.sizeExists = true;
 
 		this.rotation = rotation;
-		this.rotationExists = true;
 
 		this.scale = scale;
-		this.scaleExists = true;
 
 		this.pivot = pivot;
-		this.pivotExists = true;
 
 		this.anchor = anchor;
-		this.anchorExists = true;
 
 		this.active = active;
-		this.activeExists = true;
 
 		this.mask = mask;
-		this.maskExists = true;
 
 		this.maskInset = maskInset;
-		this.maskInsetExists = true;
 
 		this.outline = outline;
-		this.outlineExists = true;
 
 		this.lastY = lastY;
-		this.lastYExists = true;
 
 		this.lastX = lastX;
-		this.lastXExists = true;
 
 		this.shader = shader;
-		this.shaderExists = true;
 
 		this.ignoreMouse = ignoreMouse;
-		this.ignoreMouseExists = true;
 
 		this.components = components;
-		this.componentsExists = true;
 
 		this.title = title;
-		this.titleExists = true;
 
 		this.tag = tag;
-		this.tagExists = true;
 
 		this.tag1 = tag1;
-		this.tag1Exists = true;
 
 		this.tag2 = tag2;
-		this.tag2Exists = true;
 
 		this.tag3 = tag3;
-		this.tag3Exists = true;
 
 		this.tag4 = tag4;
-		this.tag4Exists = true;
 
 		this.tag5 = tag5;
-		this.tag5Exists = true;
 
 		this.tag6 = tag6;
-		this.tag6Exists = true;
 	}
 
 
@@ -173,22 +143,11 @@ public class PUHorizontalLayoutGroupBase : PUGameObject {
 
 
 	// XML Attributes
-	public float spacing;
-	public bool spacingExists;
-
-	public Vector4 padding;
-	public bool paddingExists;
-
-	public PlanetUnity2.GridLayoutChildAlignment childAlignment;
-	public bool childAlignmentExists;
+	public float? spacing;
+	public Vector4? padding;
+	public PlanetUnity2.GridLayoutChildAlignment? childAlignment;
 
 
-
-
-	
-	public void SetSpacing(float v) { spacing = v; spacingExists = true; } 
-	public void SetPadding(Vector4 v) { padding = v; paddingExists = true; } 
-	public void SetChildAlignment(PlanetUnity2.GridLayoutChildAlignment v) { childAlignment = v; childAlignmentExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -208,9 +167,6 @@ public class PUHorizontalLayoutGroupBase : PUGameObject {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("HorizontalLayoutGroupExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -266,16 +222,16 @@ public class PUHorizontalLayoutGroupBase : PUGameObject {
 		attr = reader.GetAttribute("spacing");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0"; }
-		if(attr != null) { spacing = float.Parse(attr); spacingExists = true; } 
+		if(attr != null) { spacing = float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("padding");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0,0,0,0"; }
-		if(attr != null) { padding = new Vector4().PUParse(attr); paddingExists = true; } 
+		if(attr != null) { padding = new Vector4().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("childAlignment");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); childAlignmentExists = true; } 
+		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); } 
 		
 
 	}
@@ -290,9 +246,9 @@ public class PUHorizontalLayoutGroupBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(spacingExists) { sb.AppendFormat (" {0}=\"{1}\"", "spacing", spacing.ToString ("0.##")); }
-		if(paddingExists) { sb.AppendFormat (" {0}=\"{1}\"", "padding", padding); }
-		if(childAlignmentExists) { sb.AppendFormat (" {0}=\"{1}\"", "childAlignment", (int)childAlignment); }
+		if(spacing != null) { sb.AppendFormat (" {0}=\"{1}\"", "spacing", spacing.Value.ToString ("0.##")); }
+		if(padding != null) { sb.AppendFormat (" {0}=\"{1}\"", "padding", padding); }
+		if(childAlignment != null) { sb.AppendFormat (" {0}=\"{1}\"", "childAlignment", (int)childAlignment); }
 
 	}
 	

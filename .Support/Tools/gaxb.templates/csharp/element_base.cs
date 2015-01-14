@@ -50,29 +50,29 @@ public partial class <%= FULL_NAME_CAMEL %> : <%= FULL_NAME_CAMEL %>Base {
 					
 					
 					if (typeNameForItem(v)=="bool") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = bool.Parse(attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = bool.Parse(attr); } \n")
 					elseif (typeNameForItem(v)=="string") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = attr; "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = attr; } \n")
 					elseif (typeNameForItem(v)=="float") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = float.Parse(attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = float.Parse(attr); } \n")
 					elseif (typeNameForItem(v)=="short") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = short.Parse(attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = short.Parse(attr); } \n")
 					elseif (typeNameForItem(v)=="int") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = int.Parse(attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = int.Parse(attr); } \n")
 					elseif (typeNameForItem(v)=="long") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = long.Parse(attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = long.Parse(attr); } \n")
 					elseif (typeNameForItem(v)=="double") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = double.Parse(attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = double.Parse(attr); } \n")
 					elseif (typeNameForItem(v)=="char") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = char.Parse(attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = char.Parse(attr); } \n")
 					elseif (typeNameForItem(v)=="DateTime") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = DateTime.Parse(attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = DateTime.Parse(attr); } \n")
 					elseif (typeNameForItem(v)=="byte[]") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = Convert.FromBase64String(attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = Convert.FromBase64String(attr); } \n")
 					elseif (isEnumForItem(v)) then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = ("..typeForItem(v)..")Enum.Parse(typeof("..typeForItem(v).."), attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = ("..typeForItem(v)..")Enum.Parse(typeof("..typeForItem(v).."), attr); } \n")
 					else
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = new "..typeForItem(v).."().PUParse(attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = new "..typeForItem(v).."().PUParse(attr); } \n")
 					end
 					
 					
@@ -98,7 +98,6 @@ public partial class <%= FULL_NAME_CAMEL %> : <%= FULL_NAME_CAMEL %>Base {
 <%
 		for i,v in ipairs(allRequiredAttributes) do
 			gaxb_print("\t\tthis."..cleanedName(v.name).." = "..cleanedName(v.name)..";\n");
-			gaxb_print("\t\tthis."..cleanedName(v.name).."Exists = true;\n");
 			if(i ~= #allRequiredAttributes) then gaxb_print("\n"); end
 		end%>	}
 <% end %>
@@ -117,7 +116,6 @@ public partial class <%= FULL_NAME_CAMEL %> : <%= FULL_NAME_CAMEL %>Base {
 <%
 		for i,v in ipairs(allAttributes) do
 			gaxb_print("\t\tthis."..cleanedName(v.name).." = "..cleanedName(v.name)..";\n");
-			gaxb_print("\t\tthis."..cleanedName(v.name).."Exists = true;\n");
 			if(i ~= #allAttributes) then gaxb_print("\n"); end
 		end%>	}
 <% end %>
@@ -158,11 +156,10 @@ public class <%= FULL_NAME_CAMEL %> : <%= superclassForItem(this) %> {
 	// XML Attributes
 <%
 for k,v in pairs(this.attributes) do
-	gaxb_print("\tpublic "..typeForItem(v).." "..v.name..";\n")
-	gaxb_print("\tpublic bool "..v.name.."Exists;\n\n")
+	gaxb_print("\tpublic "..nullableTypeForItem(v).." "..v.name..";\n")
 end
 if (this.mixedContent == true) then
-	gaxb_print("\tpublic string mixedContent;\n\tpublic bool mixedContentExists;\n\n");
+	gaxb_print("\tpublic string mixedContent;\n\n");
 end
 %>
 
@@ -178,20 +175,13 @@ if (# this.sequences > 0) then
 			if(isObject(v)) then
 				gaxb_print("\tpublic "..typeNameForItem(v).." "..v.name..";\n")
 			else
-				gaxb_print("\tpublic "..typeForItem(v).." "..v.name..";\n")
+				gaxb_print("\tpublic "..nullableTypeForItem(v).." "..v.name..";\n")
 			end
-			gaxb_print("\tpublic bool "..v.name.."Exists;\n")
 		end
 		gaxb_print("\t\n")
 	end
 end
 %>
-	
-<%
-	for k,v in pairs(this.attributes) do
-		gaxb_print("\tpublic void Set"..capitalizedString(v.name).."("..typeNameForItem(v).." v) { "..v.name.." = v; "..v.name.."Exists = true; } \n")
-	end
-	%>
 
 	public <%=NEW_KEYWORD%>void gaxb_unload()
 	{
@@ -215,9 +205,6 @@ end
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("<%= CAP_NAME %>Exists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -284,29 +271,29 @@ end
 			end
 			
 			if (typeNameForItem(v)=="bool") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = bool.Parse(attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = bool.Parse(attr); } \n")
 			elseif (typeNameForItem(v)=="string") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = attr; "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = attr; } \n")
 			elseif (typeNameForItem(v)=="float") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = float.Parse(attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = float.Parse(attr); } \n")
 			elseif (typeNameForItem(v)=="short") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = short.Parse(attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = short.Parse(attr); } \n")
 			elseif (typeNameForItem(v)=="int") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = int.Parse(attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = int.Parse(attr); } \n")
 			elseif (typeNameForItem(v)=="long") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = long.Parse(attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = long.Parse(attr); } \n")
 			elseif (typeNameForItem(v)=="double") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = double.Parse(attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = double.Parse(attr); } \n")
 			elseif (typeNameForItem(v)=="char") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = char.Parse(attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = char.Parse(attr); } \n")
 			elseif (typeNameForItem(v)=="DateTime") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = DateTime.Parse(attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = DateTime.Parse(attr); } \n")
 			elseif (typeNameForItem(v)=="byte[]") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = Convert.FromBase64String(attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = Convert.FromBase64String(attr); } \n")
 			elseif (isEnumForItem(v)) then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = ("..typeForItem(v)..")Enum.Parse(typeof("..typeForItem(v).."), attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = ("..typeForItem(v)..")Enum.Parse(typeof("..typeForItem(v).."), attr); } \n")
 			else
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = new "..typeForItem(v).."().PUParse(attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = new "..typeForItem(v).."().PUParse(attr); } \n")
 			end
 			
 			gaxb_print("\t\t\n")
@@ -328,27 +315,33 @@ end
 <%
 		for k,v in pairs(this.attributes) do
 			if (typeNameForItem(v)=="bool") then
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.ToString().ToLower()); }\n')
+				gaxb_print('\t\tif('..v.name..' != false) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.ToString().ToLower()); }\n')
 			elseif (typeNameForItem(v)=="float") then
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.ToString ("0.##")); }\n')
+				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.Value.ToString ("0.##")); }\n')
 			elseif (typeNameForItem(v)=="short") then
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
+				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
 			elseif (typeNameForItem(v)=="int") then
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
+				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
 			elseif (typeNameForItem(v)=="long") then
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
+				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
 			elseif (typeNameForItem(v)=="double") then
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.ToString ("0.##")); }\n')
+				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.Value.ToString ("0.##")); }\n')
 			elseif (typeNameForItem(v)=="char") then
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
+				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
 			elseif (typeNameForItem(v)=="DateTime") then
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
+				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
 			elseif (typeNameForItem(v)=="byte[]") then
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", Convert.ToBase64String('..v.name..')); }\n')
+				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", Convert.ToBase64String('..v.name..')); }\n')
 			elseif (isEnumForItem(v)) then
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", (int)'..v.name..'); }\n')
+				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", (int)'..v.name..'); }\n')
+			elseif (isObject(v)) then
+				if (string.sub(nullableTypeForItem(v),-1) == "?") then
+					gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.Value.PUToString()); }\n')
+				else
+					gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.PUToString()); }\n')
+				end				
 			else
-				gaxb_print('\t\tif('..v.name..'Exists) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
+				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'); }\n')
 			end
 		end %>
 	}
@@ -367,7 +360,7 @@ end
 				elseif(isPlural(v)) then
 					gaxb_print('\t\tforeach(object o in '..pluralName(v.name)..') { mInfo = o.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke (o, new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "'..v.name..'", o); } }\n');
 				else
-					gaxb_print('\t\tif('..v.name..'Exists) {\n');
+					gaxb_print('\t\tif('..v.name..' != null) {\n');
 					gaxb_print('\t\t\tmInfo = '..v.name..'.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke ('..v.name..', new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "'..v.name..'", '..v.name..'); } \n');
 					gaxb_print('\t\t}\n');
 				end

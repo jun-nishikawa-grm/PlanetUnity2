@@ -26,7 +26,6 @@ public partial class PUNotification : PUNotificationBase {
 			string name ) : this()
 	{
 		this.name = name;
-		this.nameExists = true;
 	}
 
 	
@@ -49,13 +48,8 @@ public class PUNotificationBase : IPlanetUnity2 {
 
 	// XML Attributes
 	public string name;
-	public bool nameExists;
 
 
-
-
-	
-	public void SetName(string v) { name = v; nameExists = true; } 
 
 
 	public virtual void gaxb_unload()
@@ -74,9 +68,6 @@ public class PUNotificationBase : IPlanetUnity2 {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("NotificationExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -130,7 +121,7 @@ public class PUNotificationBase : IPlanetUnity2 {
 		string attr;
 		attr = reader.GetAttribute("name");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { name = attr; nameExists = true; } 
+		if(attr != null) { name = attr; } 
 		
 
 	}
@@ -144,7 +135,7 @@ public class PUNotificationBase : IPlanetUnity2 {
 	public virtual void gaxb_appendXMLAttributes(StringBuilder sb)
 	{
 
-		if(nameExists) { sb.AppendFormat (" {0}=\"{1}\"", "name", name); }
+		if(name != null) { sb.AppendFormat (" {0}=\"{1}\"", "name", name); }
 
 	}
 	

@@ -27,10 +27,8 @@ public partial class PUImage : PUImageBase {
 			Color color ) : this()
 	{
 		this.resourcePath = resourcePath;
-		this.resourcePathExists = true;
 
 		this.color = color;
-		this.colorExists = true;
 	}
 
 	
@@ -65,85 +63,58 @@ public partial class PUImage : PUImageBase {
 			string tag6 ) : this()
 	{
 		this.resourcePath = resourcePath;
-		this.resourcePathExists = true;
 
 		this.color = color;
-		this.colorExists = true;
 
 		this.type = type;
-		this.typeExists = true;
 
 		this.bounds = bounds;
-		this.boundsExists = true;
 
 		this.position = position;
-		this.positionExists = true;
 
 		this.size = size;
-		this.sizeExists = true;
 
 		this.rotation = rotation;
-		this.rotationExists = true;
 
 		this.scale = scale;
-		this.scaleExists = true;
 
 		this.pivot = pivot;
-		this.pivotExists = true;
 
 		this.anchor = anchor;
-		this.anchorExists = true;
 
 		this.active = active;
-		this.activeExists = true;
 
 		this.mask = mask;
-		this.maskExists = true;
 
 		this.maskInset = maskInset;
-		this.maskInsetExists = true;
 
 		this.outline = outline;
-		this.outlineExists = true;
 
 		this.lastY = lastY;
-		this.lastYExists = true;
 
 		this.lastX = lastX;
-		this.lastXExists = true;
 
 		this.shader = shader;
-		this.shaderExists = true;
 
 		this.ignoreMouse = ignoreMouse;
-		this.ignoreMouseExists = true;
 
 		this.components = components;
-		this.componentsExists = true;
 
 		this.title = title;
-		this.titleExists = true;
 
 		this.tag = tag;
-		this.tagExists = true;
 
 		this.tag1 = tag1;
-		this.tag1Exists = true;
 
 		this.tag2 = tag2;
-		this.tag2Exists = true;
 
 		this.tag3 = tag3;
-		this.tag3Exists = true;
 
 		this.tag4 = tag4;
-		this.tag4Exists = true;
 
 		this.tag5 = tag5;
-		this.tag5Exists = true;
 
 		this.tag6 = tag6;
-		this.tag6Exists = true;
 	}
 
 
@@ -163,21 +134,10 @@ public class PUImageBase : PUGameObject {
 
 	// XML Attributes
 	public string resourcePath;
-	public bool resourcePathExists;
-
-	public Color color;
-	public bool colorExists;
-
-	public PlanetUnity2.ImageType type;
-	public bool typeExists;
+	public Color? color;
+	public PlanetUnity2.ImageType? type;
 
 
-
-
-	
-	public void SetResourcePath(string v) { resourcePath = v; resourcePathExists = true; } 
-	public void SetColor(Color v) { color = v; colorExists = true; } 
-	public void SetType(PlanetUnity2.ImageType v) { type = v; typeExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -197,9 +157,6 @@ public class PUImageBase : PUGameObject {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("ImageExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -254,15 +211,15 @@ public class PUImageBase : PUGameObject {
 		string attr;
 		attr = reader.GetAttribute("resourcePath");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { resourcePath = attr; resourcePathExists = true; } 
+		if(attr != null) { resourcePath = attr; } 
 		
 		attr = reader.GetAttribute("color");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { color = new Color().PUParse(attr); colorExists = true; } 
+		if(attr != null) { color = new Color().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("type");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { type = (PlanetUnity2.ImageType)Enum.Parse(typeof(PlanetUnity2.ImageType), attr); typeExists = true; } 
+		if(attr != null) { type = (PlanetUnity2.ImageType)Enum.Parse(typeof(PlanetUnity2.ImageType), attr); } 
 		
 
 	}
@@ -277,9 +234,9 @@ public class PUImageBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(resourcePathExists) { sb.AppendFormat (" {0}=\"{1}\"", "resourcePath", resourcePath); }
-		if(colorExists) { sb.AppendFormat (" {0}=\"{1}\"", "color", color); }
-		if(typeExists) { sb.AppendFormat (" {0}=\"{1}\"", "type", (int)type); }
+		if(resourcePath != null) { sb.AppendFormat (" {0}=\"{1}\"", "resourcePath", resourcePath); }
+		if(color != null) { sb.AppendFormat (" {0}=\"{1}\"", "color", color); }
+		if(type != null) { sb.AppendFormat (" {0}=\"{1}\"", "type", (int)type); }
 
 	}
 	

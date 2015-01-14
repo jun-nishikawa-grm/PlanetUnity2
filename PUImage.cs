@@ -28,11 +28,11 @@ public partial class PUImage : PUImageBase {
 		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
 		image = gameObject.AddComponent<Image> ();
 
-		if (colorExists) {
-			image.color = color;
+		if (color != null) {
+			image.color = color.Value;
 		}
 
-		if (resourcePathExists) {
+		if (resourcePath != null) {
 			LoadImageWithResourcePath(resourcePath);
 		}
 	}
@@ -46,7 +46,7 @@ public partial class PUImage : PUImageBase {
 			}
 		}
 
-		if (typeExists) {
+		if (type != null) {
 			if (type == PlanetUnity2.ImageType.filled) {
 				image.type = Image.Type.Filled;
 			}

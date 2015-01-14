@@ -81,7 +81,7 @@ public partial class PUInputField : PUInputFieldBase {
 
 		if (placeholder != null) {
 			PUText placeholderText = new PUText ();
-			placeholderText.SetValue (this.placeholder);
+			placeholderText.value = this.placeholder;
 			placeholderText.LoadIntoPUGameObject (this);
 
 			placeholderText.text.alignment = this.text.alignment;
@@ -96,12 +96,12 @@ public partial class PUInputField : PUInputFieldBase {
 			field.placeholder = placeholderText.text;
 		}
 
-		if (limitExists) {
-			field.characterLimit = limit;
+		if (limit != null) {
+			field.characterLimit = (int)limit;
 		}
 
-		if (selectionColorExists) {
-			field.selectionColor = selectionColor;
+		if (selectionColor != null) {
+			field.selectionColor = selectionColor.Value;
 		}
 
 		// This is probably not the best way to do this, but 4.60.f1 removed the onSubmit event

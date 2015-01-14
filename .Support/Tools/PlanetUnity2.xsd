@@ -204,9 +204,9 @@
 	<complexType name="ScrollRect">
 		<complexContent>
 			<extension base="planet:GameObject">
-				<attribute name="inertia" type="boolean" use="optional" />
-				<attribute name="horizontal" type="boolean" use="optional" />
-				<attribute name="vertical" type="boolean" use="optional" />
+				<attribute name="inertia" type="boolean" use="optional" default="true" />
+				<attribute name="horizontal" type="boolean" use="optional" default="false" />
+				<attribute name="vertical" type="boolean" use="optional" default="true" />
 				<attribute name="scrollWheelSensitivity" type="float" use="optional" default="0" />
 			</extension>
 		</complexContent>

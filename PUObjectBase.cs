@@ -33,28 +33,20 @@ public partial class PUObject : PUObjectBase {
 			string tag6 ) : this()
 	{
 		this.title = title;
-		this.titleExists = true;
 
 		this.tag = tag;
-		this.tagExists = true;
 
 		this.tag1 = tag1;
-		this.tag1Exists = true;
 
 		this.tag2 = tag2;
-		this.tag2Exists = true;
 
 		this.tag3 = tag3;
-		this.tag3Exists = true;
 
 		this.tag4 = tag4;
-		this.tag4Exists = true;
 
 		this.tag5 = tag5;
-		this.tag5Exists = true;
 
 		this.tag6 = tag6;
-		this.tag6Exists = true;
 	}
 
 	
@@ -77,45 +69,19 @@ public class PUObjectBase : IPlanetUnity2 {
 
 	// XML Attributes
 	public string title;
-	public bool titleExists;
-
 	public string tag;
-	public bool tagExists;
-
 	public string tag1;
-	public bool tag1Exists;
-
 	public string tag2;
-	public bool tag2Exists;
-
 	public string tag3;
-	public bool tag3Exists;
-
 	public string tag4;
-	public bool tag4Exists;
-
 	public string tag5;
-	public bool tag5Exists;
-
 	public string tag6;
-	public bool tag6Exists;
-
 
 
 
 	// XML Sequences
 	public List<object> children = new List<object>();
 	
-
-	
-	public void SetTitle(string v) { title = v; titleExists = true; } 
-	public void SetTag(string v) { tag = v; tagExists = true; } 
-	public void SetTag1(string v) { tag1 = v; tag1Exists = true; } 
-	public void SetTag2(string v) { tag2 = v; tag2Exists = true; } 
-	public void SetTag3(string v) { tag3 = v; tag3Exists = true; } 
-	public void SetTag4(string v) { tag4 = v; tag4Exists = true; } 
-	public void SetTag5(string v) { tag5 = v; tag5Exists = true; } 
-	public void SetTag6(string v) { tag6 = v; tag6Exists = true; } 
 
 
 	public virtual void gaxb_unload()
@@ -134,9 +100,6 @@ public class PUObjectBase : IPlanetUnity2 {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("ObjectExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -190,35 +153,35 @@ public class PUObjectBase : IPlanetUnity2 {
 		string attr;
 		attr = reader.GetAttribute("title");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { title = attr; titleExists = true; } 
+		if(attr != null) { title = attr; } 
 		
 		attr = reader.GetAttribute("tag");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { tag = attr; tagExists = true; } 
+		if(attr != null) { tag = attr; } 
 		
 		attr = reader.GetAttribute("tag1");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { tag1 = attr; tag1Exists = true; } 
+		if(attr != null) { tag1 = attr; } 
 		
 		attr = reader.GetAttribute("tag2");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { tag2 = attr; tag2Exists = true; } 
+		if(attr != null) { tag2 = attr; } 
 		
 		attr = reader.GetAttribute("tag3");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { tag3 = attr; tag3Exists = true; } 
+		if(attr != null) { tag3 = attr; } 
 		
 		attr = reader.GetAttribute("tag4");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { tag4 = attr; tag4Exists = true; } 
+		if(attr != null) { tag4 = attr; } 
 		
 		attr = reader.GetAttribute("tag5");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { tag5 = attr; tag5Exists = true; } 
+		if(attr != null) { tag5 = attr; } 
 		
 		attr = reader.GetAttribute("tag6");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { tag6 = attr; tag6Exists = true; } 
+		if(attr != null) { tag6 = attr; } 
 		
 
 	}
@@ -232,14 +195,14 @@ public class PUObjectBase : IPlanetUnity2 {
 	public virtual void gaxb_appendXMLAttributes(StringBuilder sb)
 	{
 
-		if(titleExists) { sb.AppendFormat (" {0}=\"{1}\"", "title", title); }
-		if(tagExists) { sb.AppendFormat (" {0}=\"{1}\"", "tag", tag); }
-		if(tag1Exists) { sb.AppendFormat (" {0}=\"{1}\"", "tag1", tag1); }
-		if(tag2Exists) { sb.AppendFormat (" {0}=\"{1}\"", "tag2", tag2); }
-		if(tag3Exists) { sb.AppendFormat (" {0}=\"{1}\"", "tag3", tag3); }
-		if(tag4Exists) { sb.AppendFormat (" {0}=\"{1}\"", "tag4", tag4); }
-		if(tag5Exists) { sb.AppendFormat (" {0}=\"{1}\"", "tag5", tag5); }
-		if(tag6Exists) { sb.AppendFormat (" {0}=\"{1}\"", "tag6", tag6); }
+		if(title != null) { sb.AppendFormat (" {0}=\"{1}\"", "title", title); }
+		if(tag != null) { sb.AppendFormat (" {0}=\"{1}\"", "tag", tag); }
+		if(tag1 != null) { sb.AppendFormat (" {0}=\"{1}\"", "tag1", tag1); }
+		if(tag2 != null) { sb.AppendFormat (" {0}=\"{1}\"", "tag2", tag2); }
+		if(tag3 != null) { sb.AppendFormat (" {0}=\"{1}\"", "tag3", tag3); }
+		if(tag4 != null) { sb.AppendFormat (" {0}=\"{1}\"", "tag4", tag4); }
+		if(tag5 != null) { sb.AppendFormat (" {0}=\"{1}\"", "tag5", tag5); }
+		if(tag6 != null) { sb.AppendFormat (" {0}=\"{1}\"", "tag6", tag6); }
 
 	}
 	

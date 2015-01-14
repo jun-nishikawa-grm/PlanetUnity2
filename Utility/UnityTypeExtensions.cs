@@ -377,7 +377,7 @@ public static class ColorExtension
 
 	public static string PUToString(this Color c)
 	{
-		return string.Format ("{0},{1},{2},{3}", c.r, c.g, c.b, c.a);
+		return c.ToHex();
 	}
 
 	public static string ToHex(this Color color)

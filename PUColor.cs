@@ -32,8 +32,8 @@ public partial class PUColor : PUColorBase {
 		canvasRenderer = gameObject.AddComponent<CanvasRenderer> ();
 		image = gameObject.AddComponent<Image> ();
 
-		if (image && colorExists) {
-			image.color = color;
+		if (image && color != null) {
+			image.color = color.Value;
 		}
 	}
 

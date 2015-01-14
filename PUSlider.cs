@@ -29,7 +29,7 @@ public partial class PUSlider : PUSliderBase {
 	{
 		base.gaxb_init ();
 
-		if (titleExists == false) {
+		if (title == null) {
 			gameObject.name = "<Slider/>";
 		}
 
@@ -42,9 +42,9 @@ public partial class PUSlider : PUSliderBase {
 		}
 
 		handle = new PUImage (handleResourcePath, Color.white);
-		handle.SetFrame (0, 0, handleSize.x, handleSize.y, 0.5f, 0.5f, "stretch,stretch");
+		handle.SetFrame (0, 0, handleSize.Value.x, handleSize.Value.y, 0.5f, 0.5f, "stretch,stretch");
 		if (handleResourcePath == null) {
-			handle.SetColor (Color.clear);
+			handle.color = Color.clear;
 		}
 		handle.LoadIntoPUGameObject (this);
 
@@ -70,15 +70,15 @@ public partial class PUSlider : PUSliderBase {
 			slider.direction = Slider.Direction.RightToLeft;
 		}
 
-		if (minValueExists) {
-			slider.minValue = minValue;
+		if (minValue != null) {
+			slider.minValue = (float)minValue;
 		}
 
-		if (maxValueExists) {
-			slider.maxValue = maxValue;
+		if (maxValue != null) {
+			slider.maxValue = (float)maxValue;
 		}
 
-		handle.rectTransform.sizeDelta = new Vector2 (handleSize.x, handleSize.y);
+		handle.rectTransform.sizeDelta = new Vector2 (handleSize.Value.x, handleSize.Value.y);
 	}
 
 }

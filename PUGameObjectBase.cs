@@ -22,19 +22,19 @@ public partial class PUGameObject : PUGameObjectBase {
 		string attr;
 
 		attr = "0,0,0";
-		if(attr != null) { position = new Vector3().PUParse(attr); positionExists = true; } 
+		if(attr != null) { position = new Vector3().PUParse(attr); } 
 		attr = "0,0";
-		if(attr != null) { size = new Vector2().PUParse(attr); sizeExists = true; } 
+		if(attr != null) { size = new Vector2().PUParse(attr); } 
 		attr = "0,0,0";
-		if(attr != null) { rotation = new Vector3().PUParse(attr); rotationExists = true; } 
+		if(attr != null) { rotation = new Vector3().PUParse(attr); } 
 		attr = "1,1,1";
-		if(attr != null) { scale = new Vector3().PUParse(attr); scaleExists = true; } 
+		if(attr != null) { scale = new Vector3().PUParse(attr); } 
 		attr = "0,0";
-		if(attr != null) { pivot = new Vector2().PUParse(attr); pivotExists = true; } 
+		if(attr != null) { pivot = new Vector2().PUParse(attr); } 
 		attr = "bottom,left";
-		if(attr != null) { anchor = attr; anchorExists = true; } 
+		if(attr != null) { anchor = attr; } 
 		attr = "true";
-		if(attr != null) { active = bool.Parse(attr); activeExists = true; } 
+		if(attr != null) { active = bool.Parse(attr); } 
 
 	}
 	
@@ -58,52 +58,36 @@ public partial class PUGameObject : PUGameObjectBase {
 			string components ) : this()
 	{
 		this.bounds = bounds;
-		this.boundsExists = true;
 
 		this.position = position;
-		this.positionExists = true;
 
 		this.size = size;
-		this.sizeExists = true;
 
 		this.rotation = rotation;
-		this.rotationExists = true;
 
 		this.scale = scale;
-		this.scaleExists = true;
 
 		this.pivot = pivot;
-		this.pivotExists = true;
 
 		this.anchor = anchor;
-		this.anchorExists = true;
 
 		this.active = active;
-		this.activeExists = true;
 
 		this.mask = mask;
-		this.maskExists = true;
 
 		this.maskInset = maskInset;
-		this.maskInsetExists = true;
 
 		this.outline = outline;
-		this.outlineExists = true;
 
 		this.lastY = lastY;
-		this.lastYExists = true;
 
 		this.lastX = lastX;
-		this.lastXExists = true;
 
 		this.shader = shader;
-		this.shaderExists = true;
 
 		this.ignoreMouse = ignoreMouse;
-		this.ignoreMouseExists = true;
 
 		this.components = components;
-		this.componentsExists = true;
 	}
 
 	
@@ -135,76 +119,52 @@ public partial class PUGameObject : PUGameObjectBase {
 			string tag6 ) : this()
 	{
 		this.bounds = bounds;
-		this.boundsExists = true;
 
 		this.position = position;
-		this.positionExists = true;
 
 		this.size = size;
-		this.sizeExists = true;
 
 		this.rotation = rotation;
-		this.rotationExists = true;
 
 		this.scale = scale;
-		this.scaleExists = true;
 
 		this.pivot = pivot;
-		this.pivotExists = true;
 
 		this.anchor = anchor;
-		this.anchorExists = true;
 
 		this.active = active;
-		this.activeExists = true;
 
 		this.mask = mask;
-		this.maskExists = true;
 
 		this.maskInset = maskInset;
-		this.maskInsetExists = true;
 
 		this.outline = outline;
-		this.outlineExists = true;
 
 		this.lastY = lastY;
-		this.lastYExists = true;
 
 		this.lastX = lastX;
-		this.lastXExists = true;
 
 		this.shader = shader;
-		this.shaderExists = true;
 
 		this.ignoreMouse = ignoreMouse;
-		this.ignoreMouseExists = true;
 
 		this.components = components;
-		this.componentsExists = true;
 
 		this.title = title;
-		this.titleExists = true;
 
 		this.tag = tag;
-		this.tagExists = true;
 
 		this.tag1 = tag1;
-		this.tag1Exists = true;
 
 		this.tag2 = tag2;
-		this.tag2Exists = true;
 
 		this.tag3 = tag3;
-		this.tag3Exists = true;
 
 		this.tag4 = tag4;
-		this.tag4Exists = true;
 
 		this.tag5 = tag5;
-		this.tag5Exists = true;
 
 		this.tag6 = tag6;
-		this.tag6Exists = true;
 	}
 
 
@@ -223,74 +183,24 @@ public class PUGameObjectBase : PUObject {
 
 
 	// XML Attributes
-	public Vector4 bounds;
-	public bool boundsExists;
-
-	public Vector3 position;
-	public bool positionExists;
-
-	public Vector2 size;
-	public bool sizeExists;
-
-	public Vector3 rotation;
-	public bool rotationExists;
-
-	public Vector3 scale;
-	public bool scaleExists;
-
-	public Vector2 pivot;
-	public bool pivotExists;
-
+	public Vector4? bounds;
+	public Vector3? position;
+	public Vector2? size;
+	public Vector3? rotation;
+	public Vector3? scale;
+	public Vector2? pivot;
 	public string anchor;
-	public bool anchorExists;
-
 	public bool active;
-	public bool activeExists;
-
 	public bool mask;
-	public bool maskExists;
-
-	public Vector4 maskInset;
-	public bool maskInsetExists;
-
+	public Vector4? maskInset;
 	public bool outline;
-	public bool outlineExists;
-
-	public float lastY;
-	public bool lastYExists;
-
-	public float lastX;
-	public bool lastXExists;
-
+	public float? lastY;
+	public float? lastX;
 	public string shader;
-	public bool shaderExists;
-
 	public bool ignoreMouse;
-	public bool ignoreMouseExists;
-
 	public string components;
-	public bool componentsExists;
 
 
-
-
-	
-	public void SetBounds(Vector4 v) { bounds = v; boundsExists = true; } 
-	public void SetPosition(Vector3 v) { position = v; positionExists = true; } 
-	public void SetSize(Vector2 v) { size = v; sizeExists = true; } 
-	public void SetRotation(Vector3 v) { rotation = v; rotationExists = true; } 
-	public void SetScale(Vector3 v) { scale = v; scaleExists = true; } 
-	public void SetPivot(Vector2 v) { pivot = v; pivotExists = true; } 
-	public void SetAnchor(string v) { anchor = v; anchorExists = true; } 
-	public void SetActive(bool v) { active = v; activeExists = true; } 
-	public void SetMask(bool v) { mask = v; maskExists = true; } 
-	public void SetMaskInset(Vector4 v) { maskInset = v; maskInsetExists = true; } 
-	public void SetOutline(bool v) { outline = v; outlineExists = true; } 
-	public void SetLastY(float v) { lastY = v; lastYExists = true; } 
-	public void SetLastX(float v) { lastX = v; lastXExists = true; } 
-	public void SetShader(string v) { shader = v; shaderExists = true; } 
-	public void SetIgnoreMouse(bool v) { ignoreMouse = v; ignoreMouseExists = true; } 
-	public void SetComponents(string v) { components = v; componentsExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -310,9 +220,6 @@ public class PUGameObjectBase : PUObject {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("GameObjectExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -367,74 +274,74 @@ public class PUGameObjectBase : PUObject {
 		string attr;
 		attr = reader.GetAttribute("bounds");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { bounds = new Vector4().PUParse(attr); boundsExists = true; } 
+		if(attr != null) { bounds = new Vector4().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("position");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0,0,0"; }
-		if(attr != null) { position = new Vector3().PUParse(attr); positionExists = true; } 
+		if(attr != null) { position = new Vector3().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("size");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0,0"; }
-		if(attr != null) { size = new Vector2().PUParse(attr); sizeExists = true; } 
+		if(attr != null) { size = new Vector2().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("rotation");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0,0,0"; }
-		if(attr != null) { rotation = new Vector3().PUParse(attr); rotationExists = true; } 
+		if(attr != null) { rotation = new Vector3().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("scale");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "1,1,1"; }
-		if(attr != null) { scale = new Vector3().PUParse(attr); scaleExists = true; } 
+		if(attr != null) { scale = new Vector3().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("pivot");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0,0"; }
-		if(attr != null) { pivot = new Vector2().PUParse(attr); pivotExists = true; } 
+		if(attr != null) { pivot = new Vector2().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("anchor");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "bottom,left"; }
-		if(attr != null) { anchor = attr; anchorExists = true; } 
+		if(attr != null) { anchor = attr; } 
 		
 		attr = reader.GetAttribute("active");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "true"; }
-		if(attr != null) { active = bool.Parse(attr); activeExists = true; } 
+		if(attr != null) { active = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("mask");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { mask = bool.Parse(attr); maskExists = true; } 
+		if(attr != null) { mask = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("maskInset");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { maskInset = new Vector4().PUParse(attr); maskInsetExists = true; } 
+		if(attr != null) { maskInset = new Vector4().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("outline");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { outline = bool.Parse(attr); outlineExists = true; } 
+		if(attr != null) { outline = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("lastY");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { lastY = float.Parse(attr); lastYExists = true; } 
+		if(attr != null) { lastY = float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("lastX");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { lastX = float.Parse(attr); lastXExists = true; } 
+		if(attr != null) { lastX = float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("shader");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { shader = attr; shaderExists = true; } 
+		if(attr != null) { shader = attr; } 
 		
 		attr = reader.GetAttribute("ignoreMouse");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { ignoreMouse = bool.Parse(attr); ignoreMouseExists = true; } 
+		if(attr != null) { ignoreMouse = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("components");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { components = attr; componentsExists = true; } 
+		if(attr != null) { components = attr; } 
 		
 
 	}
@@ -449,22 +356,22 @@ public class PUGameObjectBase : PUObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(boundsExists) { sb.AppendFormat (" {0}=\"{1}\"", "bounds", bounds); }
-		if(positionExists) { sb.AppendFormat (" {0}=\"{1}\"", "position", position); }
-		if(sizeExists) { sb.AppendFormat (" {0}=\"{1}\"", "size", size); }
-		if(rotationExists) { sb.AppendFormat (" {0}=\"{1}\"", "rotation", rotation); }
-		if(scaleExists) { sb.AppendFormat (" {0}=\"{1}\"", "scale", scale); }
-		if(pivotExists) { sb.AppendFormat (" {0}=\"{1}\"", "pivot", pivot); }
-		if(anchorExists) { sb.AppendFormat (" {0}=\"{1}\"", "anchor", anchor); }
-		if(activeExists) { sb.AppendFormat (" {0}=\"{1}\"", "active", active.ToString().ToLower()); }
-		if(maskExists) { sb.AppendFormat (" {0}=\"{1}\"", "mask", mask.ToString().ToLower()); }
-		if(maskInsetExists) { sb.AppendFormat (" {0}=\"{1}\"", "maskInset", maskInset); }
-		if(outlineExists) { sb.AppendFormat (" {0}=\"{1}\"", "outline", outline.ToString().ToLower()); }
-		if(lastYExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastY", lastY.ToString ("0.##")); }
-		if(lastXExists) { sb.AppendFormat (" {0}=\"{1}\"", "lastX", lastX.ToString ("0.##")); }
-		if(shaderExists) { sb.AppendFormat (" {0}=\"{1}\"", "shader", shader); }
-		if(ignoreMouseExists) { sb.AppendFormat (" {0}=\"{1}\"", "ignoreMouse", ignoreMouse.ToString().ToLower()); }
-		if(componentsExists) { sb.AppendFormat (" {0}=\"{1}\"", "components", components); }
+		if(bounds != null) { sb.AppendFormat (" {0}=\"{1}\"", "bounds", bounds); }
+		if(position != null) { sb.AppendFormat (" {0}=\"{1}\"", "position", position); }
+		if(size != null) { sb.AppendFormat (" {0}=\"{1}\"", "size", size); }
+		if(rotation != null) { sb.AppendFormat (" {0}=\"{1}\"", "rotation", rotation); }
+		if(scale != null) { sb.AppendFormat (" {0}=\"{1}\"", "scale", scale); }
+		if(pivot != null) { sb.AppendFormat (" {0}=\"{1}\"", "pivot", pivot); }
+		if(anchor != null) { sb.AppendFormat (" {0}=\"{1}\"", "anchor", anchor); }
+		if(active != false) { sb.AppendFormat (" {0}=\"{1}\"", "active", active.ToString().ToLower()); }
+		if(mask != false) { sb.AppendFormat (" {0}=\"{1}\"", "mask", mask.ToString().ToLower()); }
+		if(maskInset != null) { sb.AppendFormat (" {0}=\"{1}\"", "maskInset", maskInset); }
+		if(outline != false) { sb.AppendFormat (" {0}=\"{1}\"", "outline", outline.ToString().ToLower()); }
+		if(lastY != null) { sb.AppendFormat (" {0}=\"{1}\"", "lastY", lastY.Value.ToString ("0.##")); }
+		if(lastX != null) { sb.AppendFormat (" {0}=\"{1}\"", "lastX", lastX.Value.ToString ("0.##")); }
+		if(shader != null) { sb.AppendFormat (" {0}=\"{1}\"", "shader", shader); }
+		if(ignoreMouse != false) { sb.AppendFormat (" {0}=\"{1}\"", "ignoreMouse", ignoreMouse.ToString().ToLower()); }
+		if(components != null) { sb.AppendFormat (" {0}=\"{1}\"", "components", components); }
 
 	}
 	

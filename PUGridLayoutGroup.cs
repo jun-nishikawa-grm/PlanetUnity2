@@ -26,33 +26,33 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 
 		layout = gameObject.AddComponent<GridLayoutGroup> ();
 
-		if (cellSizeExists) {
-			layout.cellSize = cellSize;
+		if (cellSize != null) {
+			layout.cellSize = cellSize.Value;
 		}
 
-		if (spacingExists) {
-			layout.spacing = spacing;
+		if (spacing != null) {
+			layout.spacing = spacing.Value;
 		}
 
 		if (fixedRows > 0) {
 			layout.constraint = GridLayoutGroup.Constraint.FixedRowCount;
-			layout.constraintCount = fixedRows;
+			layout.constraintCount = (int)fixedRows;
 		} else if (fixedColumns > 0) {
 			layout.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
-			layout.constraintCount = fixedColumns;
+			layout.constraintCount = (int)fixedColumns;
 		} else {
 			layout.constraint = GridLayoutGroup.Constraint.Flexible;
 		}
 
 
-		if (startAxisExists) {
+		if (startAxis != null) {
 			if (startAxis == PlanetUnity2.GridLayoutStartAxis.horizontal)
 				layout.startAxis = GridLayoutGroup.Axis.Horizontal;
 			if (startAxis == PlanetUnity2.GridLayoutStartAxis.vertical)
 				layout.startAxis = GridLayoutGroup.Axis.Vertical;
 		}
 
-		if (startCornerExists) {
+		if (startCorner != null) {
 			if (startCorner == PlanetUnity2.GridLayoutStartCorner.lowerLeft)
 				layout.startCorner = GridLayoutGroup.Corner.LowerLeft;
 			if (startCorner == PlanetUnity2.GridLayoutStartCorner.lowerRight)
@@ -63,7 +63,7 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 				layout.startCorner = GridLayoutGroup.Corner.UpperRight;
 		}
 
-		if(childAlignmentExists) {
+		if(childAlignment != null) {
 			if (childAlignment == PlanetUnity2.GridLayoutChildAlignment.upperLeft)
 				layout.childAlignment = TextAnchor.UpperLeft;
 			if (childAlignment == PlanetUnity2.GridLayoutChildAlignment.upperCenter)

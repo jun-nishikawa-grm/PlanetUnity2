@@ -54,88 +54,60 @@ public partial class PUTable : PUTableBase {
 			string tag6 ) : this()
 	{
 		this.inertia = inertia;
-		this.inertiaExists = true;
 
 		this.horizontal = horizontal;
-		this.horizontalExists = true;
 
 		this.vertical = vertical;
-		this.verticalExists = true;
 
 		this.scrollWheelSensitivity = scrollWheelSensitivity;
-		this.scrollWheelSensitivityExists = true;
 
 		this.bounds = bounds;
-		this.boundsExists = true;
 
 		this.position = position;
-		this.positionExists = true;
 
 		this.size = size;
-		this.sizeExists = true;
 
 		this.rotation = rotation;
-		this.rotationExists = true;
 
 		this.scale = scale;
-		this.scaleExists = true;
 
 		this.pivot = pivot;
-		this.pivotExists = true;
 
 		this.anchor = anchor;
-		this.anchorExists = true;
 
 		this.active = active;
-		this.activeExists = true;
 
 		this.mask = mask;
-		this.maskExists = true;
 
 		this.maskInset = maskInset;
-		this.maskInsetExists = true;
 
 		this.outline = outline;
-		this.outlineExists = true;
 
 		this.lastY = lastY;
-		this.lastYExists = true;
 
 		this.lastX = lastX;
-		this.lastXExists = true;
 
 		this.shader = shader;
-		this.shaderExists = true;
 
 		this.ignoreMouse = ignoreMouse;
-		this.ignoreMouseExists = true;
 
 		this.components = components;
-		this.componentsExists = true;
 
 		this.title = title;
-		this.titleExists = true;
 
 		this.tag = tag;
-		this.tagExists = true;
 
 		this.tag1 = tag1;
-		this.tag1Exists = true;
 
 		this.tag2 = tag2;
-		this.tag2Exists = true;
 
 		this.tag3 = tag3;
-		this.tag3Exists = true;
 
 		this.tag4 = tag4;
-		this.tag4Exists = true;
 
 		this.tag5 = tag5;
-		this.tag5Exists = true;
 
 		this.tag6 = tag6;
-		this.tag6Exists = true;
 	}
 
 
@@ -153,8 +125,6 @@ public class PUTableBase : PUScrollRect {
 	// XML Attributes
 
 
-
-	
 
 
 	public override void gaxb_unload()
@@ -174,9 +144,6 @@ public class PUTableBase : PUScrollRect {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("TableExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{

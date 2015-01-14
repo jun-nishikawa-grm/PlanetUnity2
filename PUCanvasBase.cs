@@ -22,9 +22,9 @@ public partial class PUCanvas : PUCanvasBase {
 		string attr;
 
 		attr = "ScreenSpaceOverlay";
-		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); renderModeExists = true; } 
+		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); } 
 		attr = "false";
-		if(attr != null) { pixelPerfect = bool.Parse(attr); pixelPerfectExists = true; } 
+		if(attr != null) { pixelPerfect = bool.Parse(attr); } 
 
 	}
 	
@@ -34,10 +34,8 @@ public partial class PUCanvas : PUCanvasBase {
 			bool pixelPerfect ) : this()
 	{
 		this.renderMode = renderMode;
-		this.renderModeExists = true;
 
 		this.pixelPerfect = pixelPerfect;
-		this.pixelPerfectExists = true;
 	}
 
 	
@@ -71,82 +69,56 @@ public partial class PUCanvas : PUCanvasBase {
 			string tag6 ) : this()
 	{
 		this.renderMode = renderMode;
-		this.renderModeExists = true;
 
 		this.pixelPerfect = pixelPerfect;
-		this.pixelPerfectExists = true;
 
 		this.bounds = bounds;
-		this.boundsExists = true;
 
 		this.position = position;
-		this.positionExists = true;
 
 		this.size = size;
-		this.sizeExists = true;
 
 		this.rotation = rotation;
-		this.rotationExists = true;
 
 		this.scale = scale;
-		this.scaleExists = true;
 
 		this.pivot = pivot;
-		this.pivotExists = true;
 
 		this.anchor = anchor;
-		this.anchorExists = true;
 
 		this.active = active;
-		this.activeExists = true;
 
 		this.mask = mask;
-		this.maskExists = true;
 
 		this.maskInset = maskInset;
-		this.maskInsetExists = true;
 
 		this.outline = outline;
-		this.outlineExists = true;
 
 		this.lastY = lastY;
-		this.lastYExists = true;
 
 		this.lastX = lastX;
-		this.lastXExists = true;
 
 		this.shader = shader;
-		this.shaderExists = true;
 
 		this.ignoreMouse = ignoreMouse;
-		this.ignoreMouseExists = true;
 
 		this.components = components;
-		this.componentsExists = true;
 
 		this.title = title;
-		this.titleExists = true;
 
 		this.tag = tag;
-		this.tagExists = true;
 
 		this.tag1 = tag1;
-		this.tag1Exists = true;
 
 		this.tag2 = tag2;
-		this.tag2Exists = true;
 
 		this.tag3 = tag3;
-		this.tag3Exists = true;
 
 		this.tag4 = tag4;
-		this.tag4Exists = true;
 
 		this.tag5 = tag5;
-		this.tag5Exists = true;
 
 		this.tag6 = tag6;
-		this.tag6Exists = true;
 	}
 
 
@@ -165,18 +137,10 @@ public class PUCanvasBase : PUGameObject {
 
 
 	// XML Attributes
-	public PlanetUnity2.CanvasRenderMode renderMode;
-	public bool renderModeExists;
-
+	public PlanetUnity2.CanvasRenderMode? renderMode;
 	public bool pixelPerfect;
-	public bool pixelPerfectExists;
 
 
-
-
-	
-	public void SetRenderMode(PlanetUnity2.CanvasRenderMode v) { renderMode = v; renderModeExists = true; } 
-	public void SetPixelPerfect(bool v) { pixelPerfect = v; pixelPerfectExists = true; } 
 
 
 	public override void gaxb_unload()
@@ -196,9 +160,6 @@ public class PUCanvasBase : PUGameObject {
 			if(parentField != null)
 			{
 				parentField.SetValue(parent, this);
-				
-				parentField = parent.GetType().GetField("CanvasExists");
-				parentField.SetValue(parent, true);
 			}
 			else
 			{
@@ -254,12 +215,12 @@ public class PUCanvasBase : PUGameObject {
 		attr = reader.GetAttribute("renderMode");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "ScreenSpaceOverlay"; }
-		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); renderModeExists = true; } 
+		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); } 
 		
 		attr = reader.GetAttribute("pixelPerfect");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "false"; }
-		if(attr != null) { pixelPerfect = bool.Parse(attr); pixelPerfectExists = true; } 
+		if(attr != null) { pixelPerfect = bool.Parse(attr); } 
 		
 
 	}
@@ -274,8 +235,8 @@ public class PUCanvasBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(renderModeExists) { sb.AppendFormat (" {0}=\"{1}\"", "renderMode", (int)renderMode); }
-		if(pixelPerfectExists) { sb.AppendFormat (" {0}=\"{1}\"", "pixelPerfect", pixelPerfect.ToString().ToLower()); }
+		if(renderMode != null) { sb.AppendFormat (" {0}=\"{1}\"", "renderMode", (int)renderMode); }
+		if(pixelPerfect != false) { sb.AppendFormat (" {0}=\"{1}\"", "pixelPerfect", pixelPerfect.ToString().ToLower()); }
 
 	}
 	
