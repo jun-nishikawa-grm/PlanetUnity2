@@ -166,7 +166,8 @@ public class PUPrefabBase : PUGameObject {
 
 	}
 	
-	public void gaxb_addToParent()
+	public new void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{

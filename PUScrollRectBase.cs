@@ -207,7 +207,8 @@ public class PUScrollRectBase : PUGameObject {
 
 	}
 	
-	public void gaxb_addToParent()
+	public new void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{

@@ -266,7 +266,8 @@ public class PUInputFieldBase : PUText {
 
 	}
 	
-	public void gaxb_addToParent()
+	public new void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{
@@ -345,11 +346,11 @@ public class PUInputFieldBase : PUText {
 		
 		attr = reader.GetAttribute("contentType");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { contentType = (PlanetUnity2.InputFieldContentType)System.Enum.Parse(typeof(PlanetUnity2.InputFieldContentType), attr); contentTypeExists = true; } 
+		if(attr != null) { contentType = (PlanetUnity2.InputFieldContentType)Enum.Parse(typeof(PlanetUnity2.InputFieldContentType), attr); contentTypeExists = true; } 
 		
 		attr = reader.GetAttribute("lineType");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { lineType = (PlanetUnity2.InputFieldLineType)System.Enum.Parse(typeof(PlanetUnity2.InputFieldLineType), attr); lineTypeExists = true; } 
+		if(attr != null) { lineType = (PlanetUnity2.InputFieldLineType)Enum.Parse(typeof(PlanetUnity2.InputFieldLineType), attr); lineTypeExists = true; } 
 		
 		attr = reader.GetAttribute("selectionColor");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }

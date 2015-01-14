@@ -22,7 +22,7 @@ public partial class PUCanvas : PUCanvasBase {
 		string attr;
 
 		attr = "ScreenSpaceOverlay";
-		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)System.Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); renderModeExists = true; } 
+		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); renderModeExists = true; } 
 		attr = "false";
 		if(attr != null) { pixelPerfect = bool.Parse(attr); pixelPerfectExists = true; } 
 
@@ -185,7 +185,8 @@ public class PUCanvasBase : PUGameObject {
 
 	}
 	
-	public void gaxb_addToParent()
+	public new void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{
@@ -253,7 +254,7 @@ public class PUCanvasBase : PUGameObject {
 		attr = reader.GetAttribute("renderMode");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "ScreenSpaceOverlay"; }
-		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)System.Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); renderModeExists = true; } 
+		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); renderModeExists = true; } 
 		
 		attr = reader.GetAttribute("pixelPerfect");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }

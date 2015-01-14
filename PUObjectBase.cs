@@ -124,6 +124,7 @@ public class PUObjectBase : IPlanetUnity2 {
 	}
 	
 	public void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{

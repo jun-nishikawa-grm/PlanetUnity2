@@ -186,7 +186,8 @@ public class PUImageBase : PUGameObject {
 
 	}
 	
-	public void gaxb_addToParent()
+	public new void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{
@@ -261,7 +262,7 @@ public class PUImageBase : PUGameObject {
 		
 		attr = reader.GetAttribute("type");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { type = (PlanetUnity2.ImageType)System.Enum.Parse(typeof(PlanetUnity2.ImageType), attr); typeExists = true; } 
+		if(attr != null) { type = (PlanetUnity2.ImageType)Enum.Parse(typeof(PlanetUnity2.ImageType), attr); typeExists = true; } 
 		
 
 	}

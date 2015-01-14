@@ -64,6 +64,7 @@ public class PUNotificationBase : IPlanetUnity2 {
 	}
 	
 	public void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{

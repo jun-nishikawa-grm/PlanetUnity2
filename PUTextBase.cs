@@ -26,7 +26,7 @@ public partial class PUText : PUTextBase {
 		attr = "0,0,0,1";
 		if(attr != null) { fontColor = new Color().PUParse(attr); fontColorExists = true; } 
 		attr = "middleCenter";
-		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)System.Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); alignmentExists = true; } 
+		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); alignmentExists = true; } 
 
 	}
 	
@@ -271,7 +271,8 @@ public class PUTextBase : PUGameObject {
 
 	}
 	
-	public void gaxb_addToParent()
+	public new void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{
@@ -347,7 +348,7 @@ public class PUTextBase : PUGameObject {
 		
 		attr = reader.GetAttribute("fontStyle");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { fontStyle = (PlanetUnity2.FontStyle)System.Enum.Parse(typeof(PlanetUnity2.FontStyle), attr); fontStyleExists = true; } 
+		if(attr != null) { fontStyle = (PlanetUnity2.FontStyle)Enum.Parse(typeof(PlanetUnity2.FontStyle), attr); fontStyleExists = true; } 
 		
 		attr = reader.GetAttribute("fontColor");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
@@ -361,7 +362,7 @@ public class PUTextBase : PUGameObject {
 		attr = reader.GetAttribute("alignment");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "middleCenter"; }
-		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)System.Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); alignmentExists = true; } 
+		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); alignmentExists = true; } 
 		
 		attr = reader.GetAttribute("value");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }

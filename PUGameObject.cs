@@ -94,7 +94,7 @@ public partial class PUGameObject : PUGameObjectBase {
 		gameObject.transform.SetParent (p.transform, false);
 	}
 
-	public virtual void gaxb_load(XmlReader reader, object _parent, Hashtable args)
+	public override void gaxb_load(XmlReader reader, object _parent, Hashtable args)
 	{
 		if (stringToAnchorLookup == null) {
 			stringToAnchorLookup = new Dictionary<string, Vector4> ();

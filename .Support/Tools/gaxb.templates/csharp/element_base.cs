@@ -70,7 +70,7 @@ public partial class <%= FULL_NAME_CAMEL %> : <%= FULL_NAME_CAMEL %>Base {
 					elseif (typeNameForItem(v)=="byte[]") then
 						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = Convert.FromBase64String(attr); "..cleanedName(v.name).."Exists = true; } \n")
 					elseif (isEnumForItem(v)) then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = ("..typeForItem(v)..")System.Enum.Parse(typeof("..typeForItem(v).."), attr); "..cleanedName(v.name).."Exists = true; } \n")
+						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = ("..typeForItem(v)..")Enum.Parse(typeof("..typeForItem(v).."), attr); "..cleanedName(v.name).."Exists = true; } \n")
 					else
 						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = new "..typeForItem(v).."().PUParse(attr); "..cleanedName(v.name).."Exists = true; } \n")
 					end
@@ -201,7 +201,11 @@ end
 %>
 	}
 	
-	public void gaxb_addToParent()
+<%	if(hasSuperclass(this) == false) then
+		gaxb_print("\tpublic void gaxb_addToParent()\n")
+	else
+		gaxb_print("\tpublic new void gaxb_addToParent()\n")
+	end %>
 	{
 		if(parent != null)
 		{
@@ -300,7 +304,7 @@ end
 			elseif (typeNameForItem(v)=="byte[]") then
 				gaxb_print("\t\tif(attr != null) { "..v.name.." = Convert.FromBase64String(attr); "..v.name.."Exists = true; } \n")
 			elseif (isEnumForItem(v)) then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = ("..typeForItem(v)..")System.Enum.Parse(typeof("..typeForItem(v).."), attr); "..v.name.."Exists = true; } \n")
+				gaxb_print("\t\tif(attr != null) { "..v.name.." = ("..typeForItem(v)..")Enum.Parse(typeof("..typeForItem(v).."), attr); "..v.name.."Exists = true; } \n")
 			else
 				gaxb_print("\t\tif(attr != null) { "..v.name.." = new "..typeForItem(v).."().PUParse(attr); "..v.name.."Exists = true; } \n")
 			end

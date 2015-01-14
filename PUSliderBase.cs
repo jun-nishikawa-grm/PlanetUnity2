@@ -263,7 +263,8 @@ public class PUSliderBase : PUImage {
 
 	}
 	
-	public void gaxb_addToParent()
+	public new void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{
@@ -357,7 +358,7 @@ public class PUSliderBase : PUImage {
 		
 		attr = reader.GetAttribute("direction");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { direction = (PlanetUnity2.SliderDirection)System.Enum.Parse(typeof(PlanetUnity2.SliderDirection), attr); directionExists = true; } 
+		if(attr != null) { direction = (PlanetUnity2.SliderDirection)Enum.Parse(typeof(PlanetUnity2.SliderDirection), attr); directionExists = true; } 
 		
 
 	}

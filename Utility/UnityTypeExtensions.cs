@@ -251,6 +251,17 @@ public static class Vector2Extension
 		float y = v.x * Mathf.Sin (radians) + v.y * Mathf.Cos (radians);
 		return new Vector2(x, y);
 	}
+
+	public static Vector2 RotateByAngle(this Vector2 v, Vector2 pivot, float angle) {
+		float rx = v.x - pivot.x;
+		float ry = v.y - pivot.y;
+
+		float t = rx;
+		float cosa = (float)Math.Cos (angle), sina = (float)Math.Sin (angle);
+		rx = t * cosa - ry * sina;
+		ry = t * sina + ry * cosa;
+		return new Vector2(rx + pivot.x, ry + pivot.y);
+	}
 }
 
 public static class Vector3Extension

@@ -245,7 +245,8 @@ public class PUGridLayoutGroupBase : PUGameObject {
 
 	}
 	
-	public void gaxb_addToParent()
+	public new void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{
@@ -322,15 +323,15 @@ public class PUGridLayoutGroupBase : PUGameObject {
 		
 		attr = reader.GetAttribute("startCorner");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { startCorner = (PlanetUnity2.GridLayoutStartCorner)System.Enum.Parse(typeof(PlanetUnity2.GridLayoutStartCorner), attr); startCornerExists = true; } 
+		if(attr != null) { startCorner = (PlanetUnity2.GridLayoutStartCorner)Enum.Parse(typeof(PlanetUnity2.GridLayoutStartCorner), attr); startCornerExists = true; } 
 		
 		attr = reader.GetAttribute("startAxis");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { startAxis = (PlanetUnity2.GridLayoutStartAxis)System.Enum.Parse(typeof(PlanetUnity2.GridLayoutStartAxis), attr); startAxisExists = true; } 
+		if(attr != null) { startAxis = (PlanetUnity2.GridLayoutStartAxis)Enum.Parse(typeof(PlanetUnity2.GridLayoutStartAxis), attr); startAxisExists = true; } 
 		
 		attr = reader.GetAttribute("childAlignment");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)System.Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); childAlignmentExists = true; } 
+		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); childAlignmentExists = true; } 
 		
 		attr = reader.GetAttribute("fixedRows");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }

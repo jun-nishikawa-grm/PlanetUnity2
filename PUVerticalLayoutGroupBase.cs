@@ -197,7 +197,8 @@ public class PUVerticalLayoutGroupBase : PUGameObject {
 
 	}
 	
-	public void gaxb_addToParent()
+	public new void gaxb_addToParent()
+
 	{
 		if(parent != null)
 		{
@@ -274,7 +275,7 @@ public class PUVerticalLayoutGroupBase : PUGameObject {
 		
 		attr = reader.GetAttribute("childAlignment");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)System.Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); childAlignmentExists = true; } 
+		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); childAlignmentExists = true; } 
 		
 
 	}

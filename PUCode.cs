@@ -71,7 +71,7 @@ public partial class PUCode : PUCodeBase {
 		return (IPUCode)instances [name];
 	}
 
-	public void gaxb_complete()
+	public override void gaxb_complete()
 	{
 		// If we're in live editor mode, we don't want to load controllers
 		if (Application.isPlaying == false) {
@@ -92,7 +92,7 @@ public partial class PUCode : PUCodeBase {
 				}
 			} else {
 				MonoBehaviour.DontDestroyOnLoad(this.gameObject);
-				this.gameObject.transform.parent = null;
+				this.gameObject.transform.SetParent (null);
 			}
 		}
 
