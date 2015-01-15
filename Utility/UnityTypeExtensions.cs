@@ -219,7 +219,7 @@ public static class Vector2Extension
 
 	public static string PUToString(this Vector2 v)
 	{
-		return string.Format ("{0},{1}", v.x, v.y);
+		return string.Format ("{0:0.##},{1:0.##}", v.x, v.y);
 	}
 
 	public static float AngleSignedBetweenVectors(this Vector2 a, Vector2 b)
@@ -277,7 +277,7 @@ public static class Vector3Extension
 
 	public static string PUToString(this Vector3 v)
 	{
-		return string.Format ("{0},{1},{2}", v.x, v.y, v.z);
+		return string.Format ("{0:0.##},{1:0.##},{2:0.##}", v.x, v.y, v.z);
 	}
 
 	public static Vector3 RotateLeft(this Vector3 v)
@@ -340,7 +340,7 @@ public static class Vector4Extension
 
 	public static string PUToString(this Vector4 v)
 	{
-		return string.Format ("{0},{1},{2},{3}", v.x, v.y, v.z, v.w);
+		return string.Format ("{0:0.##},{1:0.##},{2:0.##},{3:0.##}", v.x, v.y, v.z, v.w);
 	}
 
 	public static float Width(this Vector4 v)

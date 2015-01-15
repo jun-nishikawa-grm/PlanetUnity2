@@ -150,7 +150,7 @@ public class <%= FULL_NAME_CAMEL %> : <%= superclassForItem(this) %> {
 
 <%	if(hasSuperclass(this) == false) then
 		gaxb_print("\tpublic object parent;\n")
-		gaxb_print("\tpublic string xmlns;\n")
+		gaxb_print('\tpublic string xmlns = "'..this.namespaceURL..'";\n')
 	end %>
 
 	// XML Attributes
@@ -379,9 +379,16 @@ end
 		
 		sb.AppendFormat ("<{0}", "<%=this.name%>");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\\"{1}\\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\\"{1}\\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\\"{1}\\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);
