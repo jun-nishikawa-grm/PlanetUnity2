@@ -46,7 +46,11 @@ public partial class <%= FULL_NAME_CAMEL %> : <%= FULL_NAME_CAMEL %>Base {
 						gaxb_print("\n\t\tstring attr;\n\n")
 					end
 					
-					gaxb_print("\t\tattr = \""..v.default.."\";\n")
+					if (v.default == "UUID_REGISTER") then
+						gaxb_print("\t\tattr = UUID.Generate ();\n")
+					else
+						gaxb_print('\t\tattr = "'..v.default..'";\n')
+					end
 					
 					
 					if (typeNameForItem(v)=="bool") then
@@ -58,7 +62,11 @@ public partial class <%= FULL_NAME_CAMEL %> : <%= FULL_NAME_CAMEL %>Base {
 					elseif (typeNameForItem(v)=="short") then
 						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = short.Parse(attr); } \n")
 					elseif (typeNameForItem(v)=="int") then
-						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = int.Parse(attr); } \n")
+						if (isEnumForItem(v)) then
+							gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = "..v.type.namespace.."."..v.type.name..".PUParse(attr); } \n")
+						else
+							gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = int.Parse(attr); } \n")
+						end
 					elseif (typeNameForItem(v)=="long") then
 						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = long.Parse(attr); } \n")
 					elseif (typeNameForItem(v)=="double") then
@@ -267,7 +275,11 @@ end
 			gaxb_print('\t\tif(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }\n');
 			
 			if (v.default ~= nil) then
-				gaxb_print("\t\tif(attr == null) { attr = \""..v.default.."\"; }\n")
+				if (v.default == "UUID_REGISTER") then
+					gaxb_print("\t\tif(attr == null) { attr = UUID.Generate (); }\n")
+				else
+					gaxb_print("\t\tif(attr == null) { attr = \""..v.default.."\"; }\n")
+				end
 			end
 			
 			if (typeNameForItem(v)=="bool") then
@@ -279,7 +291,11 @@ end
 			elseif (typeNameForItem(v)=="short") then
 				gaxb_print("\t\tif(attr != null) { "..v.name.." = short.Parse(attr); } \n")
 			elseif (typeNameForItem(v)=="int") then
-				gaxb_print("\t\tif(attr != null) { "..v.name.." = int.Parse(attr); } \n")
+				if (isEnumForItem(v)) then
+					gaxb_print("\t\tif(attr != null) { "..v.name.." = "..v.type.namespace.."."..v.type.name..".PUParse(attr); } \n")
+				else
+					gaxb_print("\t\tif(attr != null) { "..v.name.." = int.Parse(attr); } \n")
+				end
 			elseif (typeNameForItem(v)=="long") then
 				gaxb_print("\t\tif(attr != null) { "..v.name.." = long.Parse(attr); } \n")
 			elseif (typeNameForItem(v)=="double") then

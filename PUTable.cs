@@ -312,7 +312,7 @@ public partial class PUTable : PUTableBase {
 	}
 
 
-	public void LateUpdate() {
+	public override void LateUpdate() {
 
 		float y = 0;
 

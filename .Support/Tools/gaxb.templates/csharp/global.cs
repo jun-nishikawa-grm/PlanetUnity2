@@ -68,6 +68,19 @@ for k,v in pairs(schema.simpleTypes) do
 				gaxb_print("\t\tstatic public readonly int "..v1.attributes.value.." = "..i..";\n")
 				i = i + 1;
 			end
+			
+			gaxb_print("\t\tstatic public int PUParse(string s) { \n")
+			gaxb_print("\t\t\tstring[] parts = { ")
+			for k1,v1 in pairs(enums) do
+				gaxb_print('"'..v1.attributes.value..'",')
+			end
+			gaxb_print(' };\n')
+			
+			gaxb_print('\t\t\tint idx = Array.IndexOf(parts, s);\n')
+			gaxb_print('\t\t\tif(idx == -1) { idx = int.Parse(s); }\n')
+			
+			gaxb_print('\t\t\treturn idx;\n\t\t}\n')
+			
 			gaxb_print("\t};\n\n")
 		end
 		if(appinfo == "ENUM_MASK") then
