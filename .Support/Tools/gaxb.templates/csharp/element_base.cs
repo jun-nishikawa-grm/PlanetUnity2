@@ -331,7 +331,7 @@ end
 <%
 		for k,v in pairs(this.attributes) do
 			if (typeNameForItem(v)=="bool") then
-				gaxb_print('\t\tif('..v.name..' != false) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.ToString().ToLower()); }\n')
+				gaxb_print('\t\t sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.ToString().ToLower()); \n')
 			elseif (typeNameForItem(v)=="float") then
 				gaxb_print('\t\tif('..v.name..' != null) { sb.AppendFormat (" {0}=\\"{1}\\"", "'..v.name..'", '..v.name..'.Value.ToString ("0.##")); }\n')
 			elseif (typeNameForItem(v)=="short") then
