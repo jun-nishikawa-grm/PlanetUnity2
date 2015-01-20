@@ -37,7 +37,7 @@ public partial class PUImage : PUImageBase {
 		}
 	}
 
-	public void LoadImageWithResourcePath(string p) {
+	public virtual void LoadImageWithResourcePath(string p) {
 		image.sprite = PlanetUnityResourceCache.GetSprite (p);
 		if (image.sprite != null) {
 			Vector4 border = image.sprite.border;

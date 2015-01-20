@@ -161,7 +161,6 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		return currentGameObject.Canvas ();
 	}
 
-
 	public GameObject Container() {
 		return planetUnityContainer;
 	}
@@ -169,6 +168,35 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	public PUCanvas Canvas() {
 		return canvas;
 	}
+
+
+	#region XML navigation
+
+	private List<string> navigationHistory = new List<string>();
+
+	static public void PushXML(string newXMLPath) {
+		PlanetUnityGameObject.currentGameObject.InternalPushXML (newXMLPath);
+	}
+
+	static public void PopXML() {
+		PlanetUnityGameObject.currentGameObject.InternalPopXML ();
+	}
+
+	private void InternalPushXML(string newXMLPath) {
+		navigationHistory.Add (xmlPath);
+		xmlPath = newXMLPath;
+		ReloadCanvas ();
+	}
+
+	private void InternalPopXML() {
+		xmlPath = navigationHistory [navigationHistory.Count - 1];
+		navigationHistory.RemoveAt (navigationHistory.Count - 1);
+		ReloadCanvas ();
+	}
+
+	#endregion
+
+
 
 	// Use this for initialization
 	void Start () {

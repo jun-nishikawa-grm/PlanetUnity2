@@ -31,6 +31,7 @@ public partial class PUCode : PUCodeBase {
 	IPUCode controller;
 
 	private static Hashtable instances = new Hashtable ();
+	private static Hashtable normalInstances = new Hashtable ();
 
 	public object GetObject()
 	{
@@ -56,6 +57,8 @@ public partial class PUCode : PUCodeBase {
 	{
 		base.gaxb_unload ();
 
+		normalInstances.Remove (_class);
+
 		if (singleton == false) {
 			NotificationCenter.removeObserver (controller);
 		}
@@ -68,11 +71,16 @@ public partial class PUCode : PUCodeBase {
 	}
 
 	public static IPUCode GetSingletonByName(string name){
-		return (IPUCode)instances [name];
+		IPUCode c = (IPUCode)instances [name];
+		if (c != null) {
+			return c;
+		}
+		return (IPUCode)normalInstances [name];
 	}
 
 	public override void gaxb_complete()
 	{
+		bool shouldCallSingletonStart = false;
 		// If we're in live editor mode, we don't want to load controllers
 		if (Application.isPlaying == false) {
 			base.gaxb_complete ();
@@ -87,9 +95,7 @@ public partial class PUCode : PUCodeBase {
 			if (instances [_class] != null && instances [_class] != this) {
 				GameObject.DestroyImmediate (this.gameObject);
 				controller = (IPUCode)instances[_class];
-				if (controller is IPUSingletonCode) {
-					((IPUSingletonCode)controller).SingletonStart ();
-				}
+				shouldCallSingletonStart = true;
 			} else {
 				MonoBehaviour.DontDestroyOnLoad(this.gameObject);
 				this.gameObject.transform.SetParent (null);
@@ -135,6 +141,8 @@ public partial class PUCode : PUCodeBase {
 				if(singleton){
 					Debug.Log("Saving instance class for: "+_class);
 					instances[_class] = controller;
+				}else{
+					normalInstances[_class] = controller;
 				}
 			}
 			catch(Exception e) {
@@ -164,6 +172,12 @@ public partial class PUCode : PUCodeBase {
 		
 			foreach (PUNotification subscribe in Notifications) {
 				NotificationCenter.addObserver (controller, subscribe.name, Scope (), subscribe.name);
+			}
+		}
+
+		if (shouldCallSingletonStart) {
+			if (controller is IPUSingletonCode) {
+				((IPUSingletonCode)controller).SingletonStart ();
 			}
 		}
 

@@ -1,3 +1,5 @@
+using System;
+
 
 public partial class PUSwitcher : PUSwitcherBase {
 
@@ -61,6 +63,24 @@ public partial class PUSwitcher : PUSwitcherBase {
 				LeanTween.alpha (child.gameObject, 1.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
 
 				});
+			#endif
+		}
+	}
+
+	public void Close(Action block) {
+		if (currentIndex >= 0 && currentIndex < children.Count) {
+			PUGameObject child = children [currentIndex] as PUGameObject;
+
+			child.gameObject.SetActive (true);
+			child.canvasGroup.alpha = 1;
+			#if PU2_LEANTWEEN
+			LeanTween.alpha (child.gameObject, 0.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setOnComplete (() => {
+				child.gameObject.SetActive (false);
+				block ();
+			});
+			#else
+			child.gameObject.SetActive (false);
+			block();
 			#endif
 		}
 	}

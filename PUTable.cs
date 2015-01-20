@@ -95,6 +95,7 @@ public class PUTableHeaderScript : MonoBehaviour {
 			distance = cellTransform.anchoredPosition.y - otherPos.y;
 		}
 
+
 		if (distance < cellTransform.rect.height) {
 			cellTransform.anchoredPosition = new Vector2 (otherPos.x, otherPos.y + cellTransform.rect.height);
 			tableCell.puGameObject.canvasGroup.alpha = LeanTween.easeInCubic (0, 1, distance / cellTransform.rect.height);
@@ -114,6 +115,8 @@ public class PUTableCell {
 	public PUTable table = null;
 	public PUGameObject puGameObject = null;
 	public object cellData = null;
+
+	public float animatedYOffset = 0;
 
 
 	private GameObject cellGameObject;
@@ -262,55 +265,92 @@ public partial class PUTable : PUTableBase {
 		return allObjects [(allObjects.Count-idx)-1];
 	}
 
-	public void LoadCellForData(object cellData) {
+	public PUTableCell LoadCellForData(object cellData, PUTableCell reusedCell, float currentContentHeight) {
+	
+		PUTableCell cell = reusedCell;
+		if (reusedCell == null) {
+			string className = cellData.GetType ().Name + "TableCell";
+			Type cellType = Type.GetType (className, true);
 
-		CalculateContentSize ();
+			cell = (Activator.CreateInstance (cellType)) as PUTableCell;
+			cell.LoadIntoPUGameObject (this, cellData);
+		} else {
+			cell.puGameObject.parent = this;
+			cell.puGameObject.rectTransform.SetParent (this.contentObject.transform, false);
 
-		string className = cellData.GetType ().Name + "TableCell";
+			if (cell.IsHeader () == false) {
+				cell.animatedYOffset = cell.puGameObject.rectTransform.anchoredPosition.y - currentContentHeight;
+			}
+		}
 
-		Type cellType = Type.GetType (className, true);
-
-		PUTableCell cell = (Activator.CreateInstance (cellType)) as PUTableCell;
-		cell.LoadIntoPUGameObject (this, cellData);
 		allCells.Add (cell);
 
-		cell.puGameObject.rectTransform.anchoredPosition = new Vector3(0,(contentObject.transform as RectTransform).rect.height,0);
+		cell.puGameObject.rectTransform.anchoredPosition = new Vector3 (0, currentContentHeight, 0);
+
+		return cell;
 	}
 
 	public void ReloadTable() {
-
+	
 		if(gameObject.GetComponent<PUTableUpdateScript>() == null){
 			PUTableUpdateScript script = (PUTableUpdateScript)gameObject.AddComponent (typeof(PUTableUpdateScript));
 			script.table = this;
 		}
 
-		// 0) Remove all previous content
-		foreach (PUTableCell cell in allCells) {
-			cell.puGameObject.unload ();
-		}
+
+		// -1) Save previous cells for reuse if we can...
+		List<PUTableCell> savedCells = new List<PUTableCell>(allCells);
+		
 		allCells.Clear ();
 
 		if (allObjects == null || allObjects.Count == 0) {
 			return;
 		}
 
-		// 1) Run through allObjects; instantiate a cell object based on said object class
-		for(int i = allObjects.Count-1; i >= 0; i--) {
-			LoadCellForData(allObjects[i]);
+		// 0) Remove all of the cells from the list transform temporarily
+		foreach (PUTableCell cell in savedCells) {
+			cell.puGameObject.rectTransform.SetParent (null, false);
 		}
 
-		//foreach (PUTableCell cell in allCells) {
+		// 1) Run through allObjects; instantiate a cell object based on said object class
+		float currentContentHeight = 0;
+		for(int i = allObjects.Count-1; i >= 0; i--) {
+			object myCellData = allObjects [i];
+
+			// Can we reuse an existing cell?
+			PUTableCell savedCell = null;
+			foreach (PUTableCell otherCell in savedCells) {
+				if (otherCell.cellData.Equals (myCellData)) {
+					savedCell = otherCell;
+					savedCells.Remove (otherCell);
+					break;
+				}
+			}
+
+			PUTableCell newCell = LoadCellForData(myCellData, savedCell, currentContentHeight);
+
+			currentContentHeight += newCell.puGameObject.rectTransform.rect.height;
+		}
+
 		for(int i = allCells.Count-1; i >= 0; i--){
 			PUTableCell cell = allCells [i];
 			if (cell.IsHeader ()) {
 				// TODO: Move me to the end of the stuff
+				cell.puGameObject.parent = this;
 				cell.puGameObject.gameObject.transform.SetParent (cell.puGameObject.gameObject.transform.parent, false);
+
+				PUTableHeaderScript headerScript = cell.puGameObject.rectTransform.GetComponent<PUTableHeaderScript> ();
+				headerScript.Start ();
 			}
+		}
+
+		// 2) Remove all previous content which have not reused
+		foreach (PUTableCell cell in savedCells) {
+			cell.puGameObject.unload ();
 		}
 
 		CalculateContentSize ();
 	}
-
 
 	public override void LateUpdate() {
 
@@ -320,14 +360,15 @@ public partial class PUTable : PUTableBase {
 		foreach (PUTableCell cell in allCells) {
 			cell.LateUpdate ();
 
-			cell.TestForVisibility ();
+			cell.animatedYOffset += (0.0f - cell.animatedYOffset) * 0.12346f;
+			cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (0, y + cell.animatedYOffset);
 
-			cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (0, y);
+			cell.TestForVisibility ();
 
 			y += cell.puGameObject.rectTransform.rect.height;
 		}
 
-		CalculateContentSize ();
+		//CalculateContentSize ();
 
 	}
 
