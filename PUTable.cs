@@ -138,6 +138,10 @@ public class PUTableCell {
 		// Subclasses can override to dynamically check their current size
 	}
 
+	public virtual void UpdateContents() {
+		// Subclasses can override to dynamically check their current size
+	}
+
 	public void TestForVisibility() {
 
 		// Note to self: cell are arranged from bottom of content object (pos 0) to the top (pos height)
@@ -233,6 +237,8 @@ public class PUTableCell {
 		cellTransform = cellGameObject.transform as RectTransform;
 		tableTransform = table.rectTransform;
 		tableContentTransform = table.contentObject.transform as RectTransform;
+
+		UpdateContents ();
 	}
 
 	public void unload() {
@@ -275,11 +281,15 @@ public partial class PUTable : PUTableBase {
 			cell = (Activator.CreateInstance (cellType)) as PUTableCell;
 			cell.LoadIntoPUGameObject (this, cellData);
 		} else {
+
+			cell.cellData = cellData;
 			cell.puGameObject.parent = this;
 			cell.puGameObject.rectTransform.SetParent (this.contentObject.transform, false);
 
+			cell.UpdateContents ();
+
 			if (cell.IsHeader () == false) {
-				cell.animatedYOffset = cell.puGameObject.rectTransform.anchoredPosition.y - currentContentHeight;
+				//cell.animatedYOffset = cell.puGameObject.rectTransform.anchoredPosition.y - currentContentHeight;
 			}
 		}
 
@@ -291,11 +301,17 @@ public partial class PUTable : PUTableBase {
 	}
 
 	public void ReloadTable() {
-	
+		RectTransform contentRectTransform = contentObject.transform as RectTransform;
+
+
 		if(gameObject.GetComponent<PUTableUpdateScript>() == null){
 			PUTableUpdateScript script = (PUTableUpdateScript)gameObject.AddComponent (typeof(PUTableUpdateScript));
 			script.table = this;
 		}
+
+
+		// -2) Calculate the old height, so we can subtract it from the new height and adjust the scrolling appropriately
+		float oldHeight = contentRectTransform.rect.height;
 
 
 		// -1) Save previous cells for reuse if we can...
@@ -350,6 +366,15 @@ public partial class PUTable : PUTableBase {
 		}
 
 		CalculateContentSize ();
+
+		// 3) offset the scroll based upon the change in table height
+		float newHeight = contentRectTransform.rect.height;
+
+		if (oldHeight > 1) {
+			Vector2 scroll = contentRectTransform.anchoredPosition;
+			scroll.y += newHeight - oldHeight;
+			contentRectTransform.anchoredPosition = scroll;
+		}
 	}
 
 	public override void LateUpdate() {

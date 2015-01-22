@@ -43,6 +43,7 @@ public partial class PURawImage : PURawImageBase {
 	}
 
 	public void LoadImageWithResourcePath(string p) {
+		resourcePath = p;
 		image.texture = PlanetUnityResourceCache.GetTexture (p);
 	}
 

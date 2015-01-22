@@ -19,7 +19,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class DetectTextClick : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter {
+public class DetectTextClick : MonoBehaviour, IPointerClickHandler, IPointerUpHandler, IPointerDownHandler, ICanvasRaycastFilter {
 
 	public PUText entity;
 
@@ -102,16 +102,24 @@ public class DetectTextClick : MonoBehaviour, IPointerClickHandler, ICanvasRayca
 	}
 
 	public bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera) {
-		return TestForHit(screenPoint, eventCamera, null);
+		bool b = TestForHit(screenPoint, eventCamera, null);
+		return b;
 	}
 		
 	public void OnPointerClick(PointerEventData eventData) {
 		TestForHit (Input.mousePosition, eventData.pressEventCamera, (linkText, clickedLinkID) => {
 			if(entity != null){
-				Debug.Log ("Link Clicked: " + linkText);
 				entity.LinkClicked (linkText, clickedLinkID);
 			}
 		});
+	}
+
+	public void OnPointerDown(PointerEventData data) {
+
+	}
+
+	public void OnPointerUp(PointerEventData data) {
+
 	}
 }
 
