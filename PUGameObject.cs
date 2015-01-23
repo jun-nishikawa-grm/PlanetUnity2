@@ -21,13 +21,16 @@ using UnityEngine.UI;
 
 
 
-public class MaskGraphic : Graphic {
+public class MaskGraphic : Graphic, ICanvasRaycastFilter {
 
 	public float insetTop = 0;
 	public float insetBottom = 0;
 	public float insetLeft = 0;
 	public float insetRight = 0;
 
+	public bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera) {
+		return true;
+	}
 
 	protected override void OnFillVBO (List<UIVertex> vbo)
 	{

@@ -70,12 +70,13 @@ public partial class PUCode : PUCodeBase {
 		GC.Collect();
 	}
 
-	public static IPUCode GetSingletonByName(string name){
-		IPUCode c = (IPUCode)instances [name];
+	public static T GetSingletonByName<T>(){
+		string name = typeof(T).FullName;
+		T c = (T)instances [name];
 		if (c != null) {
 			return c;
 		}
-		return (IPUCode)normalInstances [name];
+		return (T)normalInstances [name];
 	}
 
 	public override void gaxb_complete()

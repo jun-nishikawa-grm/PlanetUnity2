@@ -16,6 +16,19 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using UnityEngine.EventSystems;
+
+public class InvisibleHitGraphic : Graphic, ICanvasRaycastFilter {
+
+	protected override void OnFillVBO (List<UIVertex> vbo) {
+
+	}
+
+	public bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera) {
+		return true;
+	}
+}
 
 public partial class PUScrollRect : PUScrollRectBase {
 
@@ -114,6 +127,11 @@ public partial class PUScrollRect : PUScrollRectBase {
 		myRectTransform.pivot = new Vector2 (0, 1);
 		myRectTransform.anchorMin = myRectTransform.anchorMax = new Vector2 (0, 1);
 		myRectTransform.anchoredPosition = Vector2.zero;
+
+		if (gameObject.GetComponent<Graphic> () == null) {
+			gameObject.AddComponent<InvisibleHitGraphic> ();
+		}
+
 
 		base.gaxb_complete ();
 	}

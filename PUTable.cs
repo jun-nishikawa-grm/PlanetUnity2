@@ -281,7 +281,6 @@ public partial class PUTable : PUTableBase {
 			cell = (Activator.CreateInstance (cellType)) as PUTableCell;
 			cell.LoadIntoPUGameObject (this, cellData);
 		} else {
-
 			cell.cellData = cellData;
 			cell.puGameObject.parent = this;
 			cell.puGameObject.rectTransform.SetParent (this.contentObject.transform, false);
