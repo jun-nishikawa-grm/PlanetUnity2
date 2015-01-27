@@ -184,6 +184,10 @@ public partial class PUText : PUTextBase {
 			text.fontSize = (int)fontSize;
 		}
 
+		if (lineSpacing != null) {
+			text.lineSpacing = lineSpacing.Value;
+		}
+
 		if (fontStyle != null) {
 			if(fontStyle == PlanetUnity2.FontStyle.bold)
 				text.fontStyle = FontStyle.Bold;
