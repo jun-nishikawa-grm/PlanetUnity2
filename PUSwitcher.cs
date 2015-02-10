@@ -82,6 +82,8 @@ public partial class PUSwitcher : PUSwitcherBase {
 			child.gameObject.SetActive (false);
 			block();
 			#endif
+		} else {
+			block();
 		}
 	}
 
