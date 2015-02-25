@@ -36,6 +36,7 @@ public class PlanetUnityResourceCache
 
 		Texture2D t = Resources.Load (s) as Texture2D;
 		if (t == null) {
+			#if !UNITY_WEBPLAYER
 			if (s.EndsWith (".png") || s.EndsWith (".jpg")) {
 				string filePath = Application.streamingAssetsPath + "/" + s;
 				if (File.Exists(filePath))     {
@@ -43,6 +44,7 @@ public class PlanetUnityResourceCache
 					t.LoadImage(File.ReadAllBytes(filePath));
 				}
 			}
+			#endif
 
 			if (t == null) {
 				Debug.Log ("Unable to load streaming asset: " + Application.streamingAssetsPath + "/" + s);
