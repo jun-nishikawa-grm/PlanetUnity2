@@ -197,6 +197,25 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	#endregion
 
 
+	#region XML dynamic loading
+
+	static public PUGameObject LoadXML(string xmlPath, PUGameObject parent) {
+		PUGameObject loadedGameObject = (PUGameObject)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath(xmlPath), parent, null);
+
+		loadedGameObject.LoadIntoPUGameObject(parent);
+
+		#if UNITY_EDITOR
+		foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
+			t.gameObject.hideFlags = HideFlags.DontSave;
+		}
+		#endif
+
+		return loadedGameObject;
+	}
+
+	#endregion
+
+
 
 	// Use this for initialization
 	void Start () {

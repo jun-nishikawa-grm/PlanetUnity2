@@ -18,6 +18,7 @@ using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Reflection;
 
 
 
@@ -208,6 +209,14 @@ public partial class PUGameObject : PUGameObjectBase {
 		if (p != null) {
 			p.removeChild (this);
 		}
+
+		this.PerformOnChildren (val => {
+			MethodInfo method = val.GetType ().GetMethod ("gaxb_unload");
+			if (method != null) {
+				method.Invoke (val, null);
+			}
+			return true;
+		});
 
 		unloadAllChildren ();
 
