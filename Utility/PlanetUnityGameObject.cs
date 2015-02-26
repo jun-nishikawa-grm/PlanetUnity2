@@ -301,8 +301,15 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		}
 			
 		//UnityEngine.Debug.Log ("LoadCanvasXML");
+		PUGameObject rootObject = (PUGameObject)PlanetUnity2.loadXML (xml, planetUnityContainer, null);
 
-		canvas = (PUCanvas)PlanetUnity2.loadXML (xml, planetUnityContainer, null);
+		if (rootObject is PUCanvas) {
+			canvas = rootObject as PUCanvas;
+		} else {
+			canvas = new PUCanvas (PlanetUnity2.CanvasRenderMode.ScreenSpaceCamera, false);
+			canvas.LoadIntoGameObject(planetUnityContainer);
+			rootObject.LoadIntoPUGameObject(canvas);
+		}
 
 
 		// This is kind of silly, but we need to do this because we want the root canvas to match

@@ -337,6 +337,24 @@ public partial class PUGameObject : PUGameObjectBase {
 		gaxb_complete ();
 	}
 
+	public void LoadIntoGameObject(GameObject _parent)
+	{
+		// Sanity check to make sure this wasn't called multiple times
+		if (gameObject == null) {
+			gaxb_load (null, null, null);
+			gaxb_init ();
+			gaxb_final (null, null, null);
+		}
+
+		parent = _parent;
+
+		if (_parent != null) {
+			gameObject.transform.SetParent (_parent.transform, false);
+		}
+
+		gaxb_complete ();
+	}
+
 
 	public void CheckCanvasGroup () {
 		if (canvasGroup == null) {
