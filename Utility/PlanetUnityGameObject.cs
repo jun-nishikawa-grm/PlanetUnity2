@@ -202,8 +202,6 @@ public class PlanetUnityGameObject : MonoBehaviour {
 	static public PUGameObject LoadXML(string xmlPath, PUGameObject parent) {
 		PUGameObject loadedGameObject = (PUGameObject)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath(xmlPath), parent, null);
 
-		loadedGameObject.LoadIntoPUGameObject(parent);
-
 		#if UNITY_EDITOR
 		foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
 			t.gameObject.hideFlags = HideFlags.DontSave;
