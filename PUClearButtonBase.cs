@@ -15,31 +15,27 @@ using System.Collections.Generic;
 using System.Collections;
 
 
-public partial class PURawImage : PURawImageBase {
+public partial class PUClearButton : PUClearButtonBase {
 	
-	public PURawImage()
+	public PUClearButton()
 	{
 	}
 	
 	
-	public PURawImage(
-			string resourcePath,
-			Color color,
-			Vector4 uvRect ) : this()
+	public PUClearButton(
+			string onTouchUp,
+			string onTouchDown ) : this()
 	{
-		this.resourcePath = resourcePath;
+		this.onTouchUp = onTouchUp;
 
-		this.color = color;
-
-		this.uvRect = uvRect;
+		this.onTouchDown = onTouchDown;
 	}
 
 	
 	
-	public PURawImage(
-			string resourcePath,
-			Color color,
-			Vector4 uvRect,
+	public PUClearButton(
+			string onTouchUp,
+			string onTouchDown,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -65,11 +61,9 @@ public partial class PURawImage : PURawImageBase {
 			string tag5,
 			string tag6 ) : this()
 	{
-		this.resourcePath = resourcePath;
+		this.onTouchUp = onTouchUp;
 
-		this.color = color;
-
-		this.uvRect = uvRect;
+		this.onTouchDown = onTouchDown;
 
 		this.bounds = bounds;
 
@@ -126,7 +120,7 @@ public partial class PURawImage : PURawImageBase {
 
 
 
-public class PURawImageBase : PUGameObject {
+public class PUClearButtonBase : PUGameObject {
 
 
 	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
@@ -136,9 +130,8 @@ public class PURawImageBase : PUGameObject {
 
 
 	// XML Attributes
-	public string resourcePath;
-	public Color? color;
-	public Vector4? uvRect;
+	public string onTouchUp;
+	public string onTouchDown;
 
 
 
@@ -154,7 +147,7 @@ public class PURawImageBase : PUGameObject {
 	{
 		if(parent != null)
 		{
-			FieldInfo parentField = parent.GetType().GetField("RawImage");
+			FieldInfo parentField = parent.GetType().GetField("ClearButton");
 			List<object> parentChildren = null;
 			
 			if(parentField != null)
@@ -163,7 +156,7 @@ public class PURawImageBase : PUGameObject {
 			}
 			else
 			{
-				parentField = parent.GetType().GetField("RawImages");
+				parentField = parent.GetType().GetField("ClearButtons");
 				
 				if(parentField != null)
 				{
@@ -203,7 +196,7 @@ public class PURawImageBase : PUGameObject {
 		
 		parent = _parent;
 		
-		if(this.GetType() == typeof( PURawImage ))
+		if(this.GetType() == typeof( PUClearButton ))
 		{
 			gaxb_addToParent();
 		}
@@ -212,17 +205,13 @@ public class PURawImageBase : PUGameObject {
 		
 
 		string attr;
-		attr = reader.GetAttribute("resourcePath");
+		attr = reader.GetAttribute("onTouchUp");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { resourcePath = attr; } 
+		if(attr != null) { onTouchUp = attr; } 
 		
-		attr = reader.GetAttribute("color");
+		attr = reader.GetAttribute("onTouchDown");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { color = new Color().PUParse(attr); } 
-		
-		attr = reader.GetAttribute("uvRect");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { uvRect = new Vector4().PUParse(attr); } 
+		if(attr != null) { onTouchDown = attr; } 
 		
 
 	}
@@ -237,9 +226,8 @@ public class PURawImageBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(resourcePath != null) { sb.AppendFormat (" {0}=\"{1}\"", "resourcePath", resourcePath); }
-		if(color != null) { sb.AppendFormat (" {0}=\"{1}\"", "color", color.Value.PUToString()); }
-		if(uvRect != null) { sb.AppendFormat (" {0}=\"{1}\"", "uvRect", uvRect.Value.PUToString()); }
+		if(onTouchUp != null) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchUp", onTouchUp); }
+		if(onTouchDown != null) { sb.AppendFormat (" {0}=\"{1}\"", "onTouchDown", onTouchDown); }
 
 	}
 	
@@ -257,7 +245,7 @@ public class PURawImageBase : PUGameObject {
 			sb.AppendFormat ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		}
 		
-		sb.AppendFormat ("<{0}", "RawImage");
+		sb.AppendFormat ("<{0}", "ClearButton");
 		
 		if(xmlns != null) {
 			if(parent == null) {
@@ -284,7 +272,7 @@ public class PURawImageBase : PUGameObject {
 		}
 		else
 		{
-			sb.AppendFormat (">{0}</{1}>", seq.ToString(), "RawImage");
+			sb.AppendFormat (">{0}</{1}>", seq.ToString(), "ClearButton");
 		}
 	}
 }

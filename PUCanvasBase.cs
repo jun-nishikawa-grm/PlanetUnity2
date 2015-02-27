@@ -236,7 +236,7 @@ public class PUCanvasBase : PUGameObject {
 		base.gaxb_appendXMLAttributes(sb);
 
 		if(renderMode != null) { sb.AppendFormat (" {0}=\"{1}\"", "renderMode", (int)renderMode); }
-		if(pixelPerfect != false) { sb.AppendFormat (" {0}=\"{1}\"", "pixelPerfect", pixelPerfect.ToString().ToLower()); }
+		 sb.AppendFormat (" {0}=\"{1}\"", "pixelPerfect", pixelPerfect.ToString().ToLower()); 
 
 	}
 	
@@ -256,9 +256,16 @@ public class PUCanvasBase : PUGameObject {
 		
 		sb.AppendFormat ("<{0}", "Canvas");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);

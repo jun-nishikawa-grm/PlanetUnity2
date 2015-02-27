@@ -306,7 +306,7 @@ public class PUSliderBase : PUImage {
 		base.gaxb_appendXMLAttributes(sb);
 
 		if(handleResourcePath != null) { sb.AppendFormat (" {0}=\"{1}\"", "handleResourcePath", handleResourcePath); }
-		if(handleSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "handleSize", handleSize); }
+		if(handleSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "handleSize", handleSize.Value.PUToString()); }
 		if(fillResourcePath != null) { sb.AppendFormat (" {0}=\"{1}\"", "fillResourcePath", fillResourcePath); }
 		if(onValueChanged != null) { sb.AppendFormat (" {0}=\"{1}\"", "onValueChanged", onValueChanged); }
 		if(minValue != null) { sb.AppendFormat (" {0}=\"{1}\"", "minValue", minValue.Value.ToString ("0.##")); }
@@ -331,9 +331,16 @@ public class PUSliderBase : PUImage {
 		
 		sb.AppendFormat ("<{0}", "Slider");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);

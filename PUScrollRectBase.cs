@@ -263,9 +263,9 @@ public class PUScrollRectBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(inertia != false) { sb.AppendFormat (" {0}=\"{1}\"", "inertia", inertia.ToString().ToLower()); }
-		if(horizontal != false) { sb.AppendFormat (" {0}=\"{1}\"", "horizontal", horizontal.ToString().ToLower()); }
-		if(vertical != false) { sb.AppendFormat (" {0}=\"{1}\"", "vertical", vertical.ToString().ToLower()); }
+		 sb.AppendFormat (" {0}=\"{1}\"", "inertia", inertia.ToString().ToLower()); 
+		 sb.AppendFormat (" {0}=\"{1}\"", "horizontal", horizontal.ToString().ToLower()); 
+		 sb.AppendFormat (" {0}=\"{1}\"", "vertical", vertical.ToString().ToLower()); 
 		if(scrollWheelSensitivity != null) { sb.AppendFormat (" {0}=\"{1}\"", "scrollWheelSensitivity", scrollWheelSensitivity.Value.ToString ("0.##")); }
 
 	}
@@ -286,9 +286,16 @@ public class PUScrollRectBase : PUGameObject {
 		
 		sb.AppendFormat ("<{0}", "ScrollRect");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);

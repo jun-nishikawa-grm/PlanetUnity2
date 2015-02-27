@@ -214,9 +214,16 @@ public class PUSwitcherBase : PUGameObject {
 		
 		sb.AppendFormat ("<{0}", "Switcher");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);

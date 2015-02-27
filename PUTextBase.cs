@@ -318,11 +318,11 @@ public class PUTextBase : PUGameObject {
 		if(font != null) { sb.AppendFormat (" {0}=\"{1}\"", "font", font); }
 		if(fontSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "fontSize", fontSize); }
 		if(fontStyle != null) { sb.AppendFormat (" {0}=\"{1}\"", "fontStyle", (int)fontStyle); }
-		if(fontColor != null) { sb.AppendFormat (" {0}=\"{1}\"", "fontColor", fontColor); }
+		if(fontColor != null) { sb.AppendFormat (" {0}=\"{1}\"", "fontColor", fontColor.Value.PUToString()); }
 		if(lineSpacing != null) { sb.AppendFormat (" {0}=\"{1}\"", "lineSpacing", lineSpacing.Value.ToString ("0.##")); }
 		if(alignment != null) { sb.AppendFormat (" {0}=\"{1}\"", "alignment", (int)alignment); }
 		if(value != null) { sb.AppendFormat (" {0}=\"{1}\"", "value", value); }
-		if(bestFit != false) { sb.AppendFormat (" {0}=\"{1}\"", "bestFit", bestFit.ToString().ToLower()); }
+		 sb.AppendFormat (" {0}=\"{1}\"", "bestFit", bestFit.ToString().ToLower()); 
 		if(onLinkClick != null) { sb.AppendFormat (" {0}=\"{1}\"", "onLinkClick", onLinkClick); }
 
 	}
@@ -343,9 +343,16 @@ public class PUTextBase : PUGameObject {
 		
 		sb.AppendFormat ("<{0}", "Text");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);

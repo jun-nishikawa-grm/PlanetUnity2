@@ -248,10 +248,10 @@ public class PUMovieBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(hasAlpha != false) { sb.AppendFormat (" {0}=\"{1}\"", "hasAlpha", hasAlpha.ToString().ToLower()); }
-		if(looping != false) { sb.AppendFormat (" {0}=\"{1}\"", "looping", looping.ToString().ToLower()); }
+		 sb.AppendFormat (" {0}=\"{1}\"", "hasAlpha", hasAlpha.ToString().ToLower()); 
+		 sb.AppendFormat (" {0}=\"{1}\"", "looping", looping.ToString().ToLower()); 
 		if(resourcePath != null) { sb.AppendFormat (" {0}=\"{1}\"", "resourcePath", resourcePath); }
-		if(color != null) { sb.AppendFormat (" {0}=\"{1}\"", "color", color); }
+		if(color != null) { sb.AppendFormat (" {0}=\"{1}\"", "color", color.Value.PUToString()); }
 
 	}
 	
@@ -271,9 +271,16 @@ public class PUMovieBase : PUGameObject {
 		
 		sb.AppendFormat ("<{0}", "Movie");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);

@@ -215,7 +215,7 @@ public class PUColorBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(color != null) { sb.AppendFormat (" {0}=\"{1}\"", "color", color); }
+		if(color != null) { sb.AppendFormat (" {0}=\"{1}\"", "color", color.Value.PUToString()); }
 
 	}
 	
@@ -235,9 +235,16 @@ public class PUColorBase : PUGameObject {
 		
 		sb.AppendFormat ("<{0}", "Color");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);

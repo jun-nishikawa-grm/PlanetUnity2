@@ -356,21 +356,21 @@ public class PUGameObjectBase : PUObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(bounds != null) { sb.AppendFormat (" {0}=\"{1}\"", "bounds", bounds); }
-		if(position != null) { sb.AppendFormat (" {0}=\"{1}\"", "position", position); }
-		if(size != null) { sb.AppendFormat (" {0}=\"{1}\"", "size", size); }
-		if(rotation != null) { sb.AppendFormat (" {0}=\"{1}\"", "rotation", rotation); }
-		if(scale != null) { sb.AppendFormat (" {0}=\"{1}\"", "scale", scale); }
-		if(pivot != null) { sb.AppendFormat (" {0}=\"{1}\"", "pivot", pivot); }
+		if(bounds != null) { sb.AppendFormat (" {0}=\"{1}\"", "bounds", bounds.Value.PUToString()); }
+		if(position != null) { sb.AppendFormat (" {0}=\"{1}\"", "position", position.Value.PUToString()); }
+		if(size != null) { sb.AppendFormat (" {0}=\"{1}\"", "size", size.Value.PUToString()); }
+		if(rotation != null) { sb.AppendFormat (" {0}=\"{1}\"", "rotation", rotation.Value.PUToString()); }
+		if(scale != null) { sb.AppendFormat (" {0}=\"{1}\"", "scale", scale.Value.PUToString()); }
+		if(pivot != null) { sb.AppendFormat (" {0}=\"{1}\"", "pivot", pivot.Value.PUToString()); }
 		if(anchor != null) { sb.AppendFormat (" {0}=\"{1}\"", "anchor", anchor); }
-		if(active != false) { sb.AppendFormat (" {0}=\"{1}\"", "active", active.ToString().ToLower()); }
-		if(mask != false) { sb.AppendFormat (" {0}=\"{1}\"", "mask", mask.ToString().ToLower()); }
-		if(maskInset != null) { sb.AppendFormat (" {0}=\"{1}\"", "maskInset", maskInset); }
-		if(outline != false) { sb.AppendFormat (" {0}=\"{1}\"", "outline", outline.ToString().ToLower()); }
+		 sb.AppendFormat (" {0}=\"{1}\"", "active", active.ToString().ToLower()); 
+		 sb.AppendFormat (" {0}=\"{1}\"", "mask", mask.ToString().ToLower()); 
+		if(maskInset != null) { sb.AppendFormat (" {0}=\"{1}\"", "maskInset", maskInset.Value.PUToString()); }
+		 sb.AppendFormat (" {0}=\"{1}\"", "outline", outline.ToString().ToLower()); 
 		if(lastY != null) { sb.AppendFormat (" {0}=\"{1}\"", "lastY", lastY.Value.ToString ("0.##")); }
 		if(lastX != null) { sb.AppendFormat (" {0}=\"{1}\"", "lastX", lastX.Value.ToString ("0.##")); }
 		if(shader != null) { sb.AppendFormat (" {0}=\"{1}\"", "shader", shader); }
-		if(ignoreMouse != false) { sb.AppendFormat (" {0}=\"{1}\"", "ignoreMouse", ignoreMouse.ToString().ToLower()); }
+		 sb.AppendFormat (" {0}=\"{1}\"", "ignoreMouse", ignoreMouse.ToString().ToLower()); 
 		if(components != null) { sb.AppendFormat (" {0}=\"{1}\"", "components", components); }
 
 	}
@@ -391,9 +391,16 @@ public class PUGameObjectBase : PUObject {
 		
 		sb.AppendFormat ("<{0}", "GameObject");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);

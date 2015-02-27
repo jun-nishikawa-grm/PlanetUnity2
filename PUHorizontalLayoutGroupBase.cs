@@ -247,7 +247,7 @@ public class PUHorizontalLayoutGroupBase : PUGameObject {
 		base.gaxb_appendXMLAttributes(sb);
 
 		if(spacing != null) { sb.AppendFormat (" {0}=\"{1}\"", "spacing", spacing.Value.ToString ("0.##")); }
-		if(padding != null) { sb.AppendFormat (" {0}=\"{1}\"", "padding", padding); }
+		if(padding != null) { sb.AppendFormat (" {0}=\"{1}\"", "padding", padding.Value.PUToString()); }
 		if(childAlignment != null) { sb.AppendFormat (" {0}=\"{1}\"", "childAlignment", (int)childAlignment); }
 
 	}
@@ -268,9 +268,16 @@ public class PUHorizontalLayoutGroupBase : PUGameObject {
 		
 		sb.AppendFormat ("<{0}", "HorizontalLayoutGroup");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);

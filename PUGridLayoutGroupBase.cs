@@ -290,8 +290,8 @@ public class PUGridLayoutGroupBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
-		if(cellSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "cellSize", cellSize); }
-		if(spacing != null) { sb.AppendFormat (" {0}=\"{1}\"", "spacing", spacing); }
+		if(cellSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "cellSize", cellSize.Value.PUToString()); }
+		if(spacing != null) { sb.AppendFormat (" {0}=\"{1}\"", "spacing", spacing.Value.PUToString()); }
 		if(startCorner != null) { sb.AppendFormat (" {0}=\"{1}\"", "startCorner", (int)startCorner); }
 		if(startAxis != null) { sb.AppendFormat (" {0}=\"{1}\"", "startAxis", (int)startAxis); }
 		if(childAlignment != null) { sb.AppendFormat (" {0}=\"{1}\"", "childAlignment", (int)childAlignment); }
@@ -316,9 +316,16 @@ public class PUGridLayoutGroupBase : PUGameObject {
 		
 		sb.AppendFormat ("<{0}", "GridLayoutGroup");
 		
-		if(xmlns != null)
-		{
-			sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+		if(xmlns != null) {
+			if(parent == null) {
+				sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+			}else{
+				FieldInfo parentField = parent.GetType().GetField("xmlns");
+				if(parentField != null && xmlns.Equals(parentField.GetValue(parent)) == false)
+				{
+					sb.AppendFormat (" {0}=\"{1}\"", "xmlns", xmlns);
+				}
+			}
 		}
 		
 		gaxb_appendXMLAttributes(sb);
