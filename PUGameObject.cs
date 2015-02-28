@@ -383,13 +383,28 @@ public partial class PUGameObject : PUGameObjectBase {
 	}
 
 	public void ScheduleForLateUpdate() {
-		GameObjectLateUpdateScript script = gameObject.AddComponent<GameObjectLateUpdateScript> ();
-		script.entity = this;
+		if (gameObject != null) {
+			GameObjectLateUpdateScript script = gameObject.AddComponent<GameObjectLateUpdateScript> ();
+			script.entity = this;
+		}
 	}
 
 	public void ScheduleForUpdate() {
-		GameObjectUpdateScript script = gameObject.AddComponent<GameObjectUpdateScript> ();
-		script.entity = this;
+		if (gameObject != null) {
+			GameObjectUpdateScript script = gameObject.AddComponent<GameObjectUpdateScript> ();
+			script.entity = this;
+		}
+	}
+
+	public void ScheduleForStart() {
+		if (gameObject != null) {
+			GameObjectStartScript script = gameObject.AddComponent<GameObjectStartScript> ();
+			script.entity = this;
+		}
+	}
+
+	public virtual void Start() {
+
 	}
 
 	public virtual void Update() {
@@ -446,5 +461,13 @@ public class GameObjectUpdateScript : MonoBehaviour {
 
 	public void Update() {
 		entity.Update ();
+	}
+}
+
+public class GameObjectStartScript : MonoBehaviour {
+	public PUGameObject entity;
+
+	public void Start() {
+		entity.Start ();
 	}
 }
