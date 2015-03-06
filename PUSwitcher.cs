@@ -48,6 +48,7 @@ public partial class PUSwitcher : PUSwitcherBase {
 					child.gameObject.SetActive (false);
 				});
 			#else
+				child.canvasGroup.alpha = 0;
 				child.gameObject.SetActive (false);
 			#endif
 		}
@@ -63,6 +64,8 @@ public partial class PUSwitcher : PUSwitcherBase {
 				LeanTween.alpha (child.gameObject, 1.0f, 1.13f).setEase (LeanTweenType.easeOutCubic).setDelay(delay).setOnComplete (() => {
 
 				});
+			#else
+			child.canvasGroup.alpha = 1;
 			#endif
 		}
 	}
@@ -79,6 +82,7 @@ public partial class PUSwitcher : PUSwitcherBase {
 				block ();
 			});
 			#else
+			child.canvasGroup.alpha = 0;
 			child.gameObject.SetActive (false);
 			block();
 			#endif

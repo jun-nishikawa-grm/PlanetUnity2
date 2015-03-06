@@ -316,8 +316,8 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		if (canvas.renderMode == PlanetUnity2.CanvasRenderMode.ScreenSpaceOverlay)
 			rootCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 		if (canvas.renderMode == PlanetUnity2.CanvasRenderMode.ScreenSpaceCamera) {
-			rootCanvas.renderMode = RenderMode.ScreenSpaceCamera;
 			rootCanvas.worldCamera = Camera.main;
+			rootCanvas.renderMode = RenderMode.ScreenSpaceCamera;
 		}
 		if (canvas.renderMode == PlanetUnity2.CanvasRenderMode.WorldSpace)
 			rootCanvas.renderMode = RenderMode.WorldSpace;
