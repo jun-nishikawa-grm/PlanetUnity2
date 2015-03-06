@@ -55,6 +55,13 @@ public class Profile
         ++point.totalCalls;
         profiles[tag] = point;
     }
+
+	public static void Perform(string tag, Action block)
+	{
+		StartProfile (tag);
+		block ();
+		EndProfile (tag);
+	}
  
     public static void Reset()
     {
