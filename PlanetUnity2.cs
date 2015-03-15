@@ -133,6 +133,10 @@ public class PlanetUnity2 {
 		return Regex.Replace(xmlNamespace, "[^A-Z]", "")+name;
 	}
 	
+	static public T clone<T>(T root) {
+		return (T)loadXML( writeXML (root), null, null);
+	}
+	
 	static public string writeXML(object root) {
 		StringBuilder sb = new StringBuilder ();
 		MethodInfo mInfo = root.GetType().GetMethod("gaxb_appendXML");

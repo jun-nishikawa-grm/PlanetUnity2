@@ -209,7 +209,7 @@ public class PUObjectBase : IPlanetUnity2 {
 	public virtual void gaxb_appendXMLSequences(StringBuilder sb)
 	{
 
-		MethodInfo mInfo;		foreach(object o in children) { mInfo = o.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke (o, new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "any", o); } }
+		MethodInfo mInfo;		for(int i = 0; i < children.Count; i++) { object o = children[i]; mInfo = o.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke (o, new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "any", o); } }
 	
 
 	}

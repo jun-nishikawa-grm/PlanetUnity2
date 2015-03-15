@@ -65,7 +65,7 @@ for k,v in pairs(schema.simpleTypes) do
 			gaxb_print("\tpublic static class "..v.name.." {\n")
 			i = 0;
 			for k1,v1 in pairs(enums) do
-				gaxb_print("\t\tstatic public readonly int "..v1.attributes.value.." = "..i..";\n")
+				gaxb_print("\t\tpublic const int "..v1.attributes.value.." = "..i..";\n")
 				i = i + 1;
 			end
 			
@@ -106,6 +106,10 @@ end
 	static public string ConvertClassName(string xmlNamespace, string name)
 	{
 		return Regex.Replace(xmlNamespace, "[^A-Z]", "")+name;
+	}
+	
+	static public T clone<T>(T root) {
+		return (T)loadXML( writeXML (root), null, null);
 	}
 	
 	static public string writeXML(object root) {

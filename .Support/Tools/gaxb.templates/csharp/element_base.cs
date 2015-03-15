@@ -372,9 +372,9 @@ end
 			gaxb_print('\t\tMethodInfo mInfo;');
 			for k,v in pairs(this.sequences) do
 				if (v.name == "any") then
-					gaxb_print('\t\tforeach(object o in children) { mInfo = o.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke (o, new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "'..v.name..'", o); } }\n');
+					gaxb_print('\t\tfor(int i = 0; i < children.Count; i++) { object o = children[i]; mInfo = o.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke (o, new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "'..v.name..'", o); } }\n');
 				elseif(isPlural(v)) then
-					gaxb_print('\t\tforeach(object o in '..pluralName(v.name)..') { mInfo = o.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke (o, new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "'..v.name..'", o); } }\n');
+					gaxb_print('\t\tfor(int i = 0; i < '..pluralName(v.name)..'.Count; i++) { object o = '..pluralName(v.name)..'[i]; mInfo = o.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke (o, new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "'..v.name..'", o); } }\n');
 				else
 					gaxb_print('\t\tif('..v.name..' != null) {\n');
 					gaxb_print('\t\t\tmInfo = '..v.name..'.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke ('..v.name..', new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "'..v.name..'", '..v.name..'); } \n');

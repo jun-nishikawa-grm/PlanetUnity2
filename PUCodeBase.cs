@@ -245,7 +245,7 @@ public class PUCodeBase : PUGameObject {
 	{
 		base.gaxb_appendXMLSequences(sb);
 
-		MethodInfo mInfo;		foreach(object o in Notifications) { mInfo = o.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke (o, new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "Notification", o); } }
+		MethodInfo mInfo;		for(int i = 0; i < Notifications.Count; i++) { object o = Notifications[i]; mInfo = o.GetType().GetMethod("gaxb_appendXML"); if(mInfo != null) { mInfo.Invoke (o, new[] { sb }); } else { sb.AppendFormat ("<{0}>{1}</{0}>", "Notification", o); } }
 	
 
 	}
