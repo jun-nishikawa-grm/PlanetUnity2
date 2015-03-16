@@ -212,8 +212,10 @@ public static class Vector2Extension
 	public static Vector2 PUParse(this Vector2 v, string value)
 	{
 		var elements = value.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
-		v.x = float.Parse (elements [0], System.Globalization.CultureInfo.InvariantCulture);
-		v.y = float.Parse (elements [1], System.Globalization.CultureInfo.InvariantCulture);
+		if(elements.Length > 0)
+			v.x = float.Parse (elements [0], System.Globalization.CultureInfo.InvariantCulture);
+		if(elements.Length > 1)
+			v.y = float.Parse (elements [1], System.Globalization.CultureInfo.InvariantCulture);
 		return v;
 	}
 
@@ -269,9 +271,12 @@ public static class Vector3Extension
 	public static Vector3 PUParse(this Vector3 v, string value)
 	{
 		var elements = value.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
-		v.x = float.Parse (elements [0], System.Globalization.CultureInfo.InvariantCulture);
-		v.y = float.Parse (elements [1], System.Globalization.CultureInfo.InvariantCulture);
-		v.z = float.Parse (elements [2], System.Globalization.CultureInfo.InvariantCulture);
+		if(elements.Length > 0)
+			v.x = float.Parse (elements [0], System.Globalization.CultureInfo.InvariantCulture);
+		if(elements.Length > 1)
+			v.y = float.Parse (elements [1], System.Globalization.CultureInfo.InvariantCulture);
+		if(elements.Length > 2)
+			v.z = float.Parse (elements [2], System.Globalization.CultureInfo.InvariantCulture);
 		return v;
 	}
 
@@ -324,6 +329,16 @@ public static class Vector3Extension
 		v.y = y;
 		return v;
 	}
+
+	public static float SqrDistance(this Vector3 a, Vector3 b)
+	{
+		return (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y) + (b.z - a.z) * (b.z - a.z);
+	}
+
+	public static float AngleSignedBetweenVectors(this Vector3 a, Vector3 b)
+	{
+		return Vector3.Angle (a, b);
+	}
 }
 
 public static class Vector4Extension
@@ -331,10 +346,14 @@ public static class Vector4Extension
 	public static Vector4 PUParse(this Vector4 v, string value)
 	{
 		var elements = value.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
-		v.x = float.Parse (elements [0], System.Globalization.CultureInfo.InvariantCulture);
-		v.y = float.Parse (elements [1], System.Globalization.CultureInfo.InvariantCulture);
-		v.z = float.Parse (elements [2], System.Globalization.CultureInfo.InvariantCulture);
-		v.w = float.Parse (elements [3], System.Globalization.CultureInfo.InvariantCulture);
+		if(elements.Length > 0)
+			v.x = float.Parse (elements [0], System.Globalization.CultureInfo.InvariantCulture);
+		if(elements.Length > 1)
+			v.y = float.Parse (elements [1], System.Globalization.CultureInfo.InvariantCulture);
+		if(elements.Length > 2)
+			v.z = float.Parse (elements [2], System.Globalization.CultureInfo.InvariantCulture);
+		if(elements.Length > 3)
+			v.w = float.Parse (elements [3], System.Globalization.CultureInfo.InvariantCulture);
 		return v;
 	}
 
