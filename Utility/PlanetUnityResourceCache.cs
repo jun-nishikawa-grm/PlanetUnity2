@@ -20,6 +20,7 @@ using System.Threading;
 
 public class PlanetUnityResourceCache
 {
+	static private Dictionary<string, Sprite> sprites = new Dictionary<string, Sprite>();
 	static private Dictionary<string, string> stringFiles = new Dictionary<string, string>();
 	static private Dictionary<string, Font> fonts = new Dictionary<string, Font>();
 
@@ -55,19 +56,31 @@ public class PlanetUnityResourceCache
 		if (s == null) {
 			return null;
 		}
-			
+
 		string spriteName = Path.GetFileName (s);
 		string spriteKey = s + spriteName;
+		if (sprites.ContainsKey(spriteKey)) {
+			return sprites [spriteKey];
+		}
 
 		Sprite[] allSprites = Resources.LoadAll<Sprite>(Path.GetDirectoryName(s));
 
-		// This wasn't a sprite atlas, must be an individual texture
-		Texture2D texture = GetTexture(s);
-		if (texture == null) {
-			return null;
+		foreach(Sprite sprite in allSprites) {
+			sprites [s + sprite.name] = sprite;
 		}
-		Sprite sprite = Sprite.Create (texture, new Rect (0, 0, texture.width - 1, texture.height - 1), Vector2.zero);
-		return sprite;
+
+		if (sprites.ContainsKey(spriteKey) == false) {
+			// This wasn't a sprite atlas, must be an individual texture
+			Texture2D texture = GetTexture(s);
+			if (texture == null) {
+				return null;
+			}
+			Sprite sprite = Sprite.Create (texture, new Rect (0, 0, texture.width - 1, texture.height - 1), Vector2.zero);
+			sprites [spriteKey] = sprite;
+			return sprite;
+		}
+
+		return sprites [spriteKey];
 	}
 
 	static public string GetTextFile(string s)
