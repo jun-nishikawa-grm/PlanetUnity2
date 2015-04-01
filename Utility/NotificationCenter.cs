@@ -103,6 +103,12 @@ public class NotificationCenter
 		addObserverPrivate (observer, name, scope, null, methodName);
 	}
 
+	public static void addImmediateObserver(object observer, string name, object scope, Action<Hashtable, string> block) {
+		removeObserver (observer, name);
+		addObserverPrivate (observer, name, scope, block, null);
+		block (new Hashtable(), name);
+	}
+
 	public static void postNotification(object scope, string name, Hashtable args)
 	{
 		if (name == null) {

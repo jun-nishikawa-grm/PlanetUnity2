@@ -396,6 +396,13 @@ public partial class PUGameObject : PUGameObjectBase {
 		}
 	}
 
+	public void ScheduleForFixedUpdate() {
+		if (gameObject != null) {
+			GameObjectFixedUpdateScript script = gameObject.AddComponent<GameObjectFixedUpdateScript> ();
+			script.entity = this;
+		}
+	}
+
 	public void ScheduleForStart() {
 		if (gameObject != null) {
 			GameObjectStartScript script = gameObject.AddComponent<GameObjectStartScript> ();
@@ -408,6 +415,10 @@ public partial class PUGameObject : PUGameObjectBase {
 	}
 
 	public virtual void Update() {
+
+	}
+
+	public virtual void FixedUpdate() {
 
 	}
 
@@ -461,6 +472,14 @@ public class GameObjectUpdateScript : MonoBehaviour {
 
 	public void Update() {
 		entity.Update ();
+	}
+}
+
+public class GameObjectFixedUpdateScript : MonoBehaviour {
+	public PUGameObject entity;
+
+	public void FixedUpdate() {
+		entity.FixedUpdate ();
 	}
 }
 

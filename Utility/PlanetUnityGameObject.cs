@@ -23,6 +23,7 @@ using System.Reflection;
 using System.Diagnostics;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Threading;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -169,6 +170,27 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		return canvas;
 	}
 
+
+	public static bool IsMainThread()
+	{
+		if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA &&
+			!Thread.CurrentThread.IsBackground && !Thread.CurrentThread.IsThreadPoolThread && Thread.CurrentThread.IsAlive)
+		{
+			MethodInfo correctEntryMethod = Assembly.GetEntryAssembly().EntryPoint;
+			StackTrace trace = new StackTrace();
+			StackFrame[] frames = trace.GetFrames();
+			for (int i = frames.Length - 1; i >= 0; i--)
+			{
+				MethodBase method = frames[i].GetMethod();
+				if (correctEntryMethod == method)
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 
 	#region XML navigation
 
