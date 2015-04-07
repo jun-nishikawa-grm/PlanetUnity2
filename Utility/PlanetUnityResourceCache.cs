@@ -75,7 +75,7 @@ public class PlanetUnityResourceCache
 			if (texture == null) {
 				return null;
 			}
-			Sprite sprite = Sprite.Create (texture, new Rect (0, 0, texture.width - 1, texture.height - 1), Vector2.zero);
+			Sprite sprite = Sprite.Create (texture, new Rect (0, 0, texture.width, texture.height), Vector2.zero);
 			sprites [spriteKey] = sprite;
 			return sprite;
 		}

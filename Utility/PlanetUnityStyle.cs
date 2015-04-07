@@ -29,6 +29,22 @@ public class PlanetUnityStyle
 	private static Dictionary<string, string> languageToCode = null;
 	private static string languageCode = null;
 
+	public static int GlobalFontSize = CalculateBestFontSize();
+
+	static public int CalculateBestFontSize() {
+		if ((int)Screen.dpi == 0) {
+			return 32;
+		}
+
+		int fontSize = (int)(Screen.dpi / 12);
+
+		if (fontSize < 18) {
+			fontSize = 18;
+		}
+
+		return fontSize;
+	}
+
 	static public string LanguageCode()
 	{
 		if(languageCode == null) {
@@ -146,6 +162,13 @@ public class PlanetUnityStyle
 		sb.Replace ("\\n", "\n");
 		sb.Replace ("\\x0c", "\x0c");
 		sb.Replace ("\\x0b", "\x0b");
+
+		sb.Replace ("FONTSIZE_MINUS_8", (GlobalFontSize - 8).ToString());
+		sb.Replace ("FONTSIZE_MINUS_6", (GlobalFontSize - 6).ToString());
+		sb.Replace ("FONTSIZE_MINUS_4", (GlobalFontSize - 4).ToString());
+		sb.Replace ("FONTSIZE_MINUS_2", (GlobalFontSize - 2).ToString());
+		sb.Replace ("FONTSIZE", GlobalFontSize.ToString());
+
 		return sb.ToString ();
 	}
 
