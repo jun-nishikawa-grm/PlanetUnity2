@@ -49,6 +49,19 @@ public partial class PUObject : PUObjectBase {
 
 	}
 
+	public T GetChildWithTitle<T>(string childTitle){
+		object child = null;
+		this.PerformOnChildren (val => {
+			PUObject obj = (val as PUObject);
+			if(childTitle.Equals(obj.title)){
+				child = val;
+				return false;
+			}
+			return true;
+		});
+		return (T)child;
+	}
+
 	public bool PerformOnChildren(Func<object, bool> block)
 	{
 		for (int i = children.Count - 1; i >= 0; i--) {

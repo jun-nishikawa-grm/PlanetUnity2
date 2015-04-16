@@ -410,6 +410,13 @@ public partial class PUGameObject : PUGameObjectBase {
 		}
 	}
 
+	public void ScheduleForOnLevelWasLoaded() {
+		if (gameObject != null) {
+			GameObjectOnLevelWasLoadedScript script = gameObject.AddComponent<GameObjectOnLevelWasLoadedScript> ();
+			script.entity = this;
+		}
+	}
+
 	public virtual void Start() {
 
 	}
@@ -423,6 +430,10 @@ public partial class PUGameObject : PUGameObjectBase {
 	}
 
 	public virtual void LateUpdate() {
+
+	}
+
+	public virtual void OnLevelWasLoaded(int i) {
 
 	}
 
@@ -485,8 +496,28 @@ public class GameObjectFixedUpdateScript : MonoBehaviour {
 
 public class GameObjectStartScript : MonoBehaviour {
 	public PUGameObject entity;
+	private bool shouldRecallStart = false;
+
+	public void MarkForCallStart() {
+		shouldRecallStart = true;
+	}
+
+	public void Update() {
+		if (shouldRecallStart) {
+			entity.Start ();
+			shouldRecallStart = false;
+		}
+	}
 
 	public void Start() {
 		entity.Start ();
+	}
+}
+
+public class GameObjectOnLevelWasLoadedScript : MonoBehaviour {
+	public PUGameObject entity;
+
+	public void OnLevelWasLoaded(int i) {
+		entity.OnLevelWasLoaded (i);
 	}
 }

@@ -81,6 +81,8 @@ public partial class PUCode : PUCodeBase {
 
 	public override void gaxb_complete()
 	{
+		ScheduleForStart ();
+
 		bool shouldCallSingletonStart = false;
 		// If we're in live editor mode, we don't want to load controllers
 		if (Application.isPlaying == false) {
@@ -177,12 +179,17 @@ public partial class PUCode : PUCodeBase {
 		}
 
 		if (shouldCallSingletonStart) {
-			if (controller is IPUSingletonCode) {
-				((IPUSingletonCode)controller).SingletonStart ();
-			}
+			GameObject singletonGameObject = GameObject.Find (_class);
+			singletonGameObject.SendMessage("MarkForCallStart");
 		}
 
 		base.gaxb_complete ();
+	}
+
+	public override void Start() {
+		if (controller is IPUSingletonCode) {
+			((IPUSingletonCode)controller).SingletonStart ();
+		}
 	}
 
 }
