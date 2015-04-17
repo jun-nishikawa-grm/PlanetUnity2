@@ -19,6 +19,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Reflection;
+using System;
 
 
 
@@ -192,7 +193,7 @@ public partial class PUGameObject : PUGameObjectBase {
 		if(components != null){
 			string[] allComponentNames = components.Split (',');
 			foreach (string componentName in allComponentNames) {
-				gameObject.AddComponent (componentName);
+				gameObject.AddComponent (Type.GetType(componentName));
 			}
 		}
 
