@@ -19,14 +19,9 @@ public class MathR
 
 	public static float CatmullRomSpline(float x, float v0, float v1, float v2, float v3)
 	{
-		const float M11	= 0.0f;
 		const float M12	= 1.0f;
-		const float M13	= 0.0f;
-		const float M14	= 0.0f;
 		const float M21	= -0.5f;
-		const float M22	= 0.0f;
 		const float M23	= 0.5f;
-		const float M24	= 0.0f;
 		const float M31	= 1.0f;
 		const float M32	= -2.5f;
 		const float M33	= 2.0f;
@@ -181,7 +176,6 @@ public static class GameObjectExtension
 	public static void FillParentUI(this GameObject source)
 	{
 		RectTransform myTransform = (RectTransform)source.transform;
-		RectTransform parentTransform = (RectTransform)source.transform.parent;
 
 		myTransform.pivot = new Vector2(0.5f,0.5f);
 		myTransform.anchorMin = Vector2.zero;

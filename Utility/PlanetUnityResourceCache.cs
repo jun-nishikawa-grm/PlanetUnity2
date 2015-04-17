@@ -32,7 +32,7 @@ public class PlanetUnityResourceCache
 
 		Texture2D t = Resources.Load (s) as Texture2D;
 		if (t == null) {
-			#if !UNITY_WEBPLAYER
+			#if (UNITY_WEBPLAYER == false && UNITY_WEBGL == false)
 			if (s.EndsWith (".png") || s.EndsWith (".jpg")) {
 				string filePath = Application.streamingAssetsPath + "/" + s;
 				if (File.Exists(filePath))     {
