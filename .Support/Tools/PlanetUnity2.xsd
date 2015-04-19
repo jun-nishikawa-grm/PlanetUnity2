@@ -127,6 +127,7 @@
 	<complexType name="Switcher">
 		<complexContent>
 			<extension base="planet:GameObject">
+				<attribute name="currentIndex" type="int" use="optional" default="0" />
 			</extension>
 		</complexContent>
 	</complexType>

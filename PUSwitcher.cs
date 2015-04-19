@@ -9,8 +9,6 @@ public partial class PUSwitcher : PUSwitcherBase {
 	private Action<PUGameObject, int> ShowAnimation;
 	private Action<PUGameObject, int, Action> CloseAnimation;
 
-	private int currentIndex = -1;
-
 	public override void gaxb_complete() {
 
 		HideAnimation = (x, idx) => {
@@ -37,7 +35,9 @@ public partial class PUSwitcher : PUSwitcherBase {
 			child.gameObject.SetActive (false);
 		}
 
-		SwitchTo (0);
+		int initialIndex = currentIndex.Value;
+		currentIndex = -1;
+		SwitchTo (initialIndex);
 	}
 
 	public void SetAnimationBlocks(Action<PUGameObject, int> hide, Action<PUGameObject, int> show, Action<PUGameObject, int, Action> close){
@@ -47,17 +47,17 @@ public partial class PUSwitcher : PUSwitcherBase {
 	}
 
 	public int CurrentIndex() {
-		return currentIndex;
+		return currentIndex.Value;
 	}
 
 	public void SwitchTo(int i) {
-		if (currentIndex == i) {
+		if (currentIndex.Value == i) {
 			return;
 		}
 
-		HideIndex (currentIndex, 0.0f);
+		HideIndex (currentIndex.Value, 0.0f);
 		currentIndex = i;
-		ShowIndex (currentIndex, 0.15f);
+		ShowIndex (currentIndex.Value, 0.15f);
 	}
 
 	private void HideIndex(int idx, float delay) {
@@ -75,9 +75,9 @@ public partial class PUSwitcher : PUSwitcherBase {
 	}
 
 	public void Close(Action block) {
-		if (currentIndex >= 0 && currentIndex < children.Count) {
-			PUGameObject child = children [currentIndex] as PUGameObject;
-			CloseAnimation (child, currentIndex, block);
+		if (currentIndex.Value >= 0 && currentIndex.Value < children.Count) {
+			PUGameObject child = children [currentIndex.Value] as PUGameObject;
+			CloseAnimation (child, currentIndex.Value, block);
 		} else {
 			block();
 		}

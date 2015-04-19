@@ -19,11 +19,24 @@ public partial class PUSwitcher : PUSwitcherBase {
 	
 	public PUSwitcher()
 	{
+		string attr;
+
+		attr = "0";
+		if(attr != null) { currentIndex = int.Parse(attr); } 
+
 	}
 	
 	
+	public PUSwitcher(
+			int currentIndex ) : this()
+	{
+		this.currentIndex = currentIndex;
+	}
+
+	
 	
 	public PUSwitcher(
+			int currentIndex,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -49,6 +62,8 @@ public partial class PUSwitcher : PUSwitcherBase {
 			string tag5,
 			string tag6 ) : this()
 	{
+		this.currentIndex = currentIndex;
+
 		this.bounds = bounds;
 
 		this.position = position;
@@ -107,10 +122,14 @@ public partial class PUSwitcher : PUSwitcherBase {
 public class PUSwitcherBase : PUGameObject {
 
 
+	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
+	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
+
 
 
 
 	// XML Attributes
+	public int? currentIndex;
 
 
 
@@ -183,6 +202,13 @@ public class PUSwitcherBase : PUGameObject {
 		xmlns = reader.GetAttribute("xmlns");
 		
 
+		string attr;
+		attr = reader.GetAttribute("currentIndex");
+		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr == null) { attr = "0"; }
+		if(attr != null) { currentIndex = int.Parse(attr); } 
+		
+
 	}
 	
 	
@@ -195,6 +221,7 @@ public class PUSwitcherBase : PUGameObject {
 	{
 		base.gaxb_appendXMLAttributes(sb);
 
+		if(currentIndex != null) { sb.AppendFormat (" {0}=\"{1}\"", "currentIndex", currentIndex); }
 
 	}
 	
