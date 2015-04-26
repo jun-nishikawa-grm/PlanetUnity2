@@ -134,7 +134,11 @@ public partial class PUCode : PUCodeBase {
 								field = controller.GetType ().GetField (oo.title);
 								if (field != null)
 								{
-									field.SetValue (controller, oo);
+									try{
+										field.SetValue (controller, oo);
+									}catch(Exception e) {
+										UnityEngine.Debug.Log ("Controller error: " + e);
+									}
 								}
 							}
 							return true;
