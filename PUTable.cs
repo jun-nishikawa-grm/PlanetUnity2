@@ -364,6 +364,13 @@ public partial class PUTable : PUTableBase {
 			cell.puGameObject.unload ();
 		}
 
+		// This one will set the content size of the scrolling axis
+		CalculateContentSize ();
+
+		// This will layout our cells
+		LateUpdate ();
+
+		// This will get the actual content size after the cells are successfully laid out
 		CalculateContentSize ();
 
 		// 3) offset the scroll based upon the change in table height
@@ -377,19 +384,30 @@ public partial class PUTable : PUTableBase {
 	}
 
 	public override void LateUpdate() {
+		RectTransform contentRectTransform = contentObject.transform as RectTransform;
 
 		float y = 0;
+		float nextY = 0;
+		float x = 0;
 
 		// 0) Remove all previous content
 		foreach (PUTableCell cell in allCells) {
 			cell.LateUpdate ();
 
+			// Can I fit on the current line?
+			if(x + cell.puGameObject.rectTransform.rect.width > contentRectTransform.rect.width){
+				x = 0;
+				y = nextY;
+			}
+
 			cell.animatedYOffset += (0.0f - cell.animatedYOffset) * 0.12346f;
-			cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (0, y + cell.animatedYOffset);
+			cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (x, y + cell.animatedYOffset);
 
 			cell.TestForVisibility ();
 
-			y += cell.puGameObject.rectTransform.rect.height;
+
+			x += cell.puGameObject.rectTransform.rect.width;
+			nextY = y + cell.puGameObject.rectTransform.rect.height;
 		}
 
 		//CalculateContentSize ();
