@@ -395,7 +395,8 @@ public partial class PUTable : PUTableBase {
 			cell.LateUpdate ();
 
 			// Can I fit on the current line?
-			if(x + cell.puGameObject.rectTransform.rect.width > contentRectTransform.rect.width){
+			if(	x + cell.puGameObject.rectTransform.rect.width > contentRectTransform.rect.width ||
+			   	cell.IsHeader()){
 				x = 0;
 				y = nextY;
 			}
@@ -411,6 +412,16 @@ public partial class PUTable : PUTableBase {
 		}
 
 		//CalculateContentSize ();
+
+	}
+
+	public override void gaxb_complete() {
+
+		base.gaxb_complete ();
+
+		NotificationCenter.addObserver (this, "OnAspectChanged", null, (args, name) => {
+			ReloadTable();
+		});
 
 	}
 
