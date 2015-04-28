@@ -223,9 +223,11 @@ public partial class PUGameObject : PUGameObjectBase {
 
 		NotificationCenter.removeObserver (this);
 
-		gameObject.SetActive (false);
-		GameObject.Destroy (gameObject);
-		gameObject = null;
+		if (gameObject != null) {
+			gameObject.SetActive (false);
+			GameObject.Destroy (gameObject);
+			gameObject = null;
+		}
 		rectTransform = null;
 	}
 
