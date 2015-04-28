@@ -98,6 +98,19 @@ namespace Mathos.Parser
 
                 LocalFunctions.Add("pow", x => (decimal)Math.Pow((double)x[0], (double)x[1]));
 
+
+				LocalFunctions.Add("step", (x) => {
+					// the step function divide the first number (total width) by the second number (min width)
+					// example: step(1024, 200) would result in 204.8
+					// example: step(1024, 300) would result in 341.3
+
+					return (decimal)Math.Floor((double)x[0] / Math.Floor((double)x[0]/(double)x[1]));
+				});
+
+				LocalFunctions.Add("max", x => (decimal)Math.Max((double)x[0], (double)x[1]));
+				LocalFunctions.Add("min", x => (decimal)Math.Min((double)x[0], (double)x[1]));
+
+
                 LocalFunctions.Add("exp", x => (decimal)Math.Exp((double)x[0]));
                 //LocalFunctions.Add("log", x => (decimal)Math.Log((double)x[0]));
                 //LocalFunctions.Add("log10", x => (decimal)Math.Log10((double)x[0]));

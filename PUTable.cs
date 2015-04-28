@@ -299,7 +299,7 @@ public partial class PUTable : PUTableBase {
 		return cell;
 	}
 
-	public void ReloadTable() {
+	public void ReloadTable(bool reuseCells = true) {
 		RectTransform contentRectTransform = contentObject.transform as RectTransform;
 
 
@@ -307,6 +307,9 @@ public partial class PUTable : PUTableBase {
 			PUTableUpdateScript script = (PUTableUpdateScript)gameObject.AddComponent (typeof(PUTableUpdateScript));
 			script.table = this;
 		}
+
+		// This one will set the content size of the scrolling axis
+		CalculateContentSize ();
 
 
 		// -2) Calculate the old height, so we can subtract it from the new height and adjust the scrolling appropriately
@@ -334,11 +337,13 @@ public partial class PUTable : PUTableBase {
 
 			// Can we reuse an existing cell?
 			PUTableCell savedCell = null;
-			foreach (PUTableCell otherCell in savedCells) {
-				if (otherCell.cellData.Equals (myCellData)) {
-					savedCell = otherCell;
-					savedCells.Remove (otherCell);
-					break;
+			if (reuseCells) {
+				foreach (PUTableCell otherCell in savedCells) {
+					if (otherCell.cellData.Equals (myCellData)) {
+						savedCell = otherCell;
+						savedCells.Remove (otherCell);
+						break;
+					}
 				}
 			}
 
@@ -359,11 +364,6 @@ public partial class PUTable : PUTableBase {
 			}
 		}
 
-		// 2) Remove all previous content which have not reused
-		foreach (PUTableCell cell in savedCells) {
-			cell.puGameObject.unload ();
-		}
-
 		// This one will set the content size of the scrolling axis
 		CalculateContentSize ();
 
@@ -381,6 +381,11 @@ public partial class PUTable : PUTableBase {
 			scroll.y += newHeight - oldHeight;
 			contentRectTransform.anchoredPosition = scroll;
 		}
+
+		// 2) Remove all previous content which have not reused
+		foreach (PUTableCell cell in savedCells) {
+			cell.unload ();
+		}
 	}
 
 	public override void LateUpdate() {
@@ -395,7 +400,7 @@ public partial class PUTable : PUTableBase {
 			cell.LateUpdate ();
 
 			// Can I fit on the current line?
-			if(	x + cell.puGameObject.rectTransform.rect.width > contentRectTransform.rect.width ||
+			if(	x + cell.puGameObject.rectTransform.rect.width > (contentRectTransform.rect.width+1) ||
 			   	cell.IsHeader()){
 				x = 0;
 				y = nextY;
@@ -420,7 +425,7 @@ public partial class PUTable : PUTableBase {
 		base.gaxb_complete ();
 
 		NotificationCenter.addObserver (this, "OnAspectChanged", null, (args, name) => {
-			ReloadTable();
+			ReloadTable(false);
 		});
 
 	}

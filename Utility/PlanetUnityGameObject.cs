@@ -24,6 +24,7 @@ using System.Diagnostics;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -61,7 +62,9 @@ public class PlanetUnityOverride {
 
 			string evalListString = s.Substring(6, s.Length-7);
 
-			var parts = evalListString.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
+			var parts = Regex.Split (evalListString, ",(?![^(]*\\))");
+
+			//var parts = evalListString.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
 			string[] results = new string[12];
 			int nresults = 0;
 
