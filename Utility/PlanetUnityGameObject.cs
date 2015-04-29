@@ -236,6 +236,18 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		return loadedGameObject;
 	}
 
+	static public PUGameObject LoadXML(string xmlPath, GameObject parent) {
+		PUGameObject loadedGameObject = (PUGameObject)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath(xmlPath), parent, null);
+
+		#if UNITY_EDITOR
+		foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
+			t.gameObject.hideFlags = HideFlags.DontSave;
+		}
+		#endif
+
+		return loadedGameObject;
+	}
+
 	#endregion
 
 
