@@ -332,7 +332,7 @@ public partial class PUTable : PUTableBase {
 
 		// 1) Run through allObjects; instantiate a cell object based on said object class
 		float currentContentHeight = 0;
-		for(int i = allObjects.Count-1; i >= 0; i--) {
+		for(int i = 0; i < allObjects.Count; i++) {
 			object myCellData = allObjects [i];
 
 			// Can we reuse an existing cell?
@@ -352,7 +352,7 @@ public partial class PUTable : PUTableBase {
 			currentContentHeight += newCell.puGameObject.rectTransform.rect.height;
 		}
 
-		for(int i = allCells.Count-1; i >= 0; i--){
+		for(int i = 0; i < allObjects.Count; i++) {
 			PUTableCell cell = allCells [i];
 			if (cell.IsHeader ()) {
 				// TODO: Move me to the end of the stuff
@@ -409,11 +409,17 @@ public partial class PUTable : PUTableBase {
 			cell.animatedYOffset += (0.0f - cell.animatedYOffset) * 0.12346f;
 			cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (x, y + cell.animatedYOffset);
 
-			cell.TestForVisibility ();
-
 
 			x += cell.puGameObject.rectTransform.rect.width;
 			nextY = y + cell.puGameObject.rectTransform.rect.height;
+		}
+
+		foreach (PUTableCell cell in allCells) {
+			Vector2 pos = cell.puGameObject.rectTransform.anchoredPosition;
+			pos.y = y - pos.y;
+			cell.puGameObject.rectTransform.anchoredPosition = pos;
+
+			cell.TestForVisibility ();
 		}
 
 		//CalculateContentSize ();
