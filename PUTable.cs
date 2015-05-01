@@ -414,9 +414,16 @@ public partial class PUTable : PUTableBase {
 			nextY = y + cell.puGameObject.rectTransform.rect.height;
 		}
 
+		// y now equates to the content height
+		float height = y;
+		float currentY = 0;
 		foreach (PUTableCell cell in allCells) {
 			Vector2 pos = cell.puGameObject.rectTransform.anchoredPosition;
-			pos.y = y - pos.y;
+			if (pos.y > currentY) {
+				height -= cell.puGameObject.rectTransform.rect.height;
+				currentY = pos.y;
+			}
+			pos.y = height;
 			cell.puGameObject.rectTransform.anchoredPosition = pos;
 
 			cell.TestForVisibility ();
