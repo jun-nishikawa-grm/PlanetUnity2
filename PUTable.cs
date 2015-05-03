@@ -339,7 +339,7 @@ public partial class PUTable : PUTableBase {
 			PUTableCell savedCell = null;
 			if (reuseCells) {
 				foreach (PUTableCell otherCell in savedCells) {
-					if (otherCell.cellData.Equals (myCellData)) {
+					if (otherCell.IsHeader() == false && otherCell.cellData.Equals (myCellData)) {
 						savedCell = otherCell;
 						savedCells.Remove (otherCell);
 						break;
@@ -407,23 +407,19 @@ public partial class PUTable : PUTableBase {
 			}
 
 			cell.animatedYOffset += (0.0f - cell.animatedYOffset) * 0.12346f;
-			cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (x, y + cell.animatedYOffset);
+			cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (x, y - cell.animatedYOffset - cell.puGameObject.rectTransform.rect.height);
 
 
 			x += cell.puGameObject.rectTransform.rect.width;
-			nextY = y + cell.puGameObject.rectTransform.rect.height;
+			nextY = y - cell.puGameObject.rectTransform.rect.height;
 		}
 
 		// y now equates to the content height
-		float height = y;
+		float height = -nextY;
 		float currentY = 0;
 		foreach (PUTableCell cell in allCells) {
 			Vector2 pos = cell.puGameObject.rectTransform.anchoredPosition;
-			if (pos.y > currentY) {
-				height -= cell.puGameObject.rectTransform.rect.height;
-				currentY = pos.y;
-			}
-			pos.y = height;
+			pos.y = pos.y + height;
 			cell.puGameObject.rectTransform.anchoredPosition = pos;
 
 			cell.TestForVisibility ();

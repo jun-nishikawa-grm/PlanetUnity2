@@ -228,8 +228,10 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		PUGameObject loadedGameObject = (PUGameObject)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath(xmlPath), parent, null);
 
 		#if UNITY_EDITOR
-		foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
-			t.gameObject.hideFlags = HideFlags.DontSave;
+		if(planetUnityContainer != null){
+			foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
+				t.gameObject.hideFlags = HideFlags.DontSave;
+			}
 		}
 		#endif
 
@@ -240,8 +242,10 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		PUGameObject loadedGameObject = (PUGameObject)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath(xmlPath), parent, null);
 
 		#if UNITY_EDITOR
-		foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
-			t.gameObject.hideFlags = HideFlags.DontSave;
+		if(planetUnityContainer != null){
+			foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
+				t.gameObject.hideFlags = HideFlags.DontSave;
+			}
 		}
 		#endif
 
@@ -362,8 +366,10 @@ public class PlanetUnityGameObject : MonoBehaviour {
 		// End silly section
 
 		#if UNITY_EDITOR
-		foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
-			t.gameObject.hideFlags = HideFlags.DontSave;
+		if(planetUnityContainer != null){
+			foreach (Transform t in planetUnityContainer.GetComponentsInChildren<Transform>()) {
+				t.gameObject.hideFlags = HideFlags.DontSave;
+			}
 		}
 		#endif
 
