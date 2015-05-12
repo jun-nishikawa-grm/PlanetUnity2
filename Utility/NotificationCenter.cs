@@ -17,6 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System;
+using System.Diagnostics;
 
 public class NotificationObserver
 {
@@ -77,6 +78,14 @@ public class NotificationCenter
 			scope = globalScope;
 		}
 
+		if (name.StartsWith ("GLOBAL::", StringComparison.OrdinalIgnoreCase)) {
+			scope = globalScope;
+			name = name.Substring (8);
+			if (methodName.StartsWith ("GLOBAL::", StringComparison.OrdinalIgnoreCase)) {
+				methodName = methodName.Substring (8);
+			}
+		}
+
 		NotificationObserver obv = new NotificationObserver ();
 		obv.name = name;
 		obv.block = block;
@@ -117,6 +126,11 @@ public class NotificationCenter
 
 		if (scope == null) {
 			scope = globalScope;
+		}
+
+		if (name.StartsWith ("GLOBAL::", StringComparison.OrdinalIgnoreCase)) {
+			scope = globalScope;
+			name = name.Substring (8);
 		}
 
 		List<NotificationObserver> list;

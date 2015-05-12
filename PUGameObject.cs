@@ -250,7 +250,7 @@ public partial class PUGameObject : PUGameObjectBase {
 			rectTransform.localScale = scale.Value;
 			rectTransform.localEulerAngles = rotation.Value;
 
-			RectTransform parentTransform = (RectTransform)gameObject.transform.parent;
+			RectTransform parentTransform = gameObject.transform.parent as RectTransform;
 			float parentW = Screen.width;
 			float parentH = Screen.height;
 
@@ -266,13 +266,13 @@ public partial class PUGameObject : PUGameObjectBase {
 						parentH = parentTransform.rect.height;
 					}
 				}
+			}
 
-				if ((int)size.Value.x == 0) {
-					size = new Vector2 (parentW, size.Value.y);
-				}
-				if ((int)size.Value.y == 0) {
-					size = new Vector2 (size.Value.x, parentH);
-				}
+			if ((int)size.Value.x == 0) {
+				size = new Vector2 (parentW, size.Value.y);
+			}
+			if ((int)size.Value.y == 0) {
+				size = new Vector2 (size.Value.x, parentH);
 			}
 
 			rectTransform.sizeDelta = size.Value;

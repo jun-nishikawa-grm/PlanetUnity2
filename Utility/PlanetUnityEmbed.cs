@@ -19,10 +19,16 @@ public class PlanetUnityEmbed : MonoBehaviour {
 
 	public string xmlPath;
 
+	private PUGameObject rootObject;
+
 	public void Start() {
 		if (xmlPath != null) {
-			PlanetUnityGameObject.LoadXML (xmlPath, gameObject);
+			rootObject = PlanetUnityGameObject.LoadXML (xmlPath, gameObject);
 		}
+	}
+
+	public void OnDestroy() {
+		rootObject.unload ();
 	}
 	
 }
