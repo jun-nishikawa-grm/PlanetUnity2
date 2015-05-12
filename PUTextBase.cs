@@ -22,7 +22,7 @@ public partial class PUText : PUTextBase {
 		string attr;
 
 		attr = "12";
-		if(attr != null) { fontSize = int.Parse(attr); } 
+		if(attr != null) { fontSize = (int)float.Parse(attr); } 
 		attr = "0,0,0,1";
 		if(attr != null) { fontColor = new Color().PUParse(attr); } 
 		attr = "middleCenter";
@@ -270,7 +270,7 @@ public class PUTextBase : PUGameObject {
 		attr = reader.GetAttribute("fontSize");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "12"; }
-		if(attr != null) { fontSize = int.Parse(attr); } 
+		if(attr != null) { fontSize = (int)float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("fontStyle");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }

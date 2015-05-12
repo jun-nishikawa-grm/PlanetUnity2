@@ -65,7 +65,7 @@ public partial class <%= FULL_NAME_CAMEL %> : <%= FULL_NAME_CAMEL %>Base {
 						if (isEnumForItem(v)) then
 							gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = "..v.type.namespace.."."..v.type.name..".PUParse(attr); } \n")
 						else
-							gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = int.Parse(attr); } \n")
+							gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = (int)float.Parse(attr); } \n")
 						end
 					elseif (typeNameForItem(v)=="long") then
 						gaxb_print("\t\tif(attr != null) { "..cleanedName(v.name).." = long.Parse(attr); } \n")
@@ -294,7 +294,7 @@ end
 				if (isEnumForItem(v)) then
 					gaxb_print("\t\tif(attr != null) { "..v.name.." = "..v.type.namespace.."."..v.type.name..".PUParse(attr); } \n")
 				else
-					gaxb_print("\t\tif(attr != null) { "..v.name.." = int.Parse(attr); } \n")
+					gaxb_print("\t\tif(attr != null) { "..v.name.." = (int)float.Parse(attr); } \n")
 				end
 			elseif (typeNameForItem(v)=="long") then
 				gaxb_print("\t\tif(attr != null) { "..v.name.." = long.Parse(attr); } \n")

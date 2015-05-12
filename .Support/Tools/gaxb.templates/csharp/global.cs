@@ -77,7 +77,7 @@ for k,v in pairs(schema.simpleTypes) do
 			gaxb_print(' };\n')
 			
 			gaxb_print('\t\t\tint idx = Array.IndexOf(parts, s);\n')
-			gaxb_print('\t\t\tif(idx == -1) { idx = int.Parse(s); }\n')
+			gaxb_print('\t\t\tif(idx == -1) { idx = (int)float.Parse(s); }\n')
 			
 			gaxb_print('\t\t\treturn idx;\n\t\t}\n')
 			

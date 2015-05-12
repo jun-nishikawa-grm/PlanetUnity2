@@ -271,11 +271,11 @@ public class PUGridLayoutGroupBase : PUGameObject {
 		
 		attr = reader.GetAttribute("fixedRows");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { fixedRows = int.Parse(attr); } 
+		if(attr != null) { fixedRows = (int)float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("fixedColumns");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { fixedColumns = int.Parse(attr); } 
+		if(attr != null) { fixedColumns = (int)float.Parse(attr); } 
 		
 
 	}

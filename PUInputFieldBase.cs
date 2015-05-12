@@ -273,7 +273,7 @@ public class PUInputFieldBase : PUText {
 		
 		attr = reader.GetAttribute("limit");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
-		if(attr != null) { limit = int.Parse(attr); } 
+		if(attr != null) { limit = (int)float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("contentType");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }

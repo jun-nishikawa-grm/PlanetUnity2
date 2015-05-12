@@ -22,7 +22,7 @@ public partial class PUSwitcher : PUSwitcherBase {
 		string attr;
 
 		attr = "0";
-		if(attr != null) { currentIndex = int.Parse(attr); } 
+		if(attr != null) { currentIndex = (int)float.Parse(attr); } 
 
 	}
 	
@@ -206,7 +206,7 @@ public class PUSwitcherBase : PUGameObject {
 		attr = reader.GetAttribute("currentIndex");
 		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
 		if(attr == null) { attr = "0"; }
-		if(attr != null) { currentIndex = int.Parse(attr); } 
+		if(attr != null) { currentIndex = (int)float.Parse(attr); } 
 		
 
 	}
