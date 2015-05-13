@@ -21,7 +21,7 @@ public class PlanetUnityEmbed : MonoBehaviour {
 
 	private PUGameObject rootObject;
 
-	public void Start() {
+	public void Awake() {
 		if (xmlPath != null) {
 			rootObject = PlanetUnityGameObject.LoadXML (xmlPath, gameObject);
 		}

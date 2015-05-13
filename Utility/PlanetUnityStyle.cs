@@ -32,11 +32,11 @@ public class PlanetUnityStyle
 	public static int GlobalFontSize = CalculateBestFontSize();
 
 	static public int CalculateBestFontSize() {
-		if ((int)Screen.dpi == 0) {
+		if ((int)PlanetUnityOverride.screenDPI() == 0) {
 			return 32;
 		}
 
-		int fontSize = (int)(Screen.dpi / 12);
+		int fontSize = (int)(PlanetUnityOverride.screenDPI() / 12);
 
 		if (fontSize < 18) {
 			fontSize = 18;

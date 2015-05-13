@@ -47,7 +47,9 @@ public class PlanetUnityOverride {
 		return true;
 	};
 
-
+	public static Func<float> screenDPI = () => {
+		return Screen.dpi;
+	};
 
 	private static string evaluateString(string evalListString, object o, float multiplier) {
 
@@ -62,18 +64,20 @@ public class PlanetUnityOverride {
 
 		mathParser.LocalVariables.Add ("dpi", Convert.ToDecimal (Screen.dpi));
 
-		if (o is GameObject) {
-			rectTransform = (o as GameObject).GetComponent<RectTransform> ();
+		GameObject parentAsGameObject = o as GameObject;
+		PUGameObject parentAsPUGameObject = o as PUGameObject;
+
+		if (parentAsGameObject != null) {
+			rectTransform = parentAsGameObject.GetComponent<RectTransform> ();
 
 			mathParser.LocalVariables.Add ("lastY", Convert.ToDecimal(0));
 			mathParser.LocalVariables.Add ("lastX", Convert.ToDecimal(0));
 		}
-		else if (o is PUGameObject) {
-			PUGameObject entity = (PUGameObject)o;
-			rectTransform = entity.gameObject.GetComponent<RectTransform> ();
+		else if (parentAsPUGameObject != null) {
+			rectTransform = parentAsPUGameObject.gameObject.GetComponent<RectTransform> ();
 
-			mathParser.LocalVariables.Add ("lastY", Convert.ToDecimal(entity.lastY / multiplier));
-			mathParser.LocalVariables.Add ("lastX", Convert.ToDecimal(entity.lastX / multiplier));
+			mathParser.LocalVariables.Add ("lastY", Convert.ToDecimal(parentAsPUGameObject.lastY / multiplier));
+			mathParser.LocalVariables.Add ("lastX", Convert.ToDecimal(parentAsPUGameObject.lastX / multiplier));
 		}
 
 		if (rectTransform) {
@@ -119,7 +123,7 @@ public class PlanetUnityOverride {
 
 		} else if (s.StartsWith ("@dpi(")) {
 			string evalListString = s.Substring(5, s.Length-6);
-			s = evaluateString (evalListString, o, Screen.dpi);
+			s = evaluateString (evalListString, o, PlanetUnityOverride.screenDPI());
 
 		} else if(s.StartsWith("@")) {
 
