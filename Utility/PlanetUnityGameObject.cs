@@ -51,6 +51,10 @@ public class PlanetUnityOverride {
 		return Screen.dpi;
 	};
 
+	public static Func<PUGameObject, string> shaderForObject = (obj) => {
+		return null;
+	};
+
 	private static string evaluateString(string evalListString, object o, float multiplier) {
 
 		var parts = Regex.Split (evalListString, ",(?![^(]*\\))");

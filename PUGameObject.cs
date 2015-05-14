@@ -184,6 +184,16 @@ public partial class PUGameObject : PUGameObjectBase {
 			if (graphic != null) {
 				graphic.material = new Material (Shader.Find (shader));
 			}
+		} else {
+
+			string defaultShader = PlanetUnityOverride.shaderForObject (this);
+			if(defaultShader != null){
+				Graphic graphic = gameObject.GetComponent<Graphic> ();
+				if (graphic != null) {
+					graphic.material = new Material (Shader.Find (defaultShader));
+				}
+			}
+
 		}
 
 		if (ignoreMouse) {
