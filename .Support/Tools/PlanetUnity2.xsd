@@ -183,6 +183,7 @@
 			<enumeration value = "filled"/>
 			<enumeration value = "sliced"/>
 			<enumeration value = "tiled"/>
+			<enumeration value = "aspectFilled"/>
 		</restriction>
     </simpleType>
 

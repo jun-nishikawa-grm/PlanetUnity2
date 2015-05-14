@@ -50,6 +50,7 @@ public class PlanetUnity2 {
 		filled,
 		sliced,
 		tiled,
+		aspectFilled,
 	};
 
 	public enum GridLayoutStartAxis {

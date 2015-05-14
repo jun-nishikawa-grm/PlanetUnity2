@@ -52,6 +52,10 @@ public partial class PUImage : PUImageBase {
 			if (type == PlanetUnity2.ImageType.filled) {
 				image.type = Image.Type.Filled;
 			}
+			if (type == PlanetUnity2.ImageType.aspectFilled) {
+				image.type = Image.Type.Filled;
+				image.preserveAspect = true;
+			}
 			if (type == PlanetUnity2.ImageType.simple) {
 				image.type = Image.Type.Simple;
 			}
