@@ -189,6 +189,9 @@ public class PlanetUnity2 {
 							if(customBlock == null){
 								method = entityClass.GetMethod ("gaxb_complete");
 								if(method != null) { method.Invoke (entityObject, null); }
+
+								method = entityClass.GetMethod ("gaxb_private_complete");
+								if(method != null) { method.Invoke (entityObject, null); }
 							}
 						}
 
@@ -240,6 +243,9 @@ public class PlanetUnity2 {
 						
 						if(customBlock == null) {
 							method = entityClass.GetMethod ("gaxb_complete");
+							if(method != null) { method.Invoke (rootEntity, null); }
+
+							method = entityClass.GetMethod ("gaxb_private_complete");
 							if(method != null) { method.Invoke (rootEntity, null); }
 						}
 

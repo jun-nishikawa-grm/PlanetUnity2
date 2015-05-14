@@ -249,6 +249,62 @@ public partial class PUGameObject : PUGameObjectBase {
 		children.Clear ();
 	}
 
+	public void gaxb_private_complete() {
+		// Delay setting of stretch anchors until after loading has happened
+		if (gameObject == null) {
+			return;
+		}
+
+		RectTransform parentTransform = gameObject.transform.parent as RectTransform;
+		float parentW = Screen.width;
+		float parentH = Screen.height;
+
+		if (parentTransform != null) {
+			Canvas rootCanvas = parentTransform.GetComponent<Canvas> ();
+
+			if (rootCanvas == null || rootCanvas.isRootCanvas == false) {
+				// Work around for unity issue where the rect transform of a sub canvas does not update soon enough
+				if (rootCanvas != null && ((int)parentTransform.rect.width == 100 && (int)parentTransform.rect.height == 100) ) {
+
+				} else {
+					parentW = parentTransform.rect.width;
+					parentH = parentTransform.rect.height;
+				}
+			}
+		}
+
+		if (anchor != null) {
+			int numCommas = anchor.NumberOfOccurancesOfChar (',');
+			Vector4 values = new Vector4 ();
+
+			if (numCommas == 1) {
+				// english representation
+				values = stringToAnchorLookup [anchor];
+			}
+
+			if (numCommas == 3) {
+				// math representation
+				values.PUParse (anchor);
+			}
+
+			rectTransform.anchorMin = new Vector2 (values.x, values.y);
+			rectTransform.anchorMax = new Vector2 (values.z, values.w);
+
+			// the sizeDelta is the amount left over after the anchors are calculated; therefore,
+			// if we have set the anchors we need to adjust the sizeDelta
+			float anchorDeltaX = rectTransform.anchorMax.x - rectTransform.anchorMin.x;
+			float anchorDeltaY = rectTransform.anchorMax.y - rectTransform.anchorMin.y;
+
+			float mySizeDeltaX = rectTransform.sizeDelta.x;
+			float mySizeDeltaY = rectTransform.sizeDelta.y;
+
+			mySizeDeltaX -= (parentW * anchorDeltaX);
+			mySizeDeltaY -= (parentH * anchorDeltaY);
+
+			rectTransform.sizeDelta = new Vector2 (mySizeDeltaX, mySizeDeltaY);
+		}
+	}
+
 	public void UpdateRectTransform() {
 
 		rectTransform = gameObject.GetComponent<RectTransform> ();
@@ -286,37 +342,6 @@ public partial class PUGameObject : PUGameObjectBase {
 			}
 
 			rectTransform.sizeDelta = size.Value;
-
-			if (anchor != null) {
-				int numCommas = anchor.NumberOfOccurancesOfChar (',');
-				Vector4 values = new Vector4 ();
-
-				if (numCommas == 1) {
-					// english representation
-					values = stringToAnchorLookup [anchor];
-				}
-
-				if (numCommas == 3) {
-					// math representation
-					values.PUParse (anchor);
-				}
-
-				rectTransform.anchorMin = new Vector2 (values.x, values.y);
-				rectTransform.anchorMax = new Vector2 (values.z, values.w);
-
-				// the sizeDelta is the amount left over after the anchors are calculated; therefore,
-				// if we have set the anchors we need to adjust the sizeDelta
-				float anchorDeltaX = rectTransform.anchorMax.x - rectTransform.anchorMin.x;
-				float anchorDeltaY = rectTransform.anchorMax.y - rectTransform.anchorMin.y;
-
-				float mySizeDeltaX = rectTransform.sizeDelta.x;
-				float mySizeDeltaY = rectTransform.sizeDelta.y;
-
-				mySizeDeltaX -= (parentW * anchorDeltaX);
-				mySizeDeltaY -= (parentH * anchorDeltaY);
-
-				rectTransform.sizeDelta = new Vector2 (mySizeDeltaX, mySizeDeltaY);
-			}
 		}
 	}
 
