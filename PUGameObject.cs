@@ -478,7 +478,9 @@ public class GameObjectLateUpdateScript : MonoBehaviour {
 	public PUGameObject entity;
 
 	public void LateUpdate() {
-		entity.LateUpdate ();
+		if (entity != null) {
+			entity.LateUpdate ();
+		}
 	}
 }
 
@@ -486,7 +488,9 @@ public class GameObjectUpdateScript : MonoBehaviour {
 	public PUGameObject entity;
 
 	public void Update() {
-		entity.Update ();
+		if (entity != null) {
+			entity.Update ();
+		}
 	}
 }
 
@@ -494,7 +498,9 @@ public class GameObjectFixedUpdateScript : MonoBehaviour {
 	public PUGameObject entity;
 
 	public void FixedUpdate() {
-		entity.FixedUpdate ();
+		if (entity != null) {
+			entity.FixedUpdate ();
+		}
 	}
 }
 
@@ -508,13 +514,17 @@ public class GameObjectStartScript : MonoBehaviour {
 
 	public void Update() {
 		if (shouldRecallStart) {
-			entity.Start ();
+			if (entity != null) {
+				entity.Start ();
+			}
 			shouldRecallStart = false;
 		}
 	}
 
 	public void Start() {
-		entity.Start ();
+		if (entity != null) {
+			entity.Start ();
+		}
 	}
 }
 
@@ -522,6 +532,8 @@ public class GameObjectOnLevelWasLoadedScript : MonoBehaviour {
 	public PUGameObject entity;
 
 	public void OnLevelWasLoaded(int i) {
-		entity.OnLevelWasLoaded (i);
+		if (entity != null) {
+			entity.OnLevelWasLoaded (i);
+		}
 	}
 }
