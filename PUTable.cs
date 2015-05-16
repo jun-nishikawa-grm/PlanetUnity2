@@ -22,7 +22,9 @@ public class PUTableUpdateScript : MonoBehaviour {
 	public PUTable table;
 
 	public void LateUpdate() {
-		table.LateUpdate ();
+		if (table != null) {
+			table.LateUpdate ();
+		}
 	}
 }
 
