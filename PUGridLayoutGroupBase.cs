@@ -160,8 +160,6 @@ public partial class PUGridLayoutGroup : PUGridLayoutGroupBase {
 public class PUGridLayoutGroupBase : PUGameObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -248,33 +246,33 @@ public class PUGridLayoutGroupBase : PUGameObject {
 
 		string attr;
 		attr = reader.GetAttribute("cellSize");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "100,100"; }
 		if(attr != null) { cellSize = new Vector2().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("spacing");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0,0"; }
 		if(attr != null) { spacing = new Vector2().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("startCorner");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { startCorner = (PlanetUnity2.GridLayoutStartCorner)Enum.Parse(typeof(PlanetUnity2.GridLayoutStartCorner), attr); } 
 		
 		attr = reader.GetAttribute("startAxis");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { startAxis = (PlanetUnity2.GridLayoutStartAxis)Enum.Parse(typeof(PlanetUnity2.GridLayoutStartAxis), attr); } 
 		
 		attr = reader.GetAttribute("childAlignment");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); } 
 		
 		attr = reader.GetAttribute("fixedRows");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { fixedRows = (int)float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("fixedColumns");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { fixedColumns = (int)float.Parse(attr); } 
 		
 

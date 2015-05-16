@@ -69,8 +69,6 @@ public partial class PUNotification : PUNotificationBase {
 public class PUNotificationBase : PUObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -151,7 +149,7 @@ public class PUNotificationBase : PUObject {
 
 		string attr;
 		attr = reader.GetAttribute("name");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { name = attr; } 
 		
 

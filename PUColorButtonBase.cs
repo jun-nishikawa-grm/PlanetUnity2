@@ -129,8 +129,6 @@ public partial class PUColorButton : PUColorButtonBase {
 public class PUColorButtonBase : PUColor {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -212,11 +210,11 @@ public class PUColorButtonBase : PUColor {
 
 		string attr;
 		attr = reader.GetAttribute("onTouchUp");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { onTouchUp = attr; } 
 		
 		attr = reader.GetAttribute("onTouchDown");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { onTouchDown = attr; } 
 		
 

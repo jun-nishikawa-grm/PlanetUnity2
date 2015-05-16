@@ -123,8 +123,6 @@ public partial class PUClearButton : PUClearButtonBase {
 public class PUClearButtonBase : PUGameObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -206,11 +204,11 @@ public class PUClearButtonBase : PUGameObject {
 
 		string attr;
 		attr = reader.GetAttribute("onTouchUp");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { onTouchUp = attr; } 
 		
 		attr = reader.GetAttribute("onTouchDown");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { onTouchDown = attr; } 
 		
 

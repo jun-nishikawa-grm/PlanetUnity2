@@ -128,8 +128,6 @@ public partial class PUCode : PUCodeBase {
 public class PUCodeBase : PUGameObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -215,11 +213,11 @@ public class PUCodeBase : PUGameObject {
 
 		string attr;
 		attr = reader.GetAttribute("class");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { _class = attr; } 
 		
 		attr = reader.GetAttribute("singleton");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "false"; }
 		if(attr != null) { singleton = bool.Parse(attr); } 
 		

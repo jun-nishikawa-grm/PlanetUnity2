@@ -129,8 +129,6 @@ public partial class PURawImage : PURawImageBase {
 public class PURawImageBase : PUGameObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -213,15 +211,15 @@ public class PURawImageBase : PUGameObject {
 
 		string attr;
 		attr = reader.GetAttribute("resourcePath");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { resourcePath = attr; } 
 		
 		attr = reader.GetAttribute("color");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { color = new Color().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("uvRect");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { uvRect = new Vector4().PUParse(attr); } 
 		
 

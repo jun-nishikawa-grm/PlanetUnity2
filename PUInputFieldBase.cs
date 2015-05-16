@@ -177,8 +177,6 @@ public partial class PUInputField : PUInputFieldBase {
 public class PUInputFieldBase : PUText {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -264,27 +262,27 @@ public class PUInputFieldBase : PUText {
 
 		string attr;
 		attr = reader.GetAttribute("onValueChanged");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { onValueChanged = attr; } 
 		
 		attr = reader.GetAttribute("placeholder");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { placeholder = attr; } 
 		
 		attr = reader.GetAttribute("limit");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { limit = (int)float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("contentType");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { contentType = (PlanetUnity2.InputFieldContentType)Enum.Parse(typeof(PlanetUnity2.InputFieldContentType), attr); } 
 		
 		attr = reader.GetAttribute("lineType");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { lineType = (PlanetUnity2.InputFieldLineType)Enum.Parse(typeof(PlanetUnity2.InputFieldLineType), attr); } 
 		
 		attr = reader.GetAttribute("selectionColor");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { selectionColor = new Color().PUParse(attr); } 
 		
 

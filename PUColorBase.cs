@@ -117,8 +117,6 @@ public partial class PUColor : PUColorBase {
 public class PUColorBase : PUGameObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -199,7 +197,7 @@ public class PUColorBase : PUGameObject {
 
 		string attr;
 		attr = reader.GetAttribute("color");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { color = new Color().PUParse(attr); } 
 		
 

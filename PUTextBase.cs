@@ -174,8 +174,6 @@ public partial class PUText : PUTextBase {
 public class PUTextBase : PUGameObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -264,42 +262,42 @@ public class PUTextBase : PUGameObject {
 
 		string attr;
 		attr = reader.GetAttribute("font");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { font = attr; } 
 		
 		attr = reader.GetAttribute("fontSize");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "12"; }
 		if(attr != null) { fontSize = (int)float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("fontStyle");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { fontStyle = (PlanetUnity2.FontStyle)Enum.Parse(typeof(PlanetUnity2.FontStyle), attr); } 
 		
 		attr = reader.GetAttribute("fontColor");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0,0,0,1"; }
 		if(attr != null) { fontColor = new Color().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("lineSpacing");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { lineSpacing = float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("alignment");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "middleCenter"; }
 		if(attr != null) { alignment = (PlanetUnity2.TextAlignment)Enum.Parse(typeof(PlanetUnity2.TextAlignment), attr); } 
 		
 		attr = reader.GetAttribute("value");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { value = attr; } 
 		
 		attr = reader.GetAttribute("bestFit");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { bestFit = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("onLinkClick");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { onLinkClick = attr; } 
 		
 

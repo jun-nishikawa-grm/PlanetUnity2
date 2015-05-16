@@ -130,8 +130,6 @@ public partial class PUCanvas : PUCanvasBase {
 public class PUCanvasBase : PUGameObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -213,12 +211,12 @@ public class PUCanvasBase : PUGameObject {
 
 		string attr;
 		attr = reader.GetAttribute("renderMode");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "ScreenSpaceOverlay"; }
 		if(attr != null) { renderMode = (PlanetUnity2.CanvasRenderMode)Enum.Parse(typeof(PlanetUnity2.CanvasRenderMode), attr); } 
 		
 		attr = reader.GetAttribute("pixelPerfect");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "false"; }
 		if(attr != null) { pixelPerfect = bool.Parse(attr); } 
 		

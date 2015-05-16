@@ -126,7 +126,6 @@ end
 			object rootEntity = parentObject;
 			object returnEntity = null;
 			string xmlNamespace;
-			MethodInfo method;
 
 			// Create an XmlReader
 			using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(xmlString)))

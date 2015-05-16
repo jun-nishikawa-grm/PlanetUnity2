@@ -174,8 +174,6 @@ public partial class PUSlider : PUSliderBase {
 public class PUSliderBase : PUImage {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -262,34 +260,34 @@ public class PUSliderBase : PUImage {
 
 		string attr;
 		attr = reader.GetAttribute("handleResourcePath");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { handleResourcePath = attr; } 
 		
 		attr = reader.GetAttribute("handleSize");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "32,32"; }
 		if(attr != null) { handleSize = new Vector2().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("fillResourcePath");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { fillResourcePath = attr; } 
 		
 		attr = reader.GetAttribute("onValueChanged");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { onValueChanged = attr; } 
 		
 		attr = reader.GetAttribute("minValue");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0"; }
 		if(attr != null) { minValue = float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("maxValue");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "1"; }
 		if(attr != null) { maxValue = float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("direction");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { direction = (PlanetUnity2.SliderDirection)Enum.Parse(typeof(PlanetUnity2.SliderDirection), attr); } 
 		
 

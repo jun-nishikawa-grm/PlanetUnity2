@@ -136,8 +136,6 @@ public partial class PUHorizontalLayoutGroup : PUHorizontalLayoutGroupBase {
 public class PUHorizontalLayoutGroupBase : PUGameObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -220,17 +218,17 @@ public class PUHorizontalLayoutGroupBase : PUGameObject {
 
 		string attr;
 		attr = reader.GetAttribute("spacing");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0"; }
 		if(attr != null) { spacing = float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("padding");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0,0,0,0"; }
 		if(attr != null) { padding = new Vector4().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("childAlignment");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { childAlignment = (PlanetUnity2.GridLayoutChildAlignment)Enum.Parse(typeof(PlanetUnity2.GridLayoutChildAlignment), attr); } 
 		
 

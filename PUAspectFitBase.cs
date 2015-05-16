@@ -122,8 +122,6 @@ public partial class PUAspectFit : PUAspectFitBase {
 public class PUAspectFitBase : PUGameObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -204,7 +202,7 @@ public class PUAspectFitBase : PUGameObject {
 
 		string attr;
 		attr = reader.GetAttribute("contentSize");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0,0"; }
 		if(attr != null) { contentSize = new Vector2().PUParse(attr); } 
 		

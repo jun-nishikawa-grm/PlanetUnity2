@@ -153,8 +153,6 @@ public partial class PUImageButton : PUImageButtonBase {
 public class PUImageButtonBase : PUImage {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -239,23 +237,23 @@ public class PUImageButtonBase : PUImage {
 
 		string attr;
 		attr = reader.GetAttribute("pressedResourcePath");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { pressedResourcePath = attr; } 
 		
 		attr = reader.GetAttribute("highlightedResourcePath");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { highlightedResourcePath = attr; } 
 		
 		attr = reader.GetAttribute("disabledResourcePath");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { disabledResourcePath = attr; } 
 		
 		attr = reader.GetAttribute("onTouchUp");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { onTouchUp = attr; } 
 		
 		attr = reader.GetAttribute("onTouchDown");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { onTouchDown = attr; } 
 		
 

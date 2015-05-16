@@ -146,8 +146,6 @@ public partial class PUScrollRect : PUScrollRectBase {
 public class PUScrollRectBase : PUGameObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -231,22 +229,22 @@ public class PUScrollRectBase : PUGameObject {
 
 		string attr;
 		attr = reader.GetAttribute("inertia");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "true"; }
 		if(attr != null) { inertia = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("horizontal");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "false"; }
 		if(attr != null) { horizontal = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("vertical");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "true"; }
 		if(attr != null) { vertical = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("scrollWheelSensitivity");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0"; }
 		if(attr != null) { scrollWheelSensitivity = float.Parse(attr); } 
 		

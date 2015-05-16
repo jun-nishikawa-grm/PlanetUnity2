@@ -147,8 +147,6 @@ public partial class PUTextButton : PUTextButtonBase {
 public class PUTextButtonBase : PUText {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -229,7 +227,7 @@ public class PUTextButtonBase : PUText {
 
 		string attr;
 		attr = reader.GetAttribute("onTouchUp");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { onTouchUp = attr; } 
 		
 

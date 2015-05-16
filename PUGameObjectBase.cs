@@ -176,8 +176,6 @@ public partial class PUGameObject : PUGameObjectBase {
 public class PUGameObjectBase : PUObject {
 
 
-	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
-	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
 
@@ -273,74 +271,74 @@ public class PUGameObjectBase : PUObject {
 
 		string attr;
 		attr = reader.GetAttribute("bounds");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { bounds = new Vector4().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("position");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0,0,0"; }
 		if(attr != null) { position = new Vector3().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("size");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0,0"; }
 		if(attr != null) { size = new Vector2().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("rotation");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0,0,0"; }
 		if(attr != null) { rotation = new Vector3().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("scale");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "1,1,1"; }
 		if(attr != null) { scale = new Vector3().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("pivot");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "0,0"; }
 		if(attr != null) { pivot = new Vector2().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("anchor");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "bottom,left"; }
 		if(attr != null) { anchor = attr; } 
 		
 		attr = reader.GetAttribute("active");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "true"; }
 		if(attr != null) { active = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("mask");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { mask = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("maskInset");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { maskInset = new Vector4().PUParse(attr); } 
 		
 		attr = reader.GetAttribute("outline");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { outline = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("lastY");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { lastY = float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("lastX");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { lastX = float.Parse(attr); } 
 		
 		attr = reader.GetAttribute("shader");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { shader = attr; } 
 		
 		attr = reader.GetAttribute("ignoreMouse");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { ignoreMouse = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("components");
-		if(attr != null && planetOverride != null) { attr = processStringMethod.Invoke(null, new [] {_parent, attr}).ToString(); }
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { components = attr; } 
 		
 
