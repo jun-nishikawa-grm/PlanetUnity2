@@ -473,7 +473,11 @@
 	
 	<element name="Notification" type="planet:Notification" />
 	<complexType name="Notification">
-		<attribute name="name" type="string" use="required" />
+		<complexContent>
+			<extension base="planet:Object">
+				<attribute name="name" type="string" use="required" />
+			</extension>
+		</complexContent>
 	</complexType>
 	
 	

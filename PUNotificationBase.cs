@@ -29,21 +29,50 @@ public partial class PUNotification : PUNotificationBase {
 	}
 
 	
+	
+	public PUNotification(
+			string name,
+			string title,
+			string tag,
+			string tag1,
+			string tag2,
+			string tag3,
+			string tag4,
+			string tag5,
+			string tag6 ) : this()
+	{
+		this.name = name;
+
+		this.title = title;
+
+		this.tag = tag;
+
+		this.tag1 = tag1;
+
+		this.tag2 = tag2;
+
+		this.tag3 = tag3;
+
+		this.tag4 = tag4;
+
+		this.tag5 = tag5;
+
+		this.tag6 = tag6;
+	}
+
 
 }
 
 
 
 
-public class PUNotificationBase : IPlanetUnity2 {
+public class PUNotificationBase : PUObject {
 
 
 	private static Type planetOverride = Type.GetType("PlanetUnityOverride");
 	private static MethodInfo processStringMethod = planetOverride.GetMethod("processString", BindingFlags.Public | BindingFlags.Static);
 
 
-	public object parent;
-	public string xmlns = "http://schema.smallplanet.com/PlanetUnity2";
 
 
 	// XML Attributes
@@ -52,12 +81,13 @@ public class PUNotificationBase : IPlanetUnity2 {
 
 
 
-	public virtual void gaxb_unload()
+	public override void gaxb_unload()
 	{
+		base.gaxb_unload();
 
 	}
 	
-	public void gaxb_addToParent()
+	public new void gaxb_addToParent()
 
 	{
 		if(parent != null)
@@ -79,7 +109,7 @@ public class PUNotificationBase : IPlanetUnity2 {
 				}
 				else
 				{
-					parentField = parent.GetType().GetField("PlanetUnity2s");
+					parentField = parent.GetType().GetField("Objects");
 					if(parentField != null)
 					{
 						parentChildren = (List<object>)(parentField.GetValue(parent));
@@ -102,8 +132,9 @@ public class PUNotificationBase : IPlanetUnity2 {
 		}
 	}
 
-	public virtual void gaxb_load(XmlReader reader, object _parent, Hashtable args)
+	public override void gaxb_load(XmlReader reader, object _parent, Hashtable args)
 	{
+		base.gaxb_load(reader, _parent, args);
 
 		if(reader == null && _parent == null)
 			return;
@@ -132,20 +163,22 @@ public class PUNotificationBase : IPlanetUnity2 {
 	
 	
 	
-	public virtual void gaxb_appendXMLAttributes(StringBuilder sb)
+	public override void gaxb_appendXMLAttributes(StringBuilder sb)
 	{
+		base.gaxb_appendXMLAttributes(sb);
 
 		if(name != null) { sb.AppendFormat (" {0}=\"{1}\"", "name", name); }
 
 	}
 	
-	public virtual void gaxb_appendXMLSequences(StringBuilder sb)
+	public override void gaxb_appendXMLSequences(StringBuilder sb)
 	{
+		base.gaxb_appendXMLSequences(sb);
 
 
 	}
 	
-	public virtual void gaxb_appendXML(StringBuilder sb)
+	public override void gaxb_appendXML(StringBuilder sb)
 	{
 		if(sb.Length == 0)
 		{

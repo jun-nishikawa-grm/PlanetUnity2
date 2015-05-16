@@ -122,117 +122,112 @@ end
 	}
 
 	static public object loadXML(string xmlString, object parentObject, Hashtable args, Action<object,object,XmlReader> customBlock)
-	{
-		object rootEntity = parentObject;
-		object returnEntity = null;
-		string xmlNamespace;
-		MethodInfo method;
-
-		// Create an XmlReader
-		using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(xmlString)))
 		{
-			// Parse the file and display each of the nodes.
-			while (reader.Read())
-			{
-				switch (reader.NodeType)
-				{
-				case XmlNodeType.Element:
-					xmlNamespace = Path.GetFileName (reader.NamespaceURI);
-					try
-					{
-						Type entityClass = Type.GetType (ConvertClassName(xmlNamespace, reader.Name), true);
-						object entityObject = (Activator.CreateInstance (entityClass));						
-						
-						if(customBlock == null){
-							method = entityClass.GetMethod ("gaxb_load");
-							method.Invoke (entityObject, new[] { reader, rootEntity, args });
-							
-							method = entityClass.GetMethod ("gaxb_init");
-							if(method != null) { method.Invoke (entityObject, null); }
-							
-							method = entityClass.GetMethod ("gaxb_final");
-							if(method != null) { method.Invoke (entityObject, new[] { reader, rootEntity, args }); }
-							
-						}else{
-							customBlock(entityObject, rootEntity, reader);
-						}
-						
-						if (reader.IsEmptyElement == false) {
-							rootEntity = entityObject;
-						} else {
-							if(customBlock == null){
-								method = entityClass.GetMethod ("gaxb_complete");
-								if(method != null) { method.Invoke (entityObject, null); }
-							}
-						}
+			object rootEntity = parentObject;
+			object returnEntity = null;
+			string xmlNamespace;
+			MethodInfo method;
 
-						if (rootEntity == null) {
-							rootEntity = entityObject;
-						}
-						
-						if(returnEntity == null) {
-							returnEntity = entityObject;
-						}
-					}
-					catch(TypeLoadException) {
-						if (rootEntity != null) {
-							// If we get here, this is not a unique object but perhaps a field on the parent...
-							string valueName = reader.Name;
-							if(rootEntity.GetType ().GetField (valueName) != null)
-							{
-								reader.Read();
-								if ((reader.NodeType == XmlNodeType.Text) && (reader.HasValue))
-								{
-									rootEntity.GetType ().GetField (valueName).SetValue (rootEntity, reader.Value);
+			// Create an XmlReader
+			using (XmlReader reader = XmlReader.Create(new System.IO.StringReader(xmlString)))
+			{
+				// Parse the file and display each of the nodes.
+				while (reader.Read())
+				{
+					switch (reader.NodeType)
+					{
+					case XmlNodeType.Element:
+						xmlNamespace = Path.GetFileName (reader.NamespaceURI);
+						try
+						{
+							Type entityClass = Type.GetType (ConvertClassName(xmlNamespace, reader.Name), true);
+							PUObject entityObject = (PUObject)(Activator.CreateInstance (entityClass));
+
+							if(customBlock == null){
+								entityObject.gaxb_load(reader, rootEntity, args);
+								entityObject.gaxb_init();
+								entityObject.gaxb_final(reader, rootEntity, args);
+							}else{
+								customBlock(entityObject, rootEntity, reader);
+							}
+
+							if (reader.IsEmptyElement == false) {
+								rootEntity = entityObject;
+							} else {
+								if(customBlock == null){
+									entityObject.gaxb_complete();
+									entityObject.gaxb_private_complete();
 								}
 							}
-							else
-							{
-								reader.Read();
-								if ((reader.NodeType == XmlNodeType.Text) && (reader.HasValue)) {
-									List<object> parentChildren = (List<object>)(rootEntity.GetType ().GetField (valueName + "s").GetValue (rootEntity));
-									if (parentChildren != null) {
-										parentChildren.Add (reader.Value);
+
+							if (rootEntity == null) {
+								rootEntity = entityObject;
+							}
+
+							if(returnEntity == null) {
+								returnEntity = entityObject;
+							}
+						}
+						catch(TypeLoadException) {
+							if (rootEntity != null) {
+								// If we get here, this is not a unique object but perhaps a field on the parent...
+								string valueName = reader.Name;
+								if(rootEntity.GetType ().GetField (valueName) != null)
+								{
+									reader.Read();
+									if ((reader.NodeType == XmlNodeType.Text) && (reader.HasValue))
+									{
+										rootEntity.GetType ().GetField (valueName).SetValue (rootEntity, reader.Value);
+									}
+								}
+								else
+								{
+									reader.Read();
+									if ((reader.NodeType == XmlNodeType.Text) && (reader.HasValue)) {
+										List<object> parentChildren = (List<object>)(rootEntity.GetType ().GetField (valueName + "s").GetValue (rootEntity));
+										if (parentChildren != null) {
+											parentChildren.Add (reader.Value);
+										}
 									}
 								}
 							}
 						}
-					}
 
-					break;
-				case XmlNodeType.Text:
-					break;
-				case XmlNodeType.XmlDeclaration:
-				case XmlNodeType.ProcessingInstruction:
-					break;
-				case XmlNodeType.Comment:
-					break;
-				case XmlNodeType.EndElement:
-					try{
-						xmlNamespace = Path.GetFileName (reader.NamespaceURI);
-						Type entityClass = Type.GetType (ConvertClassName(xmlNamespace, reader.Name), true);
-						
-						if(customBlock == null) {
-							method = entityClass.GetMethod ("gaxb_complete");
-							if(method != null) { method.Invoke (rootEntity, null); }
-						}
+						break;
+					case XmlNodeType.Text:
+						break;
+					case XmlNodeType.XmlDeclaration:
+					case XmlNodeType.ProcessingInstruction:
+						break;
+					case XmlNodeType.Comment:
+						break;
+					case XmlNodeType.EndElement:
+						try{
+							xmlNamespace = Path.GetFileName (reader.NamespaceURI);
+							Type entityClass = Type.GetType (ConvertClassName(xmlNamespace, reader.Name), true);
 
-						if(entityClass != null)
-						{
-							object parent = rootEntity.GetType().GetField("parent").GetValue(rootEntity);
-							if(parent != null)
-							{
-								rootEntity = parent;
+							if(customBlock == null) {
+								PUObject entityObject = rootEntity as PUObject;
+								entityObject.gaxb_complete();
+								entityObject.gaxb_private_complete();
 							}
-						}
-					}catch(TypeLoadException) { }
-					break;
+
+							if(entityClass != null)
+							{
+								object parent = rootEntity.GetType().GetField("parent").GetValue(rootEntity);
+								if(parent != null)
+								{
+									rootEntity = parent;
+								}
+							}
+						}catch(TypeLoadException) { }
+						break;
+					}
 				}
 			}
-		}
 
-		return returnEntity;
-	}
+			return returnEntity;
+		}
 	
 	static public object loadXML(string xmlString, object parentObject, Hashtable args)
 	{

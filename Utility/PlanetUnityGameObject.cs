@@ -55,59 +55,44 @@ public class PlanetUnityOverride {
 		return null;
 	};
 
+
+	static StringBuilder evalStringBuilder = new StringBuilder();
 	private static string evaluateString(string evalListString, object o, float multiplier) {
-
 		var parts = Regex.Split (evalListString, ",(?![^(]*\\))");
-
-		string[] results = new string[12];
-		int nresults = 0;
 
 		RectTransform rectTransform = null;
 
-		mathParser.LocalVariables.Clear ();
-
-		mathParser.LocalVariables.Add ("dpi", Convert.ToDecimal (Screen.dpi));
+		mathParser.LocalVariables ["dpi"] = Convert.ToDecimal (Screen.dpi);
 
 		GameObject parentAsGameObject = o as GameObject;
 		PUGameObject parentAsPUGameObject = o as PUGameObject;
 
 		if (parentAsGameObject != null) {
 			rectTransform = parentAsGameObject.GetComponent<RectTransform> ();
-
-			mathParser.LocalVariables.Add ("lastY", Convert.ToDecimal(0));
-			mathParser.LocalVariables.Add ("lastX", Convert.ToDecimal(0));
 		}
 		else if (parentAsPUGameObject != null) {
 			rectTransform = parentAsPUGameObject.gameObject.GetComponent<RectTransform> ();
-
-			mathParser.LocalVariables.Add ("lastY", Convert.ToDecimal(parentAsPUGameObject.lastY / multiplier));
-			mathParser.LocalVariables.Add ("lastX", Convert.ToDecimal(parentAsPUGameObject.lastX / multiplier));
 		}
 
 		if (rectTransform) {
 			// Work around for unity stretching canvas bug
 			if (o is PUCanvas && (int)rectTransform.rect.width == 100 && (int)rectTransform.rect.height == 100) {
-				mathParser.LocalVariables.Add ("w", Convert.ToDecimal (Screen.width / multiplier));
-				mathParser.LocalVariables.Add ("h", Convert.ToDecimal (Screen.height / multiplier));
+				mathParser.LocalVariables ["w"] = Convert.ToDecimal (Screen.width / multiplier);
+				mathParser.LocalVariables ["h"] = Convert.ToDecimal (Screen.height / multiplier);
 			} else {
-				mathParser.LocalVariables.Add ("w", Convert.ToDecimal (rectTransform.rect.width / multiplier));
-				mathParser.LocalVariables.Add ("h", Convert.ToDecimal (rectTransform.rect.height / multiplier));
+				mathParser.LocalVariables ["w"] = Convert.ToDecimal (rectTransform.rect.width / multiplier);
+				mathParser.LocalVariables ["h"] = Convert.ToDecimal (rectTransform.rect.height / multiplier);
 			}
 		}
 
+		evalStringBuilder.Length = 0;
 		foreach (string part in parts) {
-			results [nresults] = (mathParser.Parse (part) * (decimal)multiplier).ToString ();
-			nresults++;
+			decimal result = (mathParser.Parse (part) * (decimal)multiplier);
+			evalStringBuilder.AppendFormat ("{0},", result);
 		}
+		evalStringBuilder.Length = evalStringBuilder.Length - 1;
 
-		if(nresults == 4 && o is PUGameObject)
-		{
-			PUGameObject entity = (PUGameObject)o;
-			entity.lastY = float.Parse (results [1]) + float.Parse (results [3]);
-			entity.lastX = float.Parse (results [0]) + float.Parse (results [2]);
-		}
-
-		return string.Join (",", results, 0, nresults);
+		return evalStringBuilder.ToString ();
 	}
 
 	public static string processString(object o, string s)
@@ -120,7 +105,7 @@ public class PlanetUnityOverride {
 		if (s.Equals ("nan")) {
 			return "0";
 		}
-
+			
 		if (s.StartsWith ("@eval(")) {
 			string evalListString = s.Substring(6, s.Length-7);
 			s = evaluateString (evalListString, o, 1.0f);

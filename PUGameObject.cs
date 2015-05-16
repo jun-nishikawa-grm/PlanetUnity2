@@ -128,7 +128,7 @@ public partial class PUGameObject : PUGameObjectBase {
 		base.gaxb_load (reader, _parent, args);
 	}
 		
-	public virtual void gaxb_final(XmlReader reader, object _parent, Hashtable args)
+	public override void gaxb_final(XmlReader reader, object _parent, Hashtable args)
 	{
 		if (gameObject == null) {
 			gameObject = new GameObject ("<GameObject />", typeof(RectTransform));
@@ -249,7 +249,7 @@ public partial class PUGameObject : PUGameObjectBase {
 		children.Clear ();
 	}
 
-	public void gaxb_private_complete() {
+	public override void gaxb_private_complete() {
 		// Delay setting of stretch anchors until after loading has happened
 		if (gameObject == null) {
 			return;

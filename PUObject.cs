@@ -49,6 +49,15 @@ public partial class PUObject : PUObjectBase {
 
 	}
 
+	public virtual void gaxb_final(XmlReader reader, object _parent, Hashtable args)
+	{
+
+	}
+
+	public virtual void gaxb_private_complete() {
+
+	}
+
 	public T GetChildWithTitle<T>(string childTitle){
 		object child = null;
 		this.PerformOnChildren (val => {
