@@ -374,6 +374,7 @@ public partial class PUGameObject : PUGameObjectBase {
 		}
 
 		gaxb_complete ();
+		gaxb_private_complete ();
 	}
 
 	public void LoadIntoGameObject(GameObject _parent)
@@ -392,6 +393,7 @@ public partial class PUGameObject : PUGameObjectBase {
 		}
 
 		gaxb_complete ();
+		gaxb_private_complete ();
 	}
 
 
