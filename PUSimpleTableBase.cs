@@ -19,19 +19,28 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 	
 	public PUSimpleTable()
 	{
+		string attr;
+
+		attr = "true";
+		if(attr != null) { asynchronous = bool.Parse(attr); } 
+
 	}
 	
 	
 	public PUSimpleTable(
-			Vector2 cellSize ) : this()
+			Vector2 cellSize,
+			bool asynchronous ) : this()
 	{
 		this.cellSize = cellSize;
+
+		this.asynchronous = asynchronous;
 	}
 
 	
 	
 	public PUSimpleTable(
 			Vector2 cellSize,
+			bool asynchronous,
 			bool inertia,
 			bool horizontal,
 			bool vertical,
@@ -62,6 +71,8 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 			string tag6 ) : this()
 	{
 		this.cellSize = cellSize;
+
+		this.asynchronous = asynchronous;
 
 		this.inertia = inertia;
 
@@ -135,6 +146,7 @@ public class PUSimpleTableBase : PUScrollRect {
 
 	// XML Attributes
 	public Vector2? cellSize;
+	public bool asynchronous;
 
 
 
@@ -212,6 +224,11 @@ public class PUSimpleTableBase : PUScrollRect {
 		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { cellSize = new Vector2().PUParse(attr); } 
 		
+		attr = reader.GetAttribute("asynchronous");
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
+		if(attr == null) { attr = "true"; }
+		if(attr != null) { asynchronous = bool.Parse(attr); } 
+		
 
 	}
 	
@@ -226,6 +243,7 @@ public class PUSimpleTableBase : PUScrollRect {
 		base.gaxb_appendXMLAttributes(sb);
 
 		if(cellSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "cellSize", cellSize.Value.PUToString()); }
+		 sb.AppendFormat (" {0}=\"{1}\"", "asynchronous", asynchronous.ToString().ToLower()); 
 
 	}
 	

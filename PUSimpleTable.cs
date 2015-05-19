@@ -27,7 +27,7 @@ public class PUSimpleTableUpdateScript : MonoBehaviour {
 			table.LateUpdate ();
 		}
 	}
-	/*
+
 	public IEnumerator ReloadTableCellsCoroutine() {
 		return table.ReloadTableAsync ();
 	}
@@ -35,7 +35,7 @@ public class PUSimpleTableUpdateScript : MonoBehaviour {
 	public void ReloadTableCells() {
 		StopCoroutine("ReloadTableCellsCoroutine");
 		StartCoroutine("ReloadTableCellsCoroutine");
-	}*/
+	}
 
 }
 
@@ -143,8 +143,10 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 	}
 
 
-	public void ReloadTableAsync() {
+	public IEnumerator ReloadTableAsync() {
 		RectTransform contentRectTransform = contentObject.transform as RectTransform;
+
+		currentScrollY = (int)contentRectTransform.anchoredPosition.y;
 
 		// 1) Run through allObjects; instantiate a cell object based on said object class
 		float y = 0;
@@ -181,8 +183,6 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		for(int i = firstVisibleCell; i < firstVisibleCell + totalVisibleCells; i++) {
 			object myCellData = allObjects [i];
 
-			// TODO: We need the accurate width and height of the cell at this point, preferably
-			// without loading the whole thing first
 			PUSimpleTableCell cell = null;
 
 			// Can I fit on the current line?
@@ -200,7 +200,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 
 				cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (x, y);
 
-				//yield return null;
+				yield return null;
 			}
 
 			x += cellWidth;
@@ -208,7 +208,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		}
 	}
 
-	public void ReloadTable(bool asynchronous = true) {
+	public void ReloadTable() {
 
 		if(gameObject.GetComponent<PUSimpleTableUpdateScript>() == null){
 			tableUpdateScript = (PUSimpleTableUpdateScript)gameObject.AddComponent (typeof(PUSimpleTableUpdateScript));
@@ -216,20 +216,24 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		}
 
 		ClearTable ();
-		/*
+
 		if (asynchronous) {
 			tableUpdateScript.ReloadTableCells ();
 			return;
-		}*/
+		}
 
-		ReloadTableAsync ();
+		IEnumerator t = ReloadTableAsync();
+		while (t.MoveNext ()) {}
 	}
 
 	public override void LateUpdate() {
 		// If we've scrolled, retest cells to see who needs to load/unload
 		RectTransform tableContentTransform = contentObject.transform as RectTransform;
 		if (currentScrollY != (int)tableContentTransform.anchoredPosition.y) {
-			ReloadTableAsync();
+			
+			IEnumerator t = ReloadTableAsync();
+			while (t.MoveNext ()) {}
+
 			currentScrollY = (int)tableContentTransform.anchoredPosition.y;
 		}
 	}
@@ -239,7 +243,8 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		base.gaxb_complete ();
 
 		NotificationCenter.addObserver (this, "OnAspectChanged", null, (args, name) => {
-			ReloadTableAsync();
+			IEnumerator t = ReloadTableAsync();
+			while (t.MoveNext ()) {}
 		});
 
 	}

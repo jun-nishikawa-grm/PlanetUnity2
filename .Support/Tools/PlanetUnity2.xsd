@@ -533,6 +533,7 @@
 		<complexContent>
 			<extension base="planet:ScrollRect">
 				<attribute name="cellSize" type="planet:vec2" use="required" />
+				<attribute name="asynchronous" type="boolean" use="optional" default="true" />
 			</extension>
 		</complexContent>
 	</complexType>
