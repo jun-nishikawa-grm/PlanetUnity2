@@ -181,30 +181,32 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		nextY = y - cellHeight;
 
 		for(int i = firstVisibleCell; i < firstVisibleCell + totalVisibleCells; i++) {
-			object myCellData = allObjects [i];
+			if (i < allObjects.Count) {
+				object myCellData = allObjects [i];
 
-			PUSimpleTableCell cell = null;
+				PUSimpleTableCell cell = null;
 
-			// Can I fit on the current line?
-			if(	x + cellWidth > (contentRectTransform.rect.width+1)){
-				x = 0;
-				y = nextY;
-			}
-
-			if (PUSimpleTableCell.TestForVisibility (y, rectTransform, contentRectTransform)) {
-				if (visibleCells.ContainsKey (myCellData)) {
-					cell = visibleCells [myCellData];
-				} else {
-					cell = DequeueTableCell (myCellData);
+				// Can I fit on the current line?
+				if (x + cellWidth > (contentRectTransform.rect.width + 1)) {
+					x = 0;
+					y = nextY;
 				}
 
-				cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (x, y);
+				if (PUSimpleTableCell.TestForVisibility (y, rectTransform, contentRectTransform)) {
+					if (visibleCells.ContainsKey (myCellData)) {
+						cell = visibleCells [myCellData];
+					} else {
+						cell = DequeueTableCell (myCellData);
+					}
 
-				yield return null;
+					cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (x, y);
+
+					yield return null;
+				}
+
+				x += cellWidth;
+				nextY = y - cellHeight;
 			}
-
-			x += cellWidth;
-			nextY = y - cellHeight;
 		}
 	}
 
