@@ -174,10 +174,7 @@ public class PUTableCell {
 
 		if (xmlPath != null) {
 
-
-			Profile.Perform ("LoadXML", () => {
-				puGameObject = (PUGameObject)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath (xmlPath), parent.contentObject, null);
-			});
+			puGameObject = (PUGameObject)PlanetUnity2.loadXML (PlanetUnityOverride.xmlFromPath (xmlPath), parent.contentObject, null);
 
 			// Attach all of the PlanetUnity objects
 			try {
@@ -392,8 +389,6 @@ public partial class PUTable : PUTableBase {
 		foreach (PUTableCell cell in savedCells) {
 			cell.unload ();
 		}
-
-		Profile.PrintResults ();
 	}
 
 	public override void LateUpdate() {
