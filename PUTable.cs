@@ -19,7 +19,7 @@ using System.Reflection;
 
 public class PUTableUpdateScript : MonoBehaviour {
 
-	public PUTable table;
+	public PUScrollRect table;
 
 	public void LateUpdate() {
 		if (table != null) {
@@ -30,7 +30,7 @@ public class PUTableUpdateScript : MonoBehaviour {
 
 public class PUTableHeaderScript : MonoBehaviour {
 
-	public PUTable table;
+	public PUScrollRect table;
 	public PUTableCell tableCell;
 	private float originalY;
 
@@ -114,17 +114,17 @@ public class PUTableHeaderScript : MonoBehaviour {
 
 public class PUTableCell {
 
-	public PUTable table = null;
+	public PUScrollRect table = null;
 	public PUGameObject puGameObject = null;
 	public object cellData = null;
 
 	public float animatedYOffset = 0;
 
 
-	private GameObject cellGameObject;
-	private RectTransform cellTransform;
-	private RectTransform tableTransform;
-	private RectTransform tableContentTransform;
+	protected GameObject cellGameObject;
+	protected RectTransform cellTransform;
+	protected RectTransform tableTransform;
+	protected RectTransform tableContentTransform;
 
 	public virtual bool IsHeader() {
 		// Subclasses override this method to specify this cell should act as a section header
@@ -144,7 +144,7 @@ public class PUTableCell {
 		// Subclasses can override to dynamically check their current size
 	}
 
-	public void TestForVisibility() {
+	public virtual bool TestForVisibility() {
 
 		// Note to self: cell are arranged from bottom of content object (pos 0) to the top (pos height)
 		// Note to self: table scrolling is positive (as you scroll up, the anchored position increases)
@@ -156,16 +156,20 @@ public class PUTableCell {
 			if (cellGameObject.activeSelf) {
 				if (bottomOfCell > tableViewHeight || topOfCell < 0) {
 					cellGameObject.SetActive (false);
+					return false;
 				}
 			} else {
 				if (bottomOfCell < tableViewHeight && topOfCell > 0) {
 					cellGameObject.SetActive (true);
+					return true;
 				}
 			}
 		}
+
+		return false;
 	}
 
-	public virtual void LoadIntoPUGameObject(PUTable parent, object data) {
+	public virtual void LoadIntoPUGameObject(PUScrollRect parent, object data) {
 
 		table = parent;
 		cellData = data;

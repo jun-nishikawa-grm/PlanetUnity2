@@ -528,6 +528,15 @@
 		</complexContent>
 	</complexType>
 	
+	<element name="SimpleTable" type="planet:SimpleTable"/>
+	<complexType name="SimpleTable">
+		<complexContent>
+			<extension base="planet:ScrollRect">
+				<attribute name="cellSize" type="planet:vec2" use="required" />
+			</extension>
+		</complexContent>
+	</complexType>
+	
 	
 	<element name="AspectFit" type="planet:AspectFit"/>
 	<complexType name="AspectFit">
