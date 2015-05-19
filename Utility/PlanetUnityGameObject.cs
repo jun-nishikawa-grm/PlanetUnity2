@@ -63,6 +63,8 @@ public class PlanetUnityOverride {
 		RectTransform rectTransform = null;
 
 		mathParser.LocalVariables ["dpi"] = Convert.ToDecimal (Screen.dpi);
+		mathParser.LocalVariables ["screenW"] = Convert.ToDecimal (Screen.width / multiplier);
+		mathParser.LocalVariables ["screenH"] = Convert.ToDecimal (Screen.height / multiplier);
 
 		GameObject parentAsGameObject = o as GameObject;
 		PUGameObject parentAsPUGameObject = o as PUGameObject;
