@@ -33,6 +33,10 @@ public partial class PUColorButton : PUColorButtonBase {
 
 		button = gameObject.AddComponent<Button> ();
 
+		ColorBlock colors = button.colors;
+		colors.fadeDuration = 0;
+		button.colors = colors;
+
 		if (onTouchUp != null) {
 		
 			button.onClick.AddListener(() => { 

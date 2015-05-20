@@ -31,6 +31,10 @@ public partial class PUTextButton : PUTextButtonBase {
 
 		button = gameObject.AddComponent<Button> ();
 
+		ColorBlock colors = button.colors;
+		colors.fadeDuration = 0;
+		button.colors = colors;
+
 		if (onTouchUp != null) {
 			button.onClick.AddListener(() => { 
 				NotificationCenter.postNotification (Scope (), this.onTouchUp, NotificationCenter.Args("sender", this));
