@@ -39,7 +39,9 @@ public partial class PUText : PUTextBase {
 			float lineSpacing,
 			PlanetUnity2.TextAlignment alignment,
 			string value,
-			bool bestFit,
+			bool sizeToFit,
+			bool vOverflow,
+			bool hOverflow,
 			string onLinkClick ) : this()
 	{
 		this.font = font;
@@ -56,7 +58,11 @@ public partial class PUText : PUTextBase {
 
 		this.value = value;
 
-		this.bestFit = bestFit;
+		this.sizeToFit = sizeToFit;
+
+		this.vOverflow = vOverflow;
+
+		this.hOverflow = hOverflow;
 
 		this.onLinkClick = onLinkClick;
 	}
@@ -71,7 +77,9 @@ public partial class PUText : PUTextBase {
 			float lineSpacing,
 			PlanetUnity2.TextAlignment alignment,
 			string value,
-			bool bestFit,
+			bool sizeToFit,
+			bool vOverflow,
+			bool hOverflow,
 			string onLinkClick,
 			Vector4 bounds,
 			Vector3 position,
@@ -112,7 +120,11 @@ public partial class PUText : PUTextBase {
 
 		this.value = value;
 
-		this.bestFit = bestFit;
+		this.sizeToFit = sizeToFit;
+
+		this.vOverflow = vOverflow;
+
+		this.hOverflow = hOverflow;
 
 		this.onLinkClick = onLinkClick;
 
@@ -186,7 +198,9 @@ public class PUTextBase : PUGameObject {
 	public float? lineSpacing;
 	public PlanetUnity2.TextAlignment? alignment;
 	public string value;
-	public bool bestFit;
+	public bool sizeToFit;
+	public bool vOverflow;
+	public bool hOverflow;
 	public string onLinkClick;
 
 
@@ -292,9 +306,17 @@ public class PUTextBase : PUGameObject {
 		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { value = attr; } 
 		
-		attr = reader.GetAttribute("bestFit");
+		attr = reader.GetAttribute("sizeToFit");
 		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
-		if(attr != null) { bestFit = bool.Parse(attr); } 
+		if(attr != null) { sizeToFit = bool.Parse(attr); } 
+		
+		attr = reader.GetAttribute("vOverflow");
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
+		if(attr != null) { vOverflow = bool.Parse(attr); } 
+		
+		attr = reader.GetAttribute("hOverflow");
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
+		if(attr != null) { hOverflow = bool.Parse(attr); } 
 		
 		attr = reader.GetAttribute("onLinkClick");
 		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
@@ -320,7 +342,9 @@ public class PUTextBase : PUGameObject {
 		if(lineSpacing != null) { sb.AppendFormat (" {0}=\"{1}\"", "lineSpacing", lineSpacing.Value.ToString ("0.##")); }
 		if(alignment != null) { sb.AppendFormat (" {0}=\"{1}\"", "alignment", (int)alignment); }
 		if(value != null) { sb.AppendFormat (" {0}=\"{1}\"", "value", value); }
-		 sb.AppendFormat (" {0}=\"{1}\"", "bestFit", bestFit.ToString().ToLower()); 
+		 sb.AppendFormat (" {0}=\"{1}\"", "sizeToFit", sizeToFit.ToString().ToLower()); 
+		 sb.AppendFormat (" {0}=\"{1}\"", "vOverflow", vOverflow.ToString().ToLower()); 
+		 sb.AppendFormat (" {0}=\"{1}\"", "hOverflow", hOverflow.ToString().ToLower()); 
 		if(onLinkClick != null) { sb.AppendFormat (" {0}=\"{1}\"", "onLinkClick", onLinkClick); }
 
 	}

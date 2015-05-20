@@ -189,6 +189,18 @@ public partial class PUText : PUTextBase {
 			text.lineSpacing = lineSpacing.Value;
 		}
 
+		if (sizeToFit) {
+			text.resizeTextForBestFit = true;
+		}
+
+		if (vOverflow) {
+			text.verticalOverflow = VerticalWrapMode.Overflow;
+		}
+
+		if (hOverflow) {
+			text.horizontalOverflow = HorizontalWrapMode.Overflow;
+		}
+
 		if (fontStyle != null) {
 			if(fontStyle == PlanetUnity2.FontStyle.bold)
 				text.fontStyle = FontStyle.Bold;

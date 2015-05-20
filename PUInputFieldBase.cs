@@ -62,7 +62,9 @@ public partial class PUInputField : PUInputFieldBase {
 			float lineSpacing,
 			PlanetUnity2.TextAlignment alignment,
 			string value,
-			bool bestFit,
+			bool sizeToFit,
+			bool vOverflow,
+			bool hOverflow,
 			string onLinkClick,
 			Vector4 bounds,
 			Vector3 position,
@@ -115,7 +117,11 @@ public partial class PUInputField : PUInputFieldBase {
 
 		this.value = value;
 
-		this.bestFit = bestFit;
+		this.sizeToFit = sizeToFit;
+
+		this.vOverflow = vOverflow;
+
+		this.hOverflow = hOverflow;
 
 		this.onLinkClick = onLinkClick;
 

@@ -290,7 +290,11 @@
 				<attribute name="alignment" type="planet:TextAlignment" use="optional" default="middleCenter"/>
 				
 				<attribute name="value" type="string" use="required" />
-				<attribute name="bestFit" type="boolean" use="optional" />
+				
+				<attribute name="sizeToFit" type="boolean" use="optional" />
+				<attribute name="vOverflow" type="boolean" use="optional" />
+				<attribute name="hOverflow" type="boolean" use="optional" />
+				
 				
 				<attribute name="onLinkClick" type="string" use="optional" />
 			</extension>
