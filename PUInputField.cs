@@ -26,6 +26,16 @@ public partial class PUInputField : PUInputFieldBase {
 	public InputField field;
 	public PUText placeholderText;
 
+	public string GetValue() {
+		if (field.text.Length > 0) {
+			return field.text;
+		}
+		if (placeholderText != null && placeholderText.text.text.Length > 0) {
+			return placeholderText.text.text;
+		}
+		return "";
+	}
+
 	public override void gaxb_init ()
 	{
 		// We call Text's gaxb_init, which creates the appropriate text component on gameObject
