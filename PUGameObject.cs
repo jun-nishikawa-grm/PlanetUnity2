@@ -157,7 +157,8 @@ public partial class PUGameObject : PUGameObjectBase {
 		gameObject.layer = LayerMask.NameToLayer ("UI");
 
 		if (mask) {
-			gameObject.AddComponent<Mask> ();
+			Mask maskComponent = gameObject.AddComponent<Mask> ();
+			maskComponent.showMaskGraphic = false;
 
 			// Mask requires a Graphic; if we don't have one, add one and tell it now to draw it...
 			if (gameObject.GetComponent<Graphic> () == null) {
@@ -169,9 +170,6 @@ public partial class PUGameObject : PUGameObjectBase {
 					graphic.insetTop = maskInset.Value.z;
 					graphic.insetBottom = maskInset.Value.w;
 				}
-
-				Mask maskComponent = gameObject.GetComponent<Mask> ();
-				maskComponent.showMaskGraphic = false;
 			}
 		}
 
