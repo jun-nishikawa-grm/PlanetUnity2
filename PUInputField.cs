@@ -24,6 +24,7 @@ public partial class PUInputField : PUInputFieldBase {
 	public GameObject textGameObject;
 
 	public InputField field;
+	public PUText placeholderText;
 
 	public override void gaxb_init ()
 	{
@@ -80,7 +81,7 @@ public partial class PUInputField : PUInputFieldBase {
 		}
 
 		if (placeholder != null) {
-			PUText placeholderText = new PUText ();
+			placeholderText = new PUText ();
 			placeholderText.value = this.placeholder;
 			placeholderText.LoadIntoPUGameObject (this);
 
