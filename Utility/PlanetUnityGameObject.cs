@@ -399,6 +399,9 @@ public class PlanetUnityGameObject : MonoBehaviour {
 			eventSystem.AddComponent<TouchInputModule> ();
 
 		}
+
+		EventSystem system = eventSystem.GetComponent<EventSystem> ();
+		system.pixelDragThreshold = (int)(PlanetUnityOverride.screenDPI () * 0.175f);
 	}
 
 	public void ReloadCanvas () {
