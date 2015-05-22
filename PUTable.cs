@@ -114,7 +114,7 @@ public class PUTableHeaderScript : MonoBehaviour {
 
 public class PUTableCell {
 
-	public PUScrollRect table = null;
+	public PUScrollRect scrollRect = null;
 	public PUGameObject puGameObject = null;
 	public object cellData = null;
 
@@ -125,6 +125,12 @@ public class PUTableCell {
 	protected RectTransform cellTransform;
 	protected RectTransform tableTransform;
 	protected RectTransform tableContentTransform;
+
+	public PUTable table {
+		get {
+			return scrollRect as PUTable;
+		}
+	}
 
 	public virtual bool IsHeader() {
 		// Subclasses override this method to specify this cell should act as a section header
@@ -171,7 +177,7 @@ public class PUTableCell {
 
 	public virtual void LoadIntoPUGameObject(PUScrollRect parent, object data) {
 
-		table = parent;
+		scrollRect = parent;
 		cellData = data;
 
 		string xmlPath = XmlPath ();
