@@ -103,6 +103,7 @@ public class PlanetUnityOverride {
 			return null;
 
 		s = s.Replace("@LANGUAGE", PlanetUnityLanguage.LanguageCode());
+		s = s.Replace("\\n", "\n");
 
 		if (s.Equals ("nan")) {
 			return "0";
