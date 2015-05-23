@@ -248,8 +248,8 @@ public class PUTableCell {
 
 		cellGameObject = puGameObject.gameObject;
 		cellTransform = cellGameObject.transform as RectTransform;
-		tableTransform = table.rectTransform;
-		tableContentTransform = table.contentObject.transform as RectTransform;
+		tableTransform = scrollRect.rectTransform;
+		tableContentTransform = scrollRect.contentObject.transform as RectTransform;
 
 		UpdateContents ();
 	}
