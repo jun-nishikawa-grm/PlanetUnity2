@@ -243,7 +243,7 @@ public class PUTableCell {
 		// We want to bridge all notifications to my scope; this allows developers to handle notifications
 		// at the table cell level, or at the scene controller level, with ease
 		NotificationCenter.addObserver (this, "*", puGameObject, (args,name) => {
-			NotificationCenter.postNotification(table.Scope(), name, args);
+			NotificationCenter.postNotification(scrollRect.Scope(), name, args);
 		});
 
 		cellGameObject = puGameObject.gameObject;
