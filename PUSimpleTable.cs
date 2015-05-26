@@ -67,11 +67,17 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 
 	int currentScrollY = -1;
 
-	public List<object> allObjects = null;
+	public List<List<object>> allSegmentedObjects = null;
+
 	PUSimpleTableUpdateScript tableUpdateScript;
 
 	public void SetObjectList(List<object> objects) {
-		allObjects = new List<object> (objects);
+		allSegmentedObjects = new List<List<object>> ();
+		allSegmentedObjects.Add(objects);
+	}
+
+	public void SetSegmentedObjectList(List<List<object>> objects) {
+		allSegmentedObjects = objects;
 	}
 
 	public PUSimpleTableCell LoadCellForData(object cellData, PUSimpleTableCell reusedCell) {
@@ -143,15 +149,15 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 	}
 
 
+
+	private int totalCellsChecked = 0;
+
 	public IEnumerator ReloadTableAsync() {
+
 		RectTransform contentRectTransform = contentObject.transform as RectTransform;
 
-		currentScrollY = (int)contentRectTransform.anchoredPosition.y;
-
-		// 1) Run through allObjects; instantiate a cell object based on said object class
-		float y = 0;
-		float nextY = 0;
-		float x = 0;
+		contentRectTransform.sizeDelta = Vector2.zero;
+		totalCellsChecked = 0;
 
 		// Unload any cells which are not on the screen currently; store the object data for cells which are
 		// still visible
@@ -165,6 +171,27 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 			}
 		}
 
+		foreach (List<object> subtableObjects in allSegmentedObjects) {
+			ReloadSubtable (subtableObjects, visibleCells);
+		}
+
+		//Debug.Log (totalCellsChecked + " **************");
+
+		yield return null;
+	}
+
+
+	public void ReloadSubtable(List<object> subtableObjects, Dictionary<object,PUSimpleTableCell> visibleCells) {
+
+		RectTransform contentRectTransform = contentObject.transform as RectTransform;
+
+		currentScrollY = (int)contentRectTransform.anchoredPosition.y;
+
+		// 1) Run through allObjects; instantiate a cell object based on said object class
+		float currentLayoutY = 0;
+		float nextY = 0;
+		float x = 0;
+
 		float cellWidth = Mathf.Floor (rectTransform.rect.width / Mathf.Floor (rectTransform.rect.width / cellSize.Value.x));
 		float cellHeight = cellSize.Value.y;
 
@@ -172,45 +199,54 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		if (cellsPerRow < 0)
 			cellsPerRow = 1;
 
+		currentLayoutY = -contentRectTransform.sizeDelta.y;
+
 		// Can I skip a known quantity in the beginning and end?
 		int totalVisibleCells = (Mathf.CeilToInt(rectTransform.rect.height / cellHeight) * cellsPerRow) + cellsPerRow;
-		int firstVisibleCell = Mathf.FloorToInt(Mathf.Abs (contentRectTransform.anchoredPosition.y) / cellHeight) * cellsPerRow;
+		int firstVisibleCell = Mathf.FloorToInt((Mathf.Abs (contentRectTransform.anchoredPosition.y) + currentLayoutY) / cellHeight) * cellsPerRow;
+
+		if (firstVisibleCell < 0) {
+			totalVisibleCells += firstVisibleCell;
+			firstVisibleCell = 0;
+		}
 
 		// Update the content size
-		contentRectTransform.sizeDelta = new Vector2 (cellWidth * cellsPerRow, cellHeight * Mathf.Ceil(allObjects.Count / (float)cellsPerRow));
+		float subtableWidth = cellWidth * cellsPerRow;
+		float subtableHeight = cellHeight * Mathf.Ceil (subtableObjects.Count / (float)cellsPerRow);
+		contentRectTransform.sizeDelta = new Vector2 (subtableWidth, contentRectTransform.sizeDelta.y + subtableHeight);
 
-		y = -Mathf.FloorToInt(firstVisibleCell / cellsPerRow) * cellHeight;
-		nextY = y - cellHeight;
+		currentLayoutY += -Mathf.FloorToInt(firstVisibleCell / cellsPerRow) * cellHeight;
+		nextY = currentLayoutY - cellHeight;
 
 		for(int i = firstVisibleCell; i < firstVisibleCell + totalVisibleCells; i++) {
-			if (i < allObjects.Count) {
-				object myCellData = allObjects [i];
+			if (i < subtableObjects.Count) {
+				object myCellData = subtableObjects [i];
 
 				PUSimpleTableCell cell = null;
 
 				// Can I fit on the current line?
 				if (x + cellWidth > (contentRectTransform.rect.width + 1)) {
 					x = 0;
-					y = nextY;
+					currentLayoutY = nextY;
 				}
 
-				if (PUSimpleTableCell.TestForVisibility (y, rectTransform, contentRectTransform)) {
+				totalCellsChecked++;
+				if (PUSimpleTableCell.TestForVisibility (currentLayoutY, rectTransform, contentRectTransform)) {
 					if (visibleCells.ContainsKey (myCellData)) {
 						cell = visibleCells [myCellData];
 					} else {
 						cell = DequeueTableCell (myCellData);
 					}
 
-					cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (x, y);
-
-					yield return null;
+					cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (x, currentLayoutY);
 				}
 
 				x += cellWidth;
-				nextY = y - cellHeight;
+				nextY = currentLayoutY - cellHeight;
 			}
 		}
 	}
+
 
 	public void ReloadTable() {
 
