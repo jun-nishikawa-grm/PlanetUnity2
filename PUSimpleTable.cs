@@ -165,19 +165,21 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 			}
 		}
 
-
-		float cellWidth = cellSize.Value.x;
+		float cellWidth = Mathf.Floor (rectTransform.rect.width / Mathf.Floor (rectTransform.rect.width / cellSize.Value.x));
 		float cellHeight = cellSize.Value.y;
 
-		// Can I skip a known quantity in the beginning and end?
-		int totalVisibleCells = Mathf.CeilToInt(rectTransform.rect.height / cellHeight) + 1;
-		int firstVisibleCell = Mathf.FloorToInt(Mathf.Abs (contentRectTransform.anchoredPosition.y) / cellHeight);
+		int cellsPerRow = Mathf.FloorToInt(rectTransform.rect.width / cellWidth);
+		if (cellsPerRow < 0)
+			cellsPerRow = 1;
 
+		// Can I skip a known quantity in the beginning and end?
+		int totalVisibleCells = (Mathf.CeilToInt(rectTransform.rect.height / cellHeight) * cellsPerRow) + cellsPerRow;
+		int firstVisibleCell = Mathf.FloorToInt(Mathf.Abs (contentRectTransform.anchoredPosition.y) / cellHeight) * cellsPerRow;
 
 		// Update the content size
-		contentRectTransform.sizeDelta = new Vector2 (cellWidth, cellHeight * allObjects.Count);
+		contentRectTransform.sizeDelta = new Vector2 (cellWidth * cellsPerRow, cellHeight * Mathf.Ceil(allObjects.Count / (float)cellsPerRow));
 
-		y = -firstVisibleCell * cellHeight;
+		y = -Mathf.FloorToInt(firstVisibleCell / cellsPerRow) * cellHeight;
 		nextY = y - cellHeight;
 
 		for(int i = firstVisibleCell; i < firstVisibleCell + totalVisibleCells; i++) {
