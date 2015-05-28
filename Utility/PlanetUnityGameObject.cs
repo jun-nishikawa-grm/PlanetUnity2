@@ -66,6 +66,15 @@ public class PlanetUnityOverride {
 		mathParser.LocalVariables ["screenW"] = Convert.ToDecimal (Screen.width / multiplier);
 		mathParser.LocalVariables ["screenH"] = Convert.ToDecimal (Screen.height / multiplier);
 
+		#if UNITY_IOS
+		mathParser.LocalVariables ["statusBarHeight"] = Convert.ToDecimal (42.0f / multiplier);
+		#else
+		mathParser.LocalVariables ["statusBarHeight"] = 0;
+		#endif
+
+
+
+
 		GameObject parentAsGameObject = o as GameObject;
 		PUGameObject parentAsPUGameObject = o as PUGameObject;
 
