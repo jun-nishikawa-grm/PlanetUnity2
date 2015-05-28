@@ -67,13 +67,10 @@ public class PlanetUnityOverride {
 		mathParser.LocalVariables ["screenH"] = Convert.ToDecimal (Screen.height / multiplier);
 
 		#if UNITY_IOS
-		mathParser.LocalVariables ["statusBarHeight"] = Convert.ToDecimal (42.0f / multiplier);
+		mathParser.LocalVariables ["statusBarHeight"] = Convert.ToDecimal ((0.13f * PlanetUnityOverride.screenDPI()) / multiplier);
 		#else
 		mathParser.LocalVariables ["statusBarHeight"] = 0;
 		#endif
-
-
-
 
 		GameObject parentAsGameObject = o as GameObject;
 		PUGameObject parentAsPUGameObject = o as PUGameObject;
