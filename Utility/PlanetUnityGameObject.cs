@@ -47,6 +47,10 @@ public class PlanetUnityOverride {
 		return true;
 	};
 
+	public static Func<string> defaultFont = () => {
+		return "Arial";
+	};
+
 	public static Func<float> screenDPI = () => {
 		return Screen.dpi;
 	};
