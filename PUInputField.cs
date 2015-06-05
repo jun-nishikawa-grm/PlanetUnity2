@@ -95,6 +95,9 @@ public partial class PUInputField : PUInputFieldBase {
 			placeholderText.value = this.placeholder;
 			placeholderText.LoadIntoPUGameObject (this);
 
+			placeholderText.text.horizontalOverflow = this.text.horizontalOverflow;
+			placeholderText.text.verticalOverflow = this.text.verticalOverflow;
+
 			placeholderText.text.alignment = this.text.alignment;
 			placeholderText.text.font = this.text.font;
 			placeholderText.text.fontSize = this.text.fontSize;
