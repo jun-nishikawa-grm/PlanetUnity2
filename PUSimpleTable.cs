@@ -156,8 +156,10 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 
 		RectTransform contentRectTransform = contentObject.transform as RectTransform;
 
-		contentRectTransform.sizeDelta = Vector2.zero;
+		contentRectTransform.sizeDelta = new Vector2(rectTransform.rect.width, 0);
 		totalCellsChecked = 0;
+
+		yield return null;
 
 		// Unload any cells which are not on the screen currently; store the object data for cells which are
 		// still visible
@@ -172,7 +174,9 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		}
 
 		foreach (List<object> subtableObjects in allSegmentedObjects) {
-			ReloadSubtable (subtableObjects, visibleCells);
+
+			IEnumerator e = ReloadSubtable (subtableObjects, visibleCells);
+			while (e.MoveNext()) yield return e.Current;
 		}
 
 		//Debug.Log (totalCellsChecked + " **************");
@@ -181,7 +185,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 	}
 
 
-	public void ReloadSubtable(List<object> subtableObjects, Dictionary<object,PUSimpleTableCell> visibleCells) {
+	public IEnumerator ReloadSubtable(List<object> subtableObjects, Dictionary<object,PUSimpleTableCell> visibleCells) {
 
 		RectTransform contentRectTransform = contentObject.transform as RectTransform;
 
@@ -201,6 +205,14 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 
 		currentLayoutY = -contentRectTransform.sizeDelta.y;
 
+
+		// Handle the header
+		int hasHeader = 0;
+		if (headerSize.Value.y > 0) {
+			hasHeader = 1;
+			currentLayoutY -= headerSize.Value.y;
+		}
+
 		// Can I skip a known quantity in the beginning and end?
 		int totalVisibleCells = (Mathf.CeilToInt(rectTransform.rect.height / cellHeight) * cellsPerRow) + cellsPerRow;
 		int firstVisibleCell = Mathf.FloorToInt((Mathf.Abs (contentRectTransform.anchoredPosition.y) + currentLayoutY) / cellHeight) * cellsPerRow;
@@ -210,13 +222,36 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 			firstVisibleCell = 0;
 		}
 
+
+		if (hasHeader == 1 && firstVisibleCell == 0) {
+			object myCellData = subtableObjects [0];
+			PUSimpleTableCell cell = null;
+			if (PUSimpleTableCell.TestForVisibility (currentLayoutY, rectTransform, contentRectTransform)) {
+				if (visibleCells.ContainsKey (myCellData)) {
+					cell = visibleCells [myCellData];
+				} else {
+					cell = DequeueTableCell (myCellData);
+				}
+				cell.puGameObject.rectTransform.anchoredPosition = new Vector2 (x, currentLayoutY);
+			}
+
+			currentLayoutY -= headerSize.Value.y;
+		}
+
+
+
 		// Update the content size
 		float subtableWidth = cellWidth * cellsPerRow;
-		float subtableHeight = cellHeight * Mathf.Ceil (subtableObjects.Count / (float)cellsPerRow);
-		contentRectTransform.sizeDelta = new Vector2 (subtableWidth, contentRectTransform.sizeDelta.y + subtableHeight);
+		float subtableHeight = cellHeight * Mathf.Ceil ((subtableObjects.Count-hasHeader) / (float)cellsPerRow);
+		contentRectTransform.sizeDelta = new Vector2 (subtableWidth, contentRectTransform.sizeDelta.y + subtableHeight + headerSize.Value.y);
 
 		currentLayoutY += -Mathf.FloorToInt(firstVisibleCell / cellsPerRow) * cellHeight;
 		nextY = currentLayoutY - cellHeight;
+
+
+		if (hasHeader > 0 && firstVisibleCell == 0) {
+			firstVisibleCell = 1;
+		}
 
 		for(int i = firstVisibleCell; i < firstVisibleCell + totalVisibleCells; i++) {
 			if (i < subtableObjects.Count) {
@@ -243,10 +278,21 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 
 				x += cellWidth;
 				nextY = currentLayoutY - cellHeight;
+
+				yield return null;
 			}
 		}
 	}
 
+
+	private void ReloadTableCells() {
+		if (asynchronous) {
+			tableUpdateScript.ReloadTableCells ();
+		} else {
+			IEnumerator t = ReloadTableAsync();
+			while (t.MoveNext ()) {}
+		}
+	}
 
 	public void ReloadTable() {
 
@@ -256,14 +302,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		}
 
 		ClearTable ();
-
-		if (asynchronous) {
-			tableUpdateScript.ReloadTableCells ();
-			return;
-		}
-
-		IEnumerator t = ReloadTableAsync();
-		while (t.MoveNext ()) {}
+		ReloadTableCells ();
 	}
 
 	public override void LateUpdate() {
@@ -283,8 +322,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		base.gaxb_complete ();
 
 		NotificationCenter.addObserver (this, "OnAspectChanged", null, (args, name) => {
-			IEnumerator t = ReloadTableAsync();
-			while (t.MoveNext ()) {}
+			ReloadTableCells();
 		});
 
 	}

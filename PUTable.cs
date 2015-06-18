@@ -232,7 +232,7 @@ public class PUTableCell {
 			puGameObject.gameObject.transform.SetParent(parent.contentObject.transform, false);
 		}
 
-		if (IsHeader ()) {
+		if (IsHeader () && this is PUSimpleTableCell == false) {
 			PUTableHeaderScript script = (PUTableHeaderScript)puGameObject.gameObject.AddComponent (typeof(PUTableHeaderScript));
 			script.table = table;
 			script.tableCell = this;

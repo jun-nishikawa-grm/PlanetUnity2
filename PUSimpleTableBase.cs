@@ -21,6 +21,8 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 	{
 		string attr;
 
+		attr = "0,0";
+		if(attr != null) { headerSize = new Vector2().PUParse(attr); } 
 		attr = "true";
 		if(attr != null) { asynchronous = bool.Parse(attr); } 
 
@@ -29,9 +31,12 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 	
 	public PUSimpleTable(
 			Vector2 cellSize,
+			Vector2 headerSize,
 			bool asynchronous ) : this()
 	{
 		this.cellSize = cellSize;
+
+		this.headerSize = headerSize;
 
 		this.asynchronous = asynchronous;
 	}
@@ -40,6 +45,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 	
 	public PUSimpleTable(
 			Vector2 cellSize,
+			Vector2 headerSize,
 			bool asynchronous,
 			bool inertia,
 			bool horizontal,
@@ -71,6 +77,8 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 			string tag6 ) : this()
 	{
 		this.cellSize = cellSize;
+
+		this.headerSize = headerSize;
 
 		this.asynchronous = asynchronous;
 
@@ -146,6 +154,7 @@ public class PUSimpleTableBase : PUScrollRect {
 
 	// XML Attributes
 	public Vector2? cellSize;
+	public Vector2? headerSize;
 	public bool asynchronous;
 
 
@@ -224,6 +233,11 @@ public class PUSimpleTableBase : PUScrollRect {
 		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { cellSize = new Vector2().PUParse(attr); } 
 		
+		attr = reader.GetAttribute("headerSize");
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
+		if(attr == null) { attr = "0,0"; }
+		if(attr != null) { headerSize = new Vector2().PUParse(attr); } 
+		
 		attr = reader.GetAttribute("asynchronous");
 		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr == null) { attr = "true"; }
@@ -243,6 +257,7 @@ public class PUSimpleTableBase : PUScrollRect {
 		base.gaxb_appendXMLAttributes(sb);
 
 		if(cellSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "cellSize", cellSize.Value.PUToString()); }
+		if(headerSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "headerSize", headerSize.Value.PUToString()); }
 		 sb.AppendFormat (" {0}=\"{1}\"", "asynchronous", asynchronous.ToString().ToLower()); 
 
 	}
