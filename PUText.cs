@@ -178,7 +178,7 @@ public partial class PUText : PUTextBase {
 		if (font != null) {
 			text.font = PlanetUnityResourceCache.GetFont (font);
 		} else {
-			text.font = PlanetUnityResourceCache.GetFont("Arial");
+			text.font = PlanetUnityResourceCache.GetFont(PlanetUnityOverride.defaultFont());
 		}
 
 		if (fontSize != null) {

@@ -47,6 +47,10 @@ public class PlanetUnityOverride {
 		return true;
 	};
 
+	public static Func<string> defaultFont = () => {
+		return "Arial";
+	};
+
 	public static Func<float> screenDPI = () => {
 		return Screen.dpi;
 	};
@@ -62,9 +66,15 @@ public class PlanetUnityOverride {
 
 		RectTransform rectTransform = null;
 
-		mathParser.LocalVariables ["dpi"] = Convert.ToDecimal (Screen.dpi);
+		mathParser.LocalVariables ["dpi"] = Convert.ToDecimal (PlanetUnityOverride.screenDPI());
 		mathParser.LocalVariables ["screenW"] = Convert.ToDecimal (Screen.width / multiplier);
 		mathParser.LocalVariables ["screenH"] = Convert.ToDecimal (Screen.height / multiplier);
+
+		#if UNITY_IOS
+		mathParser.LocalVariables ["statusBarHeight"] = Convert.ToDecimal ((0.13f * PlanetUnityOverride.screenDPI()) / multiplier);
+		#else
+		mathParser.LocalVariables ["statusBarHeight"] = 0;
+		#endif
 
 		GameObject parentAsGameObject = o as GameObject;
 		PUGameObject parentAsPUGameObject = o as PUGameObject;

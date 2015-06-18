@@ -179,6 +179,10 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 			while (e.MoveNext()) yield return e.Current;
 		}
 
+
+		if (contentRectTransform.sizeDelta.y == 0) {
+			contentRectTransform.sizeDelta = new Vector2 (rectTransform.rect.width, rectTransform.rect.height);
+		}
 		//Debug.Log (totalCellsChecked + " **************");
 
 		yield return null;

@@ -30,7 +30,7 @@ public class PlanetUnityResourceCache
 			return null;
 		}
 
-		Texture2D t = Resources.Load (s) as Texture2D;
+		Texture2D t = Resources.Load<Texture2D> (s);
 		if (t == null) {
 			#if (UNITY_WEBPLAYER == false && UNITY_WEBGL == false)
 			if (s.EndsWith (".png") || s.EndsWith (".jpg")) {
@@ -92,7 +92,7 @@ public class PlanetUnityResourceCache
 			return stringFiles [s];
 		}
 
-		TextAsset stringData = Resources.Load (s) as TextAsset;
+		TextAsset stringData = Resources.Load<TextAsset> (s);
 		if (stringData == null) {
 			return null;
 		}
@@ -120,7 +120,7 @@ public class PlanetUnityResourceCache
 		}
 
 		if (font == null) {
-			font = Resources.Load (s) as Font;
+			font = Resources.Load<Font> (s);
 		}
 
 		if (font == null) {
