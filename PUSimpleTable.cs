@@ -326,6 +326,14 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		base.gaxb_complete ();
 
 		NotificationCenter.addObserver (this, "OnAspectChanged", null, (args, name) => {
+
+			// When the table size changes, we need to not reuse table cells...
+			for(int i = activeTableCells.Count-1; i >= 0; i--) {
+				PUSimpleTableCell cell = activeTableCells [i];
+				cell.unload();
+				activeTableCells.RemoveAt(i);
+			}
+
 			ReloadTableCells();
 		});
 
