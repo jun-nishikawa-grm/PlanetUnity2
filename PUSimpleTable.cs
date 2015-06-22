@@ -32,6 +32,10 @@ public class PUSimpleTableUpdateScript : MonoBehaviour {
 		return table.ReloadTableAsync ();
 	}
 
+	public void StopReloadTableCells() {
+		StopCoroutine("ReloadTableCellsCoroutine");
+	}
+
 	public void ReloadTableCells() {
 		StopCoroutine("ReloadTableCellsCoroutine");
 		StartCoroutine("ReloadTableCellsCoroutine");
@@ -151,8 +155,11 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 
 
 	private int totalCellsChecked = 0;
+	private bool isReloadingTableAsync = false;
 
 	public IEnumerator ReloadTableAsync() {
+
+		isReloadingTableAsync = true;
 
 		RectTransform contentRectTransform = contentObject.transform as RectTransform;
 
@@ -185,7 +192,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		}
 		//Debug.Log (totalCellsChecked + " **************");
 
-		yield return null;
+		isReloadingTableAsync = false;
 	}
 
 
@@ -310,14 +317,18 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 	}
 
 	public override void LateUpdate() {
-		// If we've scrolled, retest cells to see who needs to load/unload
-		RectTransform tableContentTransform = contentObject.transform as RectTransform;
-		if (currentScrollY != (int)tableContentTransform.anchoredPosition.y) {
-			
-			IEnumerator t = ReloadTableAsync();
-			while (t.MoveNext ()) {}
 
-			currentScrollY = (int)tableContentTransform.anchoredPosition.y;
+		// If we've scrolled, retest cells to see who needs to load/unload
+		if (isReloadingTableAsync == false) {
+			RectTransform tableContentTransform = contentObject.transform as RectTransform;
+			if (currentScrollY != (int)tableContentTransform.anchoredPosition.y) {
+			
+				IEnumerator t = ReloadTableAsync ();
+				while (t.MoveNext ()) {
+				}
+
+				currentScrollY = (int)tableContentTransform.anchoredPosition.y;
+			}
 		}
 	}
 
@@ -326,6 +337,8 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		base.gaxb_complete ();
 
 		NotificationCenter.addObserver (this, "OnAspectChanged", null, (args, name) => {
+
+			tableUpdateScript.StopReloadTableCells();
 
 			// When the table size changes, we need to not reuse table cells...
 			for(int i = activeTableCells.Count-1; i >= 0; i--) {
