@@ -30,6 +30,14 @@ public class PlanetUnityResourceCache
 			return null;
 		}
 
+		TextAsset fileData = Resources.Load (s, typeof (TextAsset)) as TextAsset;
+		if (fileData !=null) {
+			Texture2D tex = new Texture2D (2,2);
+			tex.LoadImage (fileData.bytes);
+			tex.filterMode = FilterMode.Bilinear;
+			return tex;
+		}
+
 		Texture2D t = Resources.Load<Texture2D> (s);
 		if (t == null) {
 			#if (UNITY_WEBPLAYER == false && UNITY_WEBGL == false)
