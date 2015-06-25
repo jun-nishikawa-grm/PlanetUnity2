@@ -20,6 +20,7 @@ using UnityEngine.UI;
 public partial class PUTextButton : PUTextButtonBase {
 
 	public Button button;
+	private UnityEngine.Events.UnityAction currentOnTouchUpAction = null;
 
 	public override void gaxb_init ()
 	{
@@ -36,9 +37,28 @@ public partial class PUTextButton : PUTextButtonBase {
 		button.colors = colors;
 
 		if (onTouchUp != null) {
-			button.onClick.AddListener(() => { 
+			currentOnTouchUpAction = () => { 
 				NotificationCenter.postNotification (Scope (), this.onTouchUp, NotificationCenter.Args("sender", this));
-			}); 
+			};
+
+			button.onClick.AddListener(currentOnTouchUpAction); 
+		}
+	}
+
+	public void SetOnTouchUp (string newNote) {
+		if (newNote != null) {
+
+			if (currentOnTouchUpAction != null) {
+				button.onClick.RemoveListener(currentOnTouchUpAction);
+			}
+
+			this.onTouchUp = newNote;
+
+			currentOnTouchUpAction = () => { 
+				NotificationCenter.postNotification (Scope (), this.onTouchUp, NotificationCenter.Args("sender", this));
+			};
+			
+			button.onClick.AddListener(currentOnTouchUpAction); 
 		}
 	}
 
