@@ -63,6 +63,8 @@ public partial class PUInputField : PUInputFieldBase {
 			PlanetUnity2.TextAlignment alignment,
 			string value,
 			bool sizeToFit,
+			int maxFontSize,
+			int minFontSize,
 			bool vOverflow,
 			bool hOverflow,
 			string onLinkClick,
@@ -118,6 +120,10 @@ public partial class PUInputField : PUInputFieldBase {
 		this.value = value;
 
 		this.sizeToFit = sizeToFit;
+
+		this.maxFontSize = maxFontSize;
+
+		this.minFontSize = minFontSize;
 
 		this.vOverflow = vOverflow;
 
