@@ -128,6 +128,8 @@ public partial class PUInputField : PUInputFieldBase {
 		foreach (Object obj in gameObject.GetComponentsInChildren<DetectTextClick>()) {
 			GameObject.Destroy (obj);
 		}
+
+		field.Rebuild (CanvasUpdate.LatePreRender);
 	}
 
 }

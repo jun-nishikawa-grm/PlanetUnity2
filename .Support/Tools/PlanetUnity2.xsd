@@ -293,6 +293,9 @@
 				<attribute name="value" type="string" use="required" />
 				
 				<attribute name="sizeToFit" type="boolean" use="optional" />
+				<attribute name="maxFontSize" type="int" use="optional" />
+				<attribute name="minFontSize" type="int" use="optional" />
+				
 				<attribute name="vOverflow" type="boolean" use="optional" />
 				<attribute name="hOverflow" type="boolean" use="optional" />
 				

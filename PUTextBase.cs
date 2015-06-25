@@ -40,6 +40,8 @@ public partial class PUText : PUTextBase {
 			PlanetUnity2.TextAlignment alignment,
 			string value,
 			bool sizeToFit,
+			int maxFontSize,
+			int minFontSize,
 			bool vOverflow,
 			bool hOverflow,
 			string onLinkClick ) : this()
@@ -60,6 +62,10 @@ public partial class PUText : PUTextBase {
 
 		this.sizeToFit = sizeToFit;
 
+		this.maxFontSize = maxFontSize;
+
+		this.minFontSize = minFontSize;
+
 		this.vOverflow = vOverflow;
 
 		this.hOverflow = hOverflow;
@@ -78,6 +84,8 @@ public partial class PUText : PUTextBase {
 			PlanetUnity2.TextAlignment alignment,
 			string value,
 			bool sizeToFit,
+			int maxFontSize,
+			int minFontSize,
 			bool vOverflow,
 			bool hOverflow,
 			string onLinkClick,
@@ -121,6 +129,10 @@ public partial class PUText : PUTextBase {
 		this.value = value;
 
 		this.sizeToFit = sizeToFit;
+
+		this.maxFontSize = maxFontSize;
+
+		this.minFontSize = minFontSize;
 
 		this.vOverflow = vOverflow;
 
@@ -199,6 +211,8 @@ public class PUTextBase : PUGameObject {
 	public PlanetUnity2.TextAlignment? alignment;
 	public string value;
 	public bool sizeToFit;
+	public int? maxFontSize;
+	public int? minFontSize;
 	public bool vOverflow;
 	public bool hOverflow;
 	public string onLinkClick;
@@ -310,6 +324,14 @@ public class PUTextBase : PUGameObject {
 		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { sizeToFit = bool.Parse(attr); } 
 		
+		attr = reader.GetAttribute("maxFontSize");
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
+		if(attr != null) { maxFontSize = (int)float.Parse(attr); } 
+		
+		attr = reader.GetAttribute("minFontSize");
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
+		if(attr != null) { minFontSize = (int)float.Parse(attr); } 
+		
 		attr = reader.GetAttribute("vOverflow");
 		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
 		if(attr != null) { vOverflow = bool.Parse(attr); } 
@@ -343,6 +365,8 @@ public class PUTextBase : PUGameObject {
 		if(alignment != null) { sb.AppendFormat (" {0}=\"{1}\"", "alignment", (int)alignment); }
 		if(value != null) { sb.AppendFormat (" {0}=\"{1}\"", "value", value); }
 		 sb.AppendFormat (" {0}=\"{1}\"", "sizeToFit", sizeToFit.ToString().ToLower()); 
+		if(maxFontSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "maxFontSize", maxFontSize); }
+		if(minFontSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "minFontSize", minFontSize); }
 		 sb.AppendFormat (" {0}=\"{1}\"", "vOverflow", vOverflow.ToString().ToLower()); 
 		 sb.AppendFormat (" {0}=\"{1}\"", "hOverflow", hOverflow.ToString().ToLower()); 
 		if(onLinkClick != null) { sb.AppendFormat (" {0}=\"{1}\"", "onLinkClick", onLinkClick); }

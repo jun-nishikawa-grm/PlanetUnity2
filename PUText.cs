@@ -193,6 +193,14 @@ public partial class PUText : PUTextBase {
 			text.resizeTextForBestFit = true;
 		}
 
+		if (maxFontSize != null) {
+			text.resizeTextMaxSize = maxFontSize.Value;
+		}
+
+		if (minFontSize != null) {
+			text.resizeTextMinSize = minFontSize.Value;
+		}
+
 		if (vOverflow) {
 			text.verticalOverflow = VerticalWrapMode.Overflow;
 		}
