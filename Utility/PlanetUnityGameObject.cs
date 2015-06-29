@@ -55,13 +55,17 @@ public class PlanetUnityOverride {
 		return Screen.dpi;
 	};
 
+	public static Func<decimal,decimal> app1 = (x) => {
+		return (decimal)0.0f;
+	};
+
 	public static Func<PUGameObject, string> shaderForObject = (obj) => {
 		return null;
 	};
 
 
 	static StringBuilder evalStringBuilder = new StringBuilder();
-	private static string evaluateString(string evalListString, object o, float multiplier) {
+	private static string evaluateString(string evalListString, object o, float multiplier, Func<decimal, decimal> appOverride = null) {
 		var parts = Regex.Split (evalListString, ",(?![^(]*\\))");
 
 		RectTransform rectTransform = null;
@@ -100,6 +104,9 @@ public class PlanetUnityOverride {
 		evalStringBuilder.Length = 0;
 		foreach (string part in parts) {
 			decimal result = (mathParser.Parse (part) * (decimal)multiplier);
+			if (appOverride != null) {
+				result = appOverride (result);
+			}
 			evalStringBuilder.AppendFormat ("{0},", result);
 		}
 		evalStringBuilder.Length = evalStringBuilder.Length - 1;
@@ -126,6 +133,10 @@ public class PlanetUnityOverride {
 		} else if (s.StartsWith ("@dpi(")) {
 			string evalListString = s.Substring(5, s.Length-6);
 			s = evaluateString (evalListString, o, PlanetUnityOverride.screenDPI());
+
+		} else if (s.StartsWith ("@app1(")) {
+			string evalListString = s.Substring(6, s.Length-7);
+			s = evaluateString (evalListString, o, PlanetUnityOverride.screenDPI(), PlanetUnityOverride.app1);
 
 		} else if(s.StartsWith("@")) {
 
