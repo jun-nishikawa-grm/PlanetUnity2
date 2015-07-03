@@ -17,6 +17,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 public partial class PUInputField : PUInputFieldBase {
 
@@ -80,6 +81,8 @@ public partial class PUInputField : PUInputFieldBase {
 			field.contentType = InputField.ContentType.Pin;
 		} else if (contentType == PlanetUnity2.InputFieldContentType.custom) {
 			field.contentType = InputField.ContentType.Custom;
+			
+			field.onValidateInput += ValidateInput;
 		}
 
 		if (lineType == PlanetUnity2.InputFieldLineType.single) {
@@ -130,6 +133,16 @@ public partial class PUInputField : PUInputFieldBase {
 		}
 
 		field.Rebuild (CanvasUpdate.LatePreRender);
+	}
+
+	// only allow what FanDuel server supports
+	private char ValidateInput(string text, int charIndex, char addedChar)
+	{
+		// [a-zA-Z0-9-_. ]
+		if (Regex.IsMatch(""+addedChar, "[a-zA-Z0-9-_. ]"))
+			return addedChar;
+
+		return '\0';
 	}
 
 }
