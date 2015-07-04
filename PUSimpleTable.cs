@@ -207,11 +207,14 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		float nextY = 0;
 		float x = 0;
 
-		float cellWidth = Mathf.Floor (rectTransform.rect.width / Mathf.Floor (rectTransform.rect.width / cellSize.Value.x));
+		float cellWidth = rectTransform.rect.width;
+		if(rectTransform.rect.width > cellSize.Value.x)
+			cellWidth = Mathf.Floor (rectTransform.rect.width / Mathf.Floor (rectTransform.rect.width / cellSize.Value.x));
+		
 		float cellHeight = cellSize.Value.y;
 
 		int cellsPerRow = Mathf.FloorToInt(rectTransform.rect.width / cellWidth);
-		if (cellsPerRow < 0)
+		if (cellsPerRow < 1)
 			cellsPerRow = 1;
 
 		currentLayoutY = -contentRectTransform.sizeDelta.y;
@@ -221,7 +224,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		int hasHeader = 0;
 		if (headerSize.Value.y > 0) {
 			hasHeader = 1;
-			currentLayoutY -= headerSize.Value.y;
+			//currentLayoutY -= headerSize.Value.y;
 		}
 
 		// Can I skip a known quantity in the beginning and end?
@@ -346,6 +349,13 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 				cell.unload();
 				activeTableCells.RemoveAt(i);
 			}
+
+			foreach (string key in pooledTableCells.Keys) {
+				foreach (PUSimpleTableCell cell in pooledTableCells[key]) {
+					cell.unload ();
+				}
+			}
+			pooledTableCells.Clear();
 
 			ReloadTableCells();
 		});
