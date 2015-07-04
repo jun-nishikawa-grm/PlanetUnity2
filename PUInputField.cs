@@ -17,6 +17,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Xml;
+using System.Collections;
 
 public partial class PUInputField : PUInputFieldBase {
 
@@ -26,6 +29,8 @@ public partial class PUInputField : PUInputFieldBase {
 	public InputField field;
 	public PUText placeholderText;
 
+	private string regexValidation = null;
+
 	public string GetValue() {
 		if (field.text.Length > 0) {
 			return field.text;
@@ -34,6 +39,22 @@ public partial class PUInputField : PUInputFieldBase {
 			return placeholderText.text.text;
 		}
 		return "";
+	}
+	
+	public override void gaxb_final(XmlReader reader, object _parent, Hashtable args) {
+		base.gaxb_final (reader, _parent, args);
+		
+		string attrib;
+		
+		if (reader != null) {
+			attrib = reader.GetAttribute ("regexValidation");
+			if (attrib != null) {
+				regexValidation = attrib;
+			}
+		}
+		
+		ScheduleForStart ();
+		ScheduleForUpdate ();
 	}
 
 	public override void gaxb_init ()
@@ -80,6 +101,8 @@ public partial class PUInputField : PUInputFieldBase {
 			field.contentType = InputField.ContentType.Pin;
 		} else if (contentType == PlanetUnity2.InputFieldContentType.custom) {
 			field.contentType = InputField.ContentType.Custom;
+			
+			field.onValidateInput += ValidateInput;
 		}
 
 		if (lineType == PlanetUnity2.InputFieldLineType.single) {
@@ -130,6 +153,17 @@ public partial class PUInputField : PUInputFieldBase {
 		}
 
 		field.Rebuild (CanvasUpdate.LatePreRender);
+	}
+
+	// only allow what FanDuel server supports
+	private char ValidateInput(string text, int charIndex, char addedChar)
+	{
+		// if we don't have a regex then we'll allow any char
+		// if we do then check the added char against the specified regex
+		if (regexValidation == null || Regex.IsMatch(""+addedChar, regexValidation))
+			return addedChar;
+
+		return '\0';
 	}
 
 }
