@@ -548,11 +548,25 @@
 	</complexType>
 	
 	
+	<simpleType name="AspectFitMode">
+		<annotation>
+			<appinfo>NAMED_ENUM</appinfo>
+		</annotation>
+        <restriction base="string">
+			<enumeration value = "None"/>
+			<enumeration value = "WidthControlsHeight"/>
+			<enumeration value = "HeightControlsWidth"/>
+			<enumeration value = "FitInParent"/>
+			<enumeration value = "EnvelopeParent"/>
+		</restriction>
+    </simpleType>
+	
 	<element name="AspectFit" type="planet:AspectFit"/>
 	<complexType name="AspectFit">
 		<complexContent>
 			<extension base="planet:GameObject">
 				<attribute name="contentSize" type="planet:vec2" use="optional" default="0,0" />
+				<attribute name="mode" type="planet:AspectFitMode" use="optional" default="FitInParent" />
 			</extension>
 		</complexContent>
 	</complexType>

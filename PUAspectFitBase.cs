@@ -23,20 +23,26 @@ public partial class PUAspectFit : PUAspectFitBase {
 
 		attr = "0,0";
 		if(attr != null) { contentSize = new Vector2().PUParse(attr); } 
+		attr = "FitInParent";
+		if(attr != null) { mode = (PlanetUnity2.AspectFitMode)Enum.Parse(typeof(PlanetUnity2.AspectFitMode), attr); } 
 
 	}
 	
 	
 	public PUAspectFit(
-			Vector2 contentSize ) : this()
+			Vector2 contentSize,
+			PlanetUnity2.AspectFitMode mode ) : this()
 	{
 		this.contentSize = contentSize;
+
+		this.mode = mode;
 	}
 
 	
 	
 	public PUAspectFit(
 			Vector2 contentSize,
+			PlanetUnity2.AspectFitMode mode,
 			Vector4 bounds,
 			Vector3 position,
 			Vector2 size,
@@ -63,6 +69,8 @@ public partial class PUAspectFit : PUAspectFitBase {
 			string tag6 ) : this()
 	{
 		this.contentSize = contentSize;
+
+		this.mode = mode;
 
 		this.bounds = bounds;
 
@@ -128,6 +136,7 @@ public class PUAspectFitBase : PUGameObject {
 
 	// XML Attributes
 	public Vector2? contentSize;
+	public PlanetUnity2.AspectFitMode? mode;
 
 
 
@@ -206,6 +215,11 @@ public class PUAspectFitBase : PUGameObject {
 		if(attr == null) { attr = "0,0"; }
 		if(attr != null) { contentSize = new Vector2().PUParse(attr); } 
 		
+		attr = reader.GetAttribute("mode");
+		if(attr != null) { attr = PlanetUnityOverride.processString(_parent, attr); }
+		if(attr == null) { attr = "FitInParent"; }
+		if(attr != null) { mode = (PlanetUnity2.AspectFitMode)Enum.Parse(typeof(PlanetUnity2.AspectFitMode), attr); } 
+		
 
 	}
 	
@@ -220,6 +234,7 @@ public class PUAspectFitBase : PUGameObject {
 		base.gaxb_appendXMLAttributes(sb);
 
 		if(contentSize != null) { sb.AppendFormat (" {0}=\"{1}\"", "contentSize", contentSize.Value.PUToString()); }
+		if(mode != null) { sb.AppendFormat (" {0}=\"{1}\"", "mode", (int)mode); }
 
 	}
 	

@@ -90,6 +90,14 @@ public class PlanetUnity2 {
 		lowerRight,
 	};
 
+	public enum AspectFitMode {
+		None,
+		WidthControlsHeight,
+		HeightControlsWidth,
+		FitInParent,
+		EnvelopeParent,
+	};
+
 	public enum InputFieldContentType {
 		standard,
 		autocorrected,
