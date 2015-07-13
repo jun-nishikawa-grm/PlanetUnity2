@@ -28,7 +28,9 @@ public class PlanetUnityEmbed : MonoBehaviour {
 	}
 
 	public void OnDestroy() {
-		rootObject.unload ();
+		if (rootObject != null) {
+			rootObject.unload ();
+		}
 	}
 	
 }
