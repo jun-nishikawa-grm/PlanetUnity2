@@ -49,17 +49,17 @@ public class PUSimpleTableCell : PUTableCell {
 		return new Vector2 (tableTransform.rect.width, 60.0f);
 	}
 
-	public static bool TestForVisibility(float cellPosY, RectTransform tableTransform, RectTransform tableContentTransform) {
+	public static bool TestForVisibility(float cellPosY, float cellHeight, RectTransform tableTransform, RectTransform tableContentTransform) {
 
 		float scrolledPos = (-cellPosY) - tableContentTransform.anchoredPosition.y;
-		if (Mathf.Abs (scrolledPos - tableTransform.rect.height / 2) < tableTransform.rect.height) {
+		if (Mathf.Abs (scrolledPos - tableTransform.rect.height / 2) < (tableTransform.rect.height - cellHeight)) {
 			return true;
 		}
 		return false;
 	}
 		
 	public override bool TestForVisibility() {
-		if (TestForVisibility (cellTransform.anchoredPosition.y, tableTransform, tableContentTransform)) {
+		if (TestForVisibility (cellTransform.anchoredPosition.y, cellTransform.rect.height, tableTransform, tableContentTransform)) {
 			return true;
 		}
 		return false;
@@ -228,8 +228,8 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		}
 
 		// Can I skip a known quantity in the beginning and end?
-		int totalVisibleCells = (Mathf.CeilToInt(rectTransform.rect.height / cellHeight) * cellsPerRow) + cellsPerRow;
-		int firstVisibleCell = Mathf.FloorToInt((Mathf.Abs (contentRectTransform.anchoredPosition.y) + currentLayoutY) / cellHeight) * cellsPerRow;
+		int totalVisibleCells = (Mathf.CeilToInt((rectTransform.rect.height + cellHeight) / cellHeight) * cellsPerRow) + cellsPerRow;
+		int firstVisibleCell = Mathf.FloorToInt((Mathf.Abs (contentRectTransform.anchoredPosition.y) + currentLayoutY - cellHeight) / cellHeight) * cellsPerRow;
 
 		if (firstVisibleCell < 0) {
 			totalVisibleCells += firstVisibleCell;
@@ -237,10 +237,10 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		}
 
 
-		if (hasHeader == 1 && firstVisibleCell == 0) {
+		if (hasHeader == 1) {
 			object myCellData = subtableObjects [0];
 			PUSimpleTableCell cell = null;
-			if (PUSimpleTableCell.TestForVisibility (currentLayoutY, rectTransform, contentRectTransform)) {
+			if (PUSimpleTableCell.TestForVisibility (currentLayoutY, headerSize.Value.y, rectTransform, contentRectTransform)) {
 				if (visibleCells.ContainsKey (myCellData)) {
 					cell = visibleCells [myCellData];
 				} else {
@@ -263,8 +263,8 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		nextY = currentLayoutY - cellHeight;
 
 
-		if (hasHeader > 0 && firstVisibleCell == 0) {
-			firstVisibleCell = 1;
+		if (hasHeader == 1) {
+			firstVisibleCell += 1;
 		}
 
 		for(int i = firstVisibleCell; i < firstVisibleCell + totalVisibleCells; i++) {
@@ -280,7 +280,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 				}
 
 				totalCellsChecked++;
-				if (PUSimpleTableCell.TestForVisibility (currentLayoutY, rectTransform, contentRectTransform)) {
+				if (PUSimpleTableCell.TestForVisibility (currentLayoutY, cellHeight, rectTransform, contentRectTransform)) {
 					if (visibleCells.ContainsKey (myCellData)) {
 						cell = visibleCells [myCellData];
 					} else {
