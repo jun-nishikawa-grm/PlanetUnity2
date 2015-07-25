@@ -32,6 +32,23 @@ public class InvisibleHitGraphic : Graphic, ICanvasRaycastFilter {
 
 public partial class PUScrollRect : PUScrollRectBase {
 
+	public Vector2 _ContentOffset = Vector2.zero;
+	public Vector2 ContentOffset {
+		get {
+			return _ContentOffset;
+		}
+		
+		set {
+			Vector2 diff = value - _ContentOffset;
+			_ContentOffset = value;
+			CalculateContentSize();
+
+			RectTransform contentRectTransform = (RectTransform)contentObject.transform;
+			contentRectTransform.anchoredPosition -= diff / 8;
+		}
+	}
+
+
 	public GameObject contentObject;
 	public ScrollRect scroll;
 	public CanvasRenderer canvasRenderer;
@@ -93,14 +110,14 @@ public partial class PUScrollRect : PUScrollRectBase {
 			minY = 0;
 			maxY = ((RectTransform)myRectTransform.parent).rect.height;
 		}
-			
-		myRectTransform.sizeDelta = new Vector2 (maxX - minX, maxY - minY);
+
+		myRectTransform.sizeDelta = new Vector2 ((maxX - minX) + _ContentOffset.x, (maxY - minY) + _ContentOffset.y);
 	}
 
 	public void SetContentSize(float w, float h)
 	{
 		RectTransform myRectTransform = (RectTransform)contentObject.transform;
-		myRectTransform.sizeDelta = new Vector2(w,h);
+		myRectTransform.sizeDelta = new Vector2 (w + _ContentOffset.x, h + _ContentOffset.y);
 	}
 		
 	public override void gaxb_complete()

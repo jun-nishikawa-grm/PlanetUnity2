@@ -163,7 +163,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 
 		RectTransform contentRectTransform = contentObject.transform as RectTransform;
 
-		contentRectTransform.sizeDelta = new Vector2(rectTransform.rect.width, 0);
+		contentRectTransform.sizeDelta = new Vector2(rectTransform.rect.width, 0 + _ContentOffset.y);
 		totalCellsChecked = 0;
 
 		yield return null;
@@ -188,7 +188,7 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 
 
 		if (contentRectTransform.sizeDelta.y == 0) {
-			contentRectTransform.sizeDelta = new Vector2 (rectTransform.rect.width, rectTransform.rect.height);
+			contentRectTransform.sizeDelta = new Vector2 (rectTransform.rect.width, rectTransform.rect.height + _ContentOffset.y);
 		}
 		//Debug.Log (totalCellsChecked + " **************");
 
