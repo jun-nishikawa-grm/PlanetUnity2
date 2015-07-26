@@ -161,12 +161,11 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 
 		isReloadingTableAsync = true;
 
-		RectTransform contentRectTransform = contentObject.transform as RectTransform;
+		yield return null;
 
+		RectTransform contentRectTransform = contentObject.transform as RectTransform;
 		contentRectTransform.sizeDelta = new Vector2(rectTransform.rect.width, 0 + _ContentOffset.y);
 		totalCellsChecked = 0;
-
-		yield return null;
 
 		// Unload any cells which are not on the screen currently; store the object data for cells which are
 		// still visible
