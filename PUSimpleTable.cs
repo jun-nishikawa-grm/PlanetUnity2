@@ -70,6 +70,7 @@ public class PUSimpleTableCell : PUTableCell {
 public partial class PUSimpleTable : PUSimpleTableBase {
 
 	int currentScrollY = -1;
+	int currentScrollHeight = -1;
 
 	public List<List<object>> allSegmentedObjects = null;
 
@@ -323,13 +324,16 @@ public partial class PUSimpleTable : PUSimpleTableBase {
 		// If we've scrolled, retest cells to see who needs to load/unload
 		if (isReloadingTableAsync == false) {
 			RectTransform tableContentTransform = contentObject.transform as RectTransform;
-			if (currentScrollY != (int)tableContentTransform.anchoredPosition.y) {
-			
+
+			if (currentScrollY != (int)tableContentTransform.anchoredPosition.y ||
+			    currentScrollHeight != (int)rectTransform.rect.height) {
+
 				IEnumerator t = ReloadTableAsync ();
 				while (t.MoveNext ()) {
 				}
 
 				currentScrollY = (int)tableContentTransform.anchoredPosition.y;
+				currentScrollHeight = (int)rectTransform.rect.height;
 			}
 		}
 	}
